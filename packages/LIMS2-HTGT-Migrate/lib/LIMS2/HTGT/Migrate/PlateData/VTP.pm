@@ -2,11 +2,7 @@ package LIMS2::HTGT::Migrate::PlateData::VTP;
 
 use Moose;
 use LIMS2::HTGT::Migrate::Utils;
-use Const::Fast;
 use namespace::autoclean;
-
-const my $DEFAULT_BACKBONE => 'R3R4_pBR_DTA+_Bsd_amp';
-const my $DEFAULT_CASSETTE => 'pR6K_R1R2_ZP';
 
 extends 'LIMS2::HTGT::Migrate::PlateData';
 
@@ -19,10 +15,10 @@ override well_data => sub {
 
     my $data = super();
 
-    $data->{cassette}   = $self->get_htgt_well_data_value( 'cassette' ) || $DEFAULT_CASSETTE;    
-    $data->{backbone}   = $self->get_htgt_well_data_value( 'backbone' ) || $DEFAULT_BACKBONE;
+    $data->{cassette}   = $self->get_htgt_well_data_value( 'cassette' );
+    $data->{backbone}   = $self->get_htgt_well_data_value( 'backbone' );
 
-    
+
     return $data;
 };
 
