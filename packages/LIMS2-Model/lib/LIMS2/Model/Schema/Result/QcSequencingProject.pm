@@ -79,7 +79,7 @@ __PACKAGE__->has_many(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 qc_seqs_reads
+=head2 qc_seq_reads
 
 Type: has_many
 
@@ -88,15 +88,15 @@ Related object: L<LIMS2::Model::Schema::Result::QcSeqRead>
 =cut
 
 __PACKAGE__->has_many(
-  "qc_seqs_reads",
+  "qc_seq_reads",
   "LIMS2::Model::Schema::Result::QcSeqRead",
   { "foreign.qc_sequencing_project" => "self.qc_sequencing_project" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-03-28 13:04:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:UJYF0moSxlhJSWZQ+INUWQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-02 11:41:26
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5DzeMBrrJFIjJqdIfMxdyQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

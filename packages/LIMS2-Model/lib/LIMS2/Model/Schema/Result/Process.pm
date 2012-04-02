@@ -199,7 +199,7 @@ __PACKAGE__->might_have(
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
-=head2 process_type
+=head2 process_type_rel
 
 Type: belongs_to
 
@@ -208,7 +208,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessType>
 =cut
 
 __PACKAGE__->belongs_to(
-  "process_type",
+  "process_type_rel",
   "LIMS2::Model::Schema::Result::ProcessType",
   { process_type => "process_type" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
@@ -230,8 +230,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-03-28 13:04:45
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:C1O2ywmnb4HaDTVelNjnCw
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-02 11:41:25
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:okEVyvwi6ud7qEangDBWJQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
