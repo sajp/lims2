@@ -24,6 +24,9 @@ my %REL_NAME_MAP = (
     DesignOligo => {
         design_oligo_locis => 'loci'
     },
+    QcSequencingProject => {
+        qc_seqs_reads => 'qc_seq_reads'
+    },
     # Bad plurals
     bac_clone_locis        => 'bac_clone_loci',
     design_oligo_locis     => 'design_oligo_loci',
@@ -34,7 +37,8 @@ my %REL_NAME_MAP = (
     bac_library            => 'bac_library_rel',
     design_oligo_type      => 'design_oligo_type_rel',
     genotyping_primer_type => 'genotyping_primer_type_rel',
-    plate_type             => 'plate_type_rel'
+    plate_type             => 'plate_type_rel',
+    process_type           => 'process_type_rel',
 );
 
 my $pg_host      = $ENV{PGHOST};
