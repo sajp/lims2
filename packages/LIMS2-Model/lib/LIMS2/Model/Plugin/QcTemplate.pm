@@ -10,44 +10,76 @@ use namespace::autoclean;
 
 requires qw( schema check_params throw );
 
-# Internal function, returns a LIMS2::Model::Schema::Result::QcTemplate object
 sub _instantiate_qc_template {
     my ( $self, $params ) = @_;
 
     if ( blessed( $params ) and $params->isa( 'LIMS2::Model::Schema::Result::QcTemplate' ) ) {
         return $params;
     }
-    
-    my $validated_params = $self->check_params( 
-        { slice( $params, qw( qc_template_name ) ) }, { qc_template_name => {} } );
-    
+
+    my $validated_params = $self->check_params(
+        { slice( $params, qw( qc_template_id ) ) },
+        { qc_template_id => { validate => 'integer' } }
+    );
+
     $self->retrieve( QcTemplate => $validated_params );
 }
 
 sub pspec_create_qc_template {
     return {
-        plate_name => { validate => 'plate_name', rename => 'qc_template_name' },
-        wells      => { optional => 1 }
-    }
+        qc_template_name       => { validate => 'plate_name' },
+        wells                  => { optional => 1 }
+    };
 }
 
 sub create_qc_template {
     my ( $self, $params ) = @_;
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_template );
-    
+
     my $qc_template = $self->schema->resultset( 'QcTemplate' )->create(
         { slice_def( $validated_params, qw( qc_template_name ) ) }
     );
 
     while ( my ( $well_name, $well_params ) = each %{ $validated_params->{wells} || {} } ) {
         next unless defined $well_params and keys %{$well_params};
-        $well_params->{qc_template_name}      = $validated_params->{qc_template_name};
+        $well_params->{qc_template_id}        = $qc_template->qc_template_id;
         $well_params->{qc_template_well_name} = $well_name;
         $self->create_qc_template_well( $well_params, $qc_template );
     }
 
     return $qc_template;
+}
+
+sub pspec_create_qc_template_well {
+    return {
+        qc_template_id        => { validate => 'integer' },
+        qc_template_well_name => { validate => 'well_name' },
+        eng_seq_method        => { validate => 'non_empty_string' },
+        eng_seq_params        => { validate => 'json' },
+    };
+}
+
+sub create_qc_template_well {
+    my ( $self, $params, $qc_template ) = @_;
+
+    my $validated_params = $self->check_params( $params, $self->pspec_create_qc_template_well );
+
+    $qc_template ||= $self->_instantiate_qc_template( $validated_params );
+
+    $self->log->debug( 'create_qc_template_well: '
+                       . $qc_template->qc_template_name
+                       . '_' . $validated_params->{qc_template_well_name} );
+
+    my $qc_template_well = $qc_template->create_related(
+        qc_template_wells => {
+            slice_def( $validated_params, qw( qc_template_well_name eng_seq_method eng_seq_params ) ),
+        }
+    );
+
+    $self->log->debug( 'created qc_template_well with id: ' . $qc_template_well->qc_template_well_id );
+
+    return $qc_template_well;
 }
 
 sub pspec_retrieve_qc_template {
@@ -64,32 +96,50 @@ sub retrieve_qc_template {
     my ( $self, $params ) = @_;
 
     my $validated_params = $self->check_params( $params, $self->pspec_retrieve_qc_template );
+    my $qc_template;
 
-    my $qc_template = $self->retrieve( QcTemplate => $validated_params );
+    if ( $validated_params->{qc_template_id} ) {
+        $qc_template = $self->retrieve( QcTemplate => $validated_params );
+    }
+    else {
+       $qc_template = $self->schema->resultset('QcTemplate')->search_rs(
+            {
+                qc_template_name => $validated_params->{qc_template_name}
+            },
+            {
+                order_by => { -desc => 'qc_template_created_at' }
+            }
+        )->first;
+    }
 
     return $qc_template;
 }
 
-sub pspec_delete_qc_template {
+sub pspec_retrieve_newest_qc_template_created_after {
     return {
-        qc_template_id   => { validate => 'integer', optional => 1 },
-        qc_template_name => { validate => 'plate_name' },
-        REQUIRE_SOME => {
-            qc_template_id_or_name => [ 1, qw/qc_template_id qc_template_name/ ],
-        }
+        qc_template_name          => { validate => 'non_empty_string' },
+        qc_template_created_after => { validate => 'datetime' },
     };
 }
 
-sub delete_qc_template {
+sub retrieve_newest_qc_template_created_after {
     my ( $self, $params ) = @_;
 
-    my $validated_params = $self->check_params( $params, $self->pspec_delete_plate );
+    my $validated_params = $self->check_params( $params, $self->pspec_retrieve_qc_template_created_after );
 
-    my $qc_template = $self->schema->resultset( 'QcTemplate' )->find( 
-        { qc_template_name => $validated_params->{qc_template_name} } );
-    $self->throw( 'Plate does not exist: ' . $validated_params->{qc_template_name} ) unless $qc_template;
+    my $qc_template = $self->schema->resultset('QcTemplate')->search(
+        {
+            qc_template_name       => $validated_params->{qc_template_name},
+            qc_template_created_at => { '>' => $validated_params->{qc_template_created_after} },
+        },
+        {
+            order_by => { desc => 'qc_template_created_at' },
+            columns  => [ qw( qc_template_name qc_template_created_at ) ],
+            rows     => 1
+        }
+    )->single;
 
-    $qc_template->delete_this_qc_template;
+    return $qc_template;
 }
 
 1;
