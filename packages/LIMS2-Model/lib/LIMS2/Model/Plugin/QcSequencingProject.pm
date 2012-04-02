@@ -19,7 +19,7 @@ sub _instantiate_qc_sequencing_project {
 
     my $validated_params = $self->check_params(
         { slice( $params, qw( qc_sequencing_project ) ) },
-        { qc_template_id => { validate => 'plate_name' } }
+        { qc_sequencing_project => { validate => 'plate_name' } }
     );
 
     $self->retrieve( QcSequencingProject => $validated_params );
