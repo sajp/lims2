@@ -69,16 +69,16 @@ while ( my $qc_run = $qc_rs->next ) {
             profile            => $qc_run->profile,
             software_version   => $qc_run->software_version,
             qc_test_results    => get_qc_test_results( $qc_run, $seq_read_ids, $template_plate ),
-            qc_seq_reads       => $seq_reads, 
+            qc_seq_reads       => $seq_reads,
         );
         print YAML::Any::Dump( \%qc_run );
     }
     catch {
         ERROR($_);
     }
-    finally {        
-        Log::Log4perl::NDC->pop;        
-    };    
+    finally {
+        Log::Log4perl::NDC->pop;
+    };
 }
 
 sub get_qc_seq_reads {
@@ -96,7 +96,7 @@ sub get_qc_seq_reads {
             seq            => $seq_read->seq,
         );
         $seq_read_ids{ $seq_read->qc_seq_read_id } = 1;
-        
+
         push @seq_reads, \%seq_read;
     }
 

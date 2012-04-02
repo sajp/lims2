@@ -77,9 +77,9 @@ while ( my $design = $designs_rs->next ) {
     catch {
         ERROR($_);
     }
-    finally {        
-        Log::Log4perl::NDC->pop;        
-    };    
+    finally {
+        Log::Log4perl::NDC->pop;
+    };
 }
 
 sub oligos_for {
@@ -126,7 +126,7 @@ sub genotyping_primers_for {
         {
             join     => [ 'feature_type' ],
             prefetch => [ 'feature_type', { 'feature_data' => 'feature_data_type' } ]
-        }   
+        }
     );
 
     while ( my $feature = $feature_rs->next ) {
@@ -171,7 +171,7 @@ sub type_for {
         return 'artificial-intron';
     }
 
-    my $dt = $design->design_type;    
+    my $dt = $design->design_type;
 
     if ( !defined($dt) || $dt =~ /^KO/ ) {
         return 'conditional';
@@ -205,8 +205,8 @@ sub phase_for {
 }
 
 sub target_transcript_for {
-    my ( $design ) = @_;    
-    
+    my ( $design ) = @_;
+
     if ( $design->start_exon_id ) {
         my $transcript = $design->start_exon->transcript->primary_name;
         if ( $transcript and $transcript =~ m/^ENSMUST\d+$/ ) {
