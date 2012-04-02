@@ -32,7 +32,7 @@ has limit => (
 );
 
 has plate_names => (
-    is => 'ro',
+    is  => 'ro',
     isa => 'Maybe[ArrayRef]',
 );
 
@@ -136,7 +136,7 @@ sub plate_resultset {
         
     }    
 
-    if ( $self->plate_names ) {
+    if ( @{ $self->plate_names } ) {
         $search{'name'} = { 'IN', $self->plate_names };
     }
     
