@@ -29,7 +29,7 @@ $model->txn_do(
             ,'create_qc_seq_read should succeed';
 
         is $qc_seq_read->qc_seq_read_id, 'PSA002_A_2d10.p1kaR3', '.. has right id';
-        is $qc_seq_read->qc_sequencing_project->qc_sequencing_project
+        is $qc_seq_read->qc_sequencing_project
             ,$qc_sequencing_project->qc_sequencing_project
                 ,'.. belongs to correct qc sequencing project';
 
