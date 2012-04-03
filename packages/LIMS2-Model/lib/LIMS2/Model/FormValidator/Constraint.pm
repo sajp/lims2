@@ -282,7 +282,7 @@ sub ensembl_transcript_id {
 }
 
 sub uuid {
-    regexp_matches( qr/^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$/ );
+    regexp_matches( qr/^[A-F0-9]{8}(-[A-F0-9]{4}){3}-[A-F0-9]{12}$/ );
 }
 
 sub software_version {
@@ -316,6 +316,16 @@ sub json {
             decode_json( $str );
         };
     };
+}
+
+sub existing_qc_sequencing_project {
+    my ( $class, $model ) = @_;
+
+    return sub {
+        my $qc_sequencing_project = shift;
+        $model->schema->resultset( 'QcSequencingProject' )->search_rs(
+            { qc_sequencing_project => $qc_sequencing_project } )->count;
+    }
 }
 
 1;
