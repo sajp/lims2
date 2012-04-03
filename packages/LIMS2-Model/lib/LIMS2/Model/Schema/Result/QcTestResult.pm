@@ -74,7 +74,7 @@ __PACKAGE__->table("qc_test_results");
   data_type: 'text'
   is_nullable: 0
 
-=head2 qc_template_well_id
+=head2 qc_eng_seq_id
 
   data_type: 'integer'
   is_foreign_key: 1
@@ -100,7 +100,7 @@ __PACKAGE__->add_columns(
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
   "plate_name",
   { data_type => "text", is_nullable => 0 },
-  "qc_template_well_id",
+  "qc_eng_seq_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
 );
 
@@ -118,6 +118,21 @@ __PACKAGE__->set_primary_key("qc_test_result_id");
 
 =head1 RELATIONS
 
+=head2 qc_eng_seq
+
+Type: belongs_to
+
+Related object: L<LIMS2::Model::Schema::Result::QcEngSeq>
+
+=cut
+
+__PACKAGE__->belongs_to(
+  "qc_eng_seq",
+  "LIMS2::Model::Schema::Result::QcEngSeq",
+  { qc_eng_seq_id => "qc_eng_seq_id" },
+  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
+);
+
 =head2 qc_run
 
 Type: belongs_to
@@ -130,21 +145,6 @@ __PACKAGE__->belongs_to(
   "qc_run",
   "LIMS2::Model::Schema::Result::QcRuns",
   { qc_run_id => "qc_run_id" },
-  { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
-);
-
-=head2 qc_template_well
-
-Type: belongs_to
-
-Related object: L<LIMS2::Model::Schema::Result::QcTemplateWell>
-
-=cut
-
-__PACKAGE__->belongs_to(
-  "qc_template_well",
-  "LIMS2::Model::Schema::Result::QcTemplateWell",
-  { qc_template_well_id => "qc_template_well_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -164,8 +164,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-03-15 11:56:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NteDlUwQ3rplmK3t9UFLGg
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 15:18:37
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WLQcjCdYvc8b3n13I7K4wQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

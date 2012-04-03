@@ -573,6 +573,16 @@ GRANT SELECT ON qc_template_wells TO "[% ro_role %]";
 GRANT SELECT, INSERT, UPDATE, DELETE ON qc_template_wells TO "[% rw_role %]";
 GRANT USAGE ON SEQUENCE qc_template_wells_qc_template_well_id_seq TO "[% rw_role %]";
 
+CREATE TABLE qc_eng_seqs (
+    qc_eng_seq_id             SERIAL PRIMARY KEY,
+    eng_seq_method            TEXT NOT NULL,
+    eng_seq_params            TEXT NOT NULL,
+    UNIQUE ( eng_seq_method, eng_seq_params )
+);
+GRANT SELECT ON qc_eng_seqs TO "[% ro_role %]";
+GRANT SELECT, INSERT, UPDATE, DELETE ON qc_eng_seqs TO "[% rw_role %]";
+GRANT USAGE ON SEQUENCE qc_eng_seqs_qc_eng_seq_id TO "[% rw_role %]";
+
 CREATE TABLE qc_runs (
        qc_run_id              CHAR(36) PRIMARY KEY,
        qc_run_date            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
