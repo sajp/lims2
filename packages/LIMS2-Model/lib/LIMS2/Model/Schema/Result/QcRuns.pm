@@ -51,11 +51,6 @@ __PACKAGE__->table("qc_runs");
   is_nullable: 0
   original: {default_value => \"now()"}
 
-=head2 sequencing_project
-
-  data_type: 'text'
-  is_nullable: 0
-
 =head2 profile
 
   data_type: 'text'
@@ -84,8 +79,6 @@ __PACKAGE__->add_columns(
     is_nullable   => 0,
     original      => { default_value => \"now()" },
   },
-  "sequencing_project",
-  { data_type => "text", is_nullable => 0 },
   "profile",
   { data_type => "text", is_nullable => 0 },
   "qc_template_id",
@@ -154,8 +147,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-03-28 13:04:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:gkdNEShVyPLa2hje5n2odA
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 08:03:46
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:k+klZQprTPsYpRqL3xjywQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
