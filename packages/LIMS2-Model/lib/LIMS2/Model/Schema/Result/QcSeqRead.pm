@@ -94,7 +94,7 @@ __PACKAGE__->set_primary_key("qc_seq_read_id");
 
 =head1 RELATIONS
 
-=head2 qc_sequencing_project
+=head2 qc_sequencing_project_rel
 
 Type: belongs_to
 
@@ -103,7 +103,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcSequencingProject>
 =cut
 
 __PACKAGE__->belongs_to(
-  "qc_sequencing_project",
+  "qc_sequencing_project_rel",
   "LIMS2::Model::Schema::Result::QcSequencingProject",
   { qc_sequencing_project => "qc_sequencing_project" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
@@ -125,8 +125,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-03-28 13:04:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yLwz4b7RJrb2V8ruv1qO+g
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 09:03:30
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rvs5ediQsygXzmnOoaQWxw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

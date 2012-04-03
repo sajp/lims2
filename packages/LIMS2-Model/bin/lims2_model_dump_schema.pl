@@ -39,6 +39,7 @@ my %REL_NAME_MAP = (
     genotyping_primer_type => 'genotyping_primer_type_rel',
     plate_type             => 'plate_type_rel',
     process_type           => 'process_type_rel',
+    qc_sequencing_project  => 'qc_sequencing_project_rel',
 );
 
 my $pg_host      = $ENV{PGHOST};
