@@ -53,7 +53,7 @@ sub create_qc_run {
 
 sub pspec_create_qc_run_sequencing_project {
     return {
-        qc_sequencing_project => { validate => 'existing_qc_sequencing_project' }
+        qc_sequencing_project => { validate => 'plate_name' }
     };
 }
 

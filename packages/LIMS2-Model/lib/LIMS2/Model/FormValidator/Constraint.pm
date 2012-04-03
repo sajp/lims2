@@ -318,16 +318,6 @@ sub json {
     };
 }
 
-sub existing_qc_sequencing_project {
-    my ( $class, $model ) = @_;
-
-    return sub {
-        my $qc_sequencing_project = shift;
-        $model->schema->resultset( 'QcSequencingProject' )->search_rs(
-            { qc_sequencing_project => $qc_sequencing_project } )->count;
-    }
-}
-
 1;
 
 __END__
