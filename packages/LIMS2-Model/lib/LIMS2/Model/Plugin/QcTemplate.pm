@@ -115,22 +115,22 @@ sub retrieve_qc_template {
     return $qc_template;
 }
 
-sub pspec_retrieve_newest_qc_template_created_after {
+sub pspec_retrieve_newest_qc_template_created_before {
     return {
-        qc_template_name          => { validate => 'non_empty_string' },
-        qc_template_created_after => { validate => 'datetime' },
+        qc_template_name           => { validate => 'non_empty_string' },
+        qc_template_created_before => { validate => 'date_time', post_filter => 'parse_date_time' },
     };
 }
 
-sub retrieve_newest_qc_template_created_after {
+sub retrieve_newest_qc_template_created_before {
     my ( $self, $params ) = @_;
 
-    my $validated_params = $self->check_params( $params, $self->pspec_retrieve_qc_template_created_after );
+    my $validated_params = $self->check_params( $params, $self->pspec_retrieve_qc_template_created_before );
 
     my $qc_template = $self->schema->resultset('QcTemplate')->search(
         {
             qc_template_name       => $validated_params->{qc_template_name},
-            qc_template_created_at => { '>' => $validated_params->{qc_template_created_after} },
+            qc_template_created_at => { '<' => $validated_params->{qc_template_created_before} },
         },
         {
             order_by => { desc => 'qc_template_created_at' },
