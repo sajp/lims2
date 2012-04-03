@@ -576,7 +576,6 @@ GRANT USAGE ON SEQUENCE qc_template_wells_qc_template_well_id_seq TO "[% rw_role
 CREATE TABLE qc_runs (
        qc_run_id              CHAR(36) PRIMARY KEY,
        qc_run_date            TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-       sequencing_project     TEXT NOT NULL,
        profile                TEXT NOT NULL,
        qc_template_id         INTEGER NOT NULL REFERENCES qc_templates(qc_template_id),
        software_version       TEXT NOT NULL
