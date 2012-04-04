@@ -7,6 +7,7 @@ use Moose::Role;
 use Hash::MoreUtils qw( slice slice_def );
 use Scalar::Util qw( blessed );
 use namespace::autoclean;
+use JSON qw( decode_json );
 
 requires qw( schema check_params throw );
 
@@ -71,15 +72,34 @@ sub create_qc_template_well {
                        . $qc_template->qc_template_name
                        . '_' . $validated_params->{qc_template_well_name} );
 
+    my $eng_seq_params = $self->canonicalise_eng_seq_params( $validated_params->{eng_seq_params} );
+
+    my $qc_eng_seq = $self->schema->resultset('QcEngSeq')->find_or_create(
+        {
+           eng_seq_method => $validated_params->{eng_seq_method},
+           eng_seq_params => $eng_seq_params,
+        }
+    );
+
     my $qc_template_well = $qc_template->create_related(
         qc_template_wells => {
-            slice_def( $validated_params, qw( qc_template_well_name eng_seq_method eng_seq_params ) ),
+            slice_def( $validated_params, qw( qc_template_well_name ) ),
+            qc_eng_seq_id => $qc_eng_seq->qc_eng_seq_id,
         }
     );
 
     $self->log->debug( 'created qc_template_well with id: ' . $qc_template_well->qc_template_well_id );
 
     return $qc_template_well;
+}
+
+sub canonicalise_eng_seq_params {
+    my ( $self, $eng_seq_params ) = @_;
+
+    my $params = decode_json( $eng_seq_params );
+    my $json = JSON->new->utf8->canonical->encode( $params );
+
+    return $json;
 }
 
 sub pspec_retrieve_qc_template {
