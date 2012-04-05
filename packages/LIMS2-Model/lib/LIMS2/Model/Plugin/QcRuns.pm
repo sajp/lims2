@@ -23,30 +23,40 @@ sub pspec_create_qc_run {
 
 sub create_qc_run {
     my ( $self, $params ) = @_;
+    my $qc_run;
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_run );
 
-    my $qc_template;
-    if ( $validated_params->{qc_template_created_before} ) {
-        $qc_template = $self->retrieve_newest_qc_template_created_after(
-            { slice( $validated_params, qw( qc_template_created_before qc_template_name ) ) }
-        );
-    }
-    else {
-        $qc_template = $self->retrieve_qc_template(
-            { slice( $validated_params, qw( qc_template_name ) ) }
-        );
-    }
+    $self->schema->txn_do(
+        sub {
+            my $qc_template;
+            if ( $validated_params->{qc_template_created_before} ) {
+                $qc_template = $self->retrieve_newest_qc_template_created_after(
+                    { slice( $validated_params
+                            , qw( qc_template_created_before qc_template_name ) ) }
+                );
+            }
+            else {
+                $qc_template = $self->retrieve_qc_template(
+                    { slice( $validated_params, qw( qc_template_name ) ) }
+                );
+            }
 
-    my $qc_run = $qc_template->create_related(
-        qcs_runs => {
-            slice_def( $validated_params,
-                       qw( qc_run_id qc_run_date profile software_version) )
+            $qc_run = $qc_template->create_related(
+                qcs_runs => {
+                    slice_def( $validated_params,
+                               qw( qc_run_id qc_run_date profile software_version) )
+                }
+            );
+
+            my @qc_sequencing_projects = grep { !/^\s*$/ } split ','
+                ,$validated_params->{qc_sequencing_projects};
+            map { $self->create_qc_run_sequencing_project( { qc_sequencing_project => $_ }, $qc_run ) }
+                @qc_sequencing_projects;
         }
     );
-    my @qc_sequencing_projects = grep { !/^\s*$/ } split ',', $validated_params->{qc_sequencing_projects};
-    map { $self->create_qc_run_sequencing_project( { qc_sequencing_project => $_ }, $qc_run ) }
-        @qc_sequencing_projects;
+
+    $self->log->debug( 'created qc run : ' . $qc_run->qc_run_id );
 
     return $qc_run;
 }

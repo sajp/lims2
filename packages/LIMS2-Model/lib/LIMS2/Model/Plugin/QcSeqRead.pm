@@ -37,12 +37,18 @@ sub pspec_create_qc_seq_read {
 
 sub create_qc_seq_read {
     my ( $self, $params ) = @_;
+    my $qc_seq_read;
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_seq_read );
 
-    my $qc_seq_read = $self->schema->resultset('QcSeqRead')->create(
-        {
-            slice_def( $validated_params, qw( qc_seq_read_id description seq length qc_sequencing_project ) ),
+    $self->schema->txn_do(
+        sub {
+            $qc_seq_read = $self->schema->resultset('QcSeqRead')->create(
+                {
+                    slice_def( $validated_params,
+                        qw( qc_seq_read_id description seq length qc_sequencing_project ) ),
+                }
+            );
         }
     );
 

@@ -35,19 +35,26 @@ sub pspec_create_qc_template {
 
 sub create_qc_template {
     my ( $self, $params ) = @_;
+    my $qc_template;
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_template );
 
-    my $qc_template = $self->schema->resultset( 'QcTemplate' )->create(
-        { slice_def( $validated_params, qw( qc_template_name ) ) }
+    $self->schema->txn_do(
+        sub {
+            $qc_template = $self->schema->resultset( 'QcTemplate' )->create(
+                { slice_def( $validated_params, qw( qc_template_name ) ) }
+            );
+
+            while ( my ( $well_name, $well_params ) = each %{ $validated_params->{wells} || {} } ) {
+                next unless defined $well_params and keys %{$well_params};
+                $well_params->{qc_template_id}        = $qc_template->qc_template_id;
+                $well_params->{qc_template_well_name} = $well_name;
+                $self->create_qc_template_well( $well_params, $qc_template );
+            }
+        }
     );
 
-    while ( my ( $well_name, $well_params ) = each %{ $validated_params->{wells} || {} } ) {
-        next unless defined $well_params and keys %{$well_params};
-        $well_params->{qc_template_id}        = $qc_template->qc_template_id;
-        $well_params->{qc_template_well_name} = $well_name;
-        $self->create_qc_template_well( $well_params, $qc_template );
-    }
+    $self->log->debug( 'created qc template plate : ' . $qc_template->qc_template_name );
 
     return $qc_template;
 }

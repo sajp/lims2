@@ -23,19 +23,26 @@ sub pspec_create_qc_test_result {
 
 sub create_qc_test_result {
     my ( $self, $params ) = @_;
+    my $qc_test_result;
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_test_result );
 
-    my $qc_test_result = $self->schema->resultset('QcTestResult')->create(
-        {
-            slice_def( $validated_params, qw( well_name plate_name score pass qc_eng_seq_id qc_run_id ) ),
+    $self->schema->txn_do(
+        sub {
+            $qc_test_result = $self->schema->resultset('QcTestResult')->create(
+                {
+                    slice_def( $validated_params, qw( well_name plate_name score pass qc_eng_seq_id qc_run_id ) ),
+                }
+            );
+
+            for my $test_result_alignment_params ( @{ $validated_params->{qc_test_result_alignments} } ) {
+                $test_result_alignment_params->{qc_test_result_id} = $qc_test_result->qc_test_result_id;
+                $self->create_qc_test_result_alignment( $test_result_alignment_params, $qc_test_result );
+            }
         }
     );
 
-    for my $test_result_alignment_params ( @{ $validated_params->{qc_test_result_alignments} } ) {
-        $test_result_alignment_params->{qc_test_result_id} = $qc_test_result->qc_test_result_id;
-        $self->create_qc_test_result_alignment( $test_result_alignment_params, $qc_test_result );
-    }
+    $self->log->debug( 'created qc test result: ' . $qc_test_result->qc_test_result_id );
 
     return $qc_test_result;
 }
