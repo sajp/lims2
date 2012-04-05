@@ -145,7 +145,15 @@ __PACKAGE__->has_many(
 # Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-03-28 13:04:46
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9n3lisO6I9ltjISMlfQF2w
 
+sub as_hash {
+    my $self = shift;
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+    return {
+        qc_template_name      => $self->qc_template_name,
+        qc_template_create_at => $self->qc_template_created_at ? $self->qc_template_created_at->iso8601 : '-',
+        wells                 => [ map { $_->as_hash } $self->qc_template_wells->all ],
+    };
+}
+
 __PACKAGE__->meta->make_immutable;
 1;

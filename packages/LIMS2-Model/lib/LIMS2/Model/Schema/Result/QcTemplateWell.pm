@@ -147,7 +147,13 @@ __PACKAGE__->belongs_to(
 # Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 15:18:37
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1j1AVBU2/621ENv1XcwjKQ
 
+sub as_hash {
+    my $self = shift;
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+    return {
+        well_name => $self->qc_template_well_name,
+    }
+}
+
 __PACKAGE__->meta->make_immutable;
 1;

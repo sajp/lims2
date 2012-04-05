@@ -167,7 +167,18 @@ __PACKAGE__->has_many(
 # Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 15:18:37
 # DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WLQcjCdYvc8b3n13I7K4wQ
 
+sub as_hash {
+    my $self = shift;
 
-# You can replace this text with custom code or comments, and it will be preserved on regeneration
+    return {
+        qc_test_result_id => $self->qc_test_result_id,
+        qc_run_id         => $self->qc_run_id,
+        well_name         => $self->well_name,
+        plate_name        => $self->plate_name,
+        score             => $self->score,
+        pass              => $self->pass,
+    };
+}
+
 __PACKAGE__->meta->make_immutable;
 1;
