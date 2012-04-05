@@ -32,7 +32,7 @@ sub _audit_user_set {
             my ( $storage, $dbh ) = @_;
             $dbh->do( 'SET SESSION ROLE ' . $dbh->quote_identifier( $user ) );
         }
-    );           
+    );
 }
 
 has user => (
@@ -52,7 +52,7 @@ sub _build_schema {
 
     my $user = $self->user
         or confess "user must be specified for database login";
-    
+
     return LIMS2::Model::DBConnect->connect( 'LIMS2_DB', $user );
 }
 
@@ -126,10 +126,10 @@ sub parse_date_time {
     elsif ( blessed( $date_time ) and $date_time->isa( 'DateTime' ) ) {
         return $date_time;
     }
-    else {    
+    else {
         DateTime::Format::ISO8601->parse_datetime( $date_time );
     }
-    
+
 }
 
 sub plugins {
@@ -142,7 +142,7 @@ sub retrieve {
     my ( $self, $entity_class, $search_params, $search_opts ) = @_;
 
     $search_opts ||= {};
-    
+
     my @objects = $self->schema->resultset( $entity_class )->search( $search_params, $search_opts );
 
     if ( @objects == 1 ) {
@@ -152,7 +152,22 @@ sub retrieve {
         $self->throw( NotFound => { entity_class => $entity_class, search_params => $search_params } );
     }
     else {
-        $self->throw( Implementation => "Retrieval of $entity_class returned " . @objects . " objects" );        
+        $self->throw( Implementation => "Retrieval of $entity_class returned " . @objects . " objects" );
+    }
+}
+
+sub list {
+    my ( $self, $entity_class, $search_params, $search_opts ) = @_;
+
+    $search_opts ||= {};
+
+    my @objects = $self->schema->resultset( $entity_class )->search( $search_params, $search_opts );
+
+    if ( @objects == 0 ) {
+        $self->throw( NotFound => { entity_class => $entity_class, search_params => $search_params } );
+    }
+    else {
+        return \@objects;
     }
 }
 
