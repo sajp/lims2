@@ -23,6 +23,8 @@ $model->txn_do(
 
         ok my $qc_template = $model->create_qc_template( $params ), 'create_qc_template should succeed';
 
+        is $qc_template->qc_template_name, 'VTP00001', '.. has correct plate name';
+
         ok my $qc_template_well = $qc_template->qc_template_wells->first, '.. can grab well';
         is $qc_template_well->qc_template_well_name, 'A01', '.. has correct well name';
 
