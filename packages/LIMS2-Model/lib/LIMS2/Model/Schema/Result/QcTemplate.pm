@@ -151,6 +151,7 @@ sub as_hash {
     return {
         qc_template_name      => $self->qc_template_name,
         qc_template_create_at => $self->qc_template_created_at ? $self->qc_template_created_at->iso8601 : '-',
+        qc_template_id        => $self->qc_template_id,
         wells                 => [ map { $_->as_hash } $self->qc_template_wells->all ],
     };
 }
