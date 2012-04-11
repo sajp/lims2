@@ -28,8 +28,8 @@ sub _instantiate_qc_template {
 
 sub pspec_create_qc_template {
     return {
-        qc_template_name       => { validate => 'plate_name' },
-        wells                  => { optional => 1 }
+        qc_template_name => { validate => 'plate_name' },
+        wells            => { optional => 1 }
     };
 }
 

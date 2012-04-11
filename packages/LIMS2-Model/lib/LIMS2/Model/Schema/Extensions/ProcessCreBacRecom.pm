@@ -4,7 +4,6 @@ use strict;
 use warnings FATAL => 'all';
 
 use Moose::Role;
-use LIMS2::Model::Error::Database;
 use namespace::autoclean;
 use LIMS2::Model::Constants qw( $DEFAULT_ASSEMBLY );
 
@@ -29,7 +28,6 @@ sub as_hash {
         chr_end            => $bac_locus_data->{chr_end},
     };    
 }
-
 
 1;
 
