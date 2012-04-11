@@ -19,7 +19,7 @@ sub pspec_create_cre_bac_recom_process {
         bac_name    => { validate => 'cre_bac_recom_bac_name' },
         cassette    => { validate => 'cre_bac_recom_cassette' },
         backbone    => { validate => 'cre_bac_recom_backbone' }
-    }
+    };
 }
 
 sub create_cre_bac_recom_process {
