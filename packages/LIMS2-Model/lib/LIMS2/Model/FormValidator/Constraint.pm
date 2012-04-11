@@ -286,7 +286,7 @@ sub uuid {
 }
 
 sub software_version {
-    regexp_matches( qr/^\d+\.\d+\.[\d_]+$/ );
+    regexp_matches( qr/^\d+\.\d+\.\d+(?:_\d+)?$/ );
 }
 
 sub qc_seq_read_id {
@@ -302,11 +302,11 @@ sub op_str {
 }
 
 sub qc_match_str {
-    regexp_matches( qr/[|\s]+/ );
+    regexp_matches( qr/[|\s]*/ );
 }
 
 sub qc_alignment_seq {
-    regexp_matches( qr/^[ATGC-]+$/ );
+    regexp_matches( qr/^[ATGC-]*$/ );
 }
 
 sub json {
@@ -314,6 +314,7 @@ sub json {
         my $str = shift;
         try {
             decode_json( $str );
+            return 1;
         };
     };
 }
