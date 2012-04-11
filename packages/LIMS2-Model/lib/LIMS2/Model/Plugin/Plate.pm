@@ -7,6 +7,8 @@ use Moose::Role;
 use Hash::MoreUtils qw( slice slice_def );
 use Scalar::Util qw( blessed );
 use namespace::autoclean;
+use LIMS2::Model::Error::Database;
+use Try::Tiny;
 
 requires qw( schema check_params throw );
 
@@ -124,8 +126,24 @@ sub delete_plate {
     my $plate = $self->schema->resultset( 'Plate' )->find( { plate_name => $validated_params->{plate_name} } );
     $self->throw( 'Plate does not exist: ' . $validated_params->{plate_name} ) unless $plate;
 
-    $plate->delete_this_plate;
+    my @errors;
+    foreach my $well ( $plate->wells->all ) {
+        try {
+            $self->delete_well( $well );
+        }
+        catch {
+            push @errors, $_;
+        };
+    }
+
+    LIMS2::Model::Error::Database->throw( sprintf "Unable to delete plate %s has following errors:\n%s\n",
+        $plate->plate_name, join("\n", sort @errors) ) if @errors;
+
+    $self->log->info('Deleting Plate: ' . $plate->plate_name );
+    $plate->plate_comments->delete;
+    $plate->delete;
 }
+
 1;
 
 __END__
