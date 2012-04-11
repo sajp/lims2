@@ -108,6 +108,7 @@ sub locus_for {
     return $locus;
 };
 
+# returning too much data, will it slow this down too much?
 sub as_hash {
     my $self = shift;
 
@@ -118,6 +119,10 @@ sub as_hash {
         phase              => $self->phase,
         created_by         => $self->created_by->user_name,
         created_at         => $self->created_at->iso8601,
+        ensembl_gene_id    => $self->ensembl_gene_id,
+        chromosome         => $self->chr_name,
+        strand             => $self->chr_strand,
+        marker_symbol      => $self->marker_symbol,
         comments           => [ map { $_->as_hash } $self->design_comments ],
         oligos             => [ map { $_->as_hash } $self->design_oligos ],
         genotyping_primers => [ map { $_->as_hash } $self->genotyping_primers ],
