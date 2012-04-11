@@ -10,9 +10,8 @@ use namespace::autoclean;
 sub get_process {
     my $self = shift;
 
-    my $type = $self->process_type->process_type;
+    my $type = $self->process_type;
     my $process_type = 'process_' . $type;
-    $process_type = 'process_cre_bac_recom' if $process_type eq 'process_bac_recom';
 
     return $self->$process_type;
 }
