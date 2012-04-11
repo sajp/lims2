@@ -2,7 +2,25 @@ package LIMS2::Model::Profile::Plate;
 use Moose;
 use Hash::MoreUtils qw( slice slice_def );
 use Scalar::Util qw( blessed );
+use MooseX::ClassAttribute;
 use namespace::autoclean;
+
+class_has 'well_data_fields' => (
+    is      => 'ro',
+    isa     => 'ArrayRef',
+    lazy    => 1,
+    default => sub {
+        return [ qw(
+            well_name
+            pipeline
+            assay_results
+            legacy_qc_results
+            assay_pending
+            assay_complete
+            accepted
+        ) ];
+    }
+);
 
 has plate => (
     is       => 'ro',
@@ -31,9 +49,9 @@ has assay_result_fields => (
 sub _build_assay_result_fields {
     my $self = shift;
 
-    my @assay_results = $self->schema->resultset('AssayResult')->search( 
-        {}, 
-        { 
+    my @assay_results = $self->schema->resultset('AssayResult')->search(
+        {},
+        {
             columns  => [ 'assay' ],
             distinct => 1,
         }
@@ -90,7 +108,7 @@ sub get_legacy_qc_results {
 sub get_process_of_type {
     my ( $self, $process, $type ) = @_;
 
-    if ( $process->process_type->process_type eq $type ) {
+    if ( $process->process_type eq $type ) {
         return $process->get_process;
     }
 
