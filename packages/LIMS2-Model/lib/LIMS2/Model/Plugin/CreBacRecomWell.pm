@@ -37,7 +37,7 @@ sub create_cre_bac_recom_process {
         );
     }
         
-    my $process = $self->schema->resultset( 'Process' )->create( { process_type => 'bac_recom' } );
+    my $process = $self->schema->resultset( 'Process' )->create( { process_type => 'cre_bac_recom' } );
 
     $process->create_related( process_cre_bac_recom => $validated_params );
 
