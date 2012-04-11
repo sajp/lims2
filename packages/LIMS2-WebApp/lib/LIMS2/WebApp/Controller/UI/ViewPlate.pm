@@ -26,11 +26,10 @@ sub index :Path( '/ui/view_plate' ) :Args(0) {
     my ( $self, $c ) = @_;
 
     my $params = $c->request->params();
-    my $golgi = $c->model( 'Golgi' );
     my $plate;
 
     try {
-        $plate = $golgi->retrieve_plate( $params );
+        $plate = $c->model( 'Golgi' )->retrieve_plate( $params );
     }
     catch {
         if ( blessed( $_ ) and $_->isa( 'LIMS2::Model::Error' ) ) {
@@ -40,15 +39,14 @@ sub index :Path( '/ui/view_plate' ) :Args(0) {
         }
         else {
             die $_;
-        }   
+        }
     };
-    
+
     $c->stash(
         plate    => $plate->as_hash,
         template => 'ui/view_plate/index.tt'
     );
 }
-
 
 =head1 AUTHOR
 
