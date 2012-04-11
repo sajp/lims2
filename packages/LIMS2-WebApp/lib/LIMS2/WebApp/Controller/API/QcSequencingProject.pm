@@ -27,7 +27,7 @@ Retrieve list of QcSeqReads
 sub qc_sequencing_projects_GET {
     my ( $self, $c ) = @_;
 
-    my $qc_sequencing_projects = $c->model('Golgi')->list(
+    my $qc_sequencing_projects = $c->model('Golgi')->retrieve_list(
         QcSequencingProject => { }, { columns => [ qw( qc_sequencing_project ) ] } );
 
     $self->status_ok(

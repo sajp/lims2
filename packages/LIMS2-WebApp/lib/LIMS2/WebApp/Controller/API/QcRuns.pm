@@ -27,7 +27,7 @@ Retrieve list of QcRuns
 sub qc_runs_GET {
     my ( $self, $c ) = @_;
 
-    my $qc_runs = $c->model('Golgi')->list(
+    my $qc_runs = $c->model('Golgi')->retrieve_list(
         QcRuns => { }, { columns => [ qw( qc_run_id ) ] } );
 
     $self->status_ok(

@@ -27,7 +27,7 @@ Retrieve list of QcTestResults
 sub qc_test_results_GET {
     my ( $self, $c ) = @_;
 
-    my $qc_test_result = $c->model('Golgi')->list(
+    my $qc_test_result = $c->model('Golgi')->retrieve_list(
         QcTestResult => { }, { columns => [ qw( qc_test_result_id ) ] } );
 
     $self->status_ok(

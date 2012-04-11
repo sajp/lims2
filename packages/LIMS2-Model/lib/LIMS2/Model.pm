@@ -156,7 +156,7 @@ sub retrieve {
     }
 }
 
-sub list {
+sub retrieve_list {
     my ( $self, $entity_class, $search_params, $search_opts ) = @_;
 
     $search_opts ||= {};

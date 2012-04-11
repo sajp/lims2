@@ -27,7 +27,7 @@ Retrieve list of QcSeqReads
 sub qc_seq_reads_GET {
     my ( $self, $c ) = @_;
 
-    my $qc_seq_reads = $c->model('Golgi')->list(
+    my $qc_seq_reads = $c->model('Golgi')->retrieve_list(
         QcSeqRead => { }, { columns => [ qw( qc_seq_read_id ) ] } );
 
 
