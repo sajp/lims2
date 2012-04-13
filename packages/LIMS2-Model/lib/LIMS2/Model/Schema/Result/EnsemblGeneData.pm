@@ -38,27 +38,27 @@ __PACKAGE__->table("ensembl_gene_data");
 
 =head1 ACCESSORS
 
-=head2 ensembl_gene_id
+=head2 id
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 ensembl_gene_chromosome
+=head2 chromosome
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 ensembl_gene_start
+=head2 chr_start
 
   data_type: 'integer'
   is_nullable: 0
 
-=head2 ensembl_gene_end
+=head2 chr_end
 
   data_type: 'integer'
   is_nullable: 0
 
-=head2 ensembl_gene_strand
+=head2 strand
 
   data_type: 'integer'
   is_nullable: 0
@@ -76,15 +76,15 @@ __PACKAGE__->table("ensembl_gene_data");
 =cut
 
 __PACKAGE__->add_columns(
-  "ensembl_gene_id",
+  "id",
   { data_type => "text", is_nullable => 0 },
-  "ensembl_gene_chromosome",
+  "chromosome",
   { data_type => "text", is_nullable => 0 },
-  "ensembl_gene_start",
+  "chr_start",
   { data_type => "integer", is_nullable => 0 },
-  "ensembl_gene_end",
+  "chr_end",
   { data_type => "integer", is_nullable => 0 },
-  "ensembl_gene_strand",
+  "strand",
   { data_type => "integer", is_nullable => 0 },
   "sp",
   { data_type => "boolean", is_nullable => 0 },
@@ -96,13 +96,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</ensembl_gene_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("ensembl_gene_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -117,13 +117,13 @@ Related object: L<LIMS2::Model::Schema::Result::MgiEnsemblGeneMap>
 __PACKAGE__->has_many(
   "mgi_ensembl_gene_maps",
   "LIMS2::Model::Schema::Result::MgiEnsemblGeneMap",
-  { "foreign.ensembl_gene_id" => "self.ensembl_gene_id" },
+  { "foreign.ensembl_gene_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-05 09:46:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Aro6QiASyjoFBHVjJPSP/w
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FoEmajIBzDCY8IJ6wP4Ftw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

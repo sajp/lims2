@@ -106,7 +106,7 @@ Related object: L<LIMS2::Model::Schema::Result::BacClone>
 __PACKAGE__->belongs_to(
   "bac_clone",
   "LIMS2::Model::Schema::Result::BacClone",
-  { bac_library => "bac_library", bac_name => "bac_name" },
+  { library => "bac_library", name => "bac_name" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -126,8 +126,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-10 15:16:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:uTKajLSWqy6suqbgU2WkLg
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9lpFWqKRUgvll9jNWd9PWA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

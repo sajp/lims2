@@ -38,13 +38,13 @@ __PACKAGE__->table("qc_runs");
 
 =head1 ACCESSORS
 
-=head2 qc_run_id
+=head2 id
 
   data_type: 'char'
   is_nullable: 0
   size: 36
 
-=head2 qc_run_date
+=head2 date
 
   data_type: 'timestamp'
   default_value: current_timestamp
@@ -70,9 +70,9 @@ __PACKAGE__->table("qc_runs");
 =cut
 
 __PACKAGE__->add_columns(
-  "qc_run_id",
+  "id",
   { data_type => "char", is_nullable => 0, size => 36 },
-  "qc_run_date",
+  "date",
   {
     data_type     => "timestamp",
     default_value => \"current_timestamp",
@@ -91,13 +91,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</qc_run_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("qc_run_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -112,7 +112,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcRunSequencingProject>
 __PACKAGE__->has_many(
   "qc_run_sequencing_projects",
   "LIMS2::Model::Schema::Result::QcRunSequencingProject",
-  { "foreign.qc_run_id" => "self.qc_run_id" },
+  { "foreign.qc_run_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -127,7 +127,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcTemplate>
 __PACKAGE__->belongs_to(
   "qc_template",
   "LIMS2::Model::Schema::Result::QcTemplate",
-  { qc_template_id => "qc_template_id" },
+  { id => "qc_template_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -142,13 +142,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcTestResult>
 __PACKAGE__->has_many(
   "qc_test_results",
   "LIMS2::Model::Schema::Result::QcTestResult",
-  { "foreign.qc_run_id" => "self.qc_run_id" },
+  { "foreign.qc_run_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 08:03:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:k+klZQprTPsYpRqL3xjywQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7DukB6X/zE+UiDqeyLeTAw
 
 sub as_hash {
     my $self = shift;

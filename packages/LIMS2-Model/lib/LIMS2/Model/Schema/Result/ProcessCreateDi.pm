@@ -84,7 +84,7 @@ Related object: L<LIMS2::Model::Schema::Result::Design>
 __PACKAGE__->belongs_to(
   "design",
   "LIMS2::Model::Schema::Result::Design",
-  { design_id => "design_id" },
+  { id => "design_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -99,7 +99,7 @@ Related object: L<LIMS2::Model::Schema::Result::Process>
 __PACKAGE__->belongs_to(
   "process",
   "LIMS2::Model::Schema::Result::Process",
-  { process_id => "process_id" },
+  { id => "process_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -119,8 +119,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-10 15:16:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3hTq/tbUOjHbLms8UtEM3g
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DhJeBbxBHauM07zJD1NQ8w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

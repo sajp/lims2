@@ -38,27 +38,27 @@ __PACKAGE__->table("vega_gene_data");
 
 =head1 ACCESSORS
 
-=head2 vega_gene_id
+=head2 id
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 vega_gene_chromosome
+=head2 chromosome
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 vega_gene_start
+=head2 chr_start
 
   data_type: 'integer'
   is_nullable: 0
 
-=head2 vega_gene_end
+=head2 chr_end
 
   data_type: 'integer'
   is_nullable: 0
 
-=head2 vega_gene_strand
+=head2 strand
 
   data_type: 'integer'
   is_nullable: 0
@@ -66,15 +66,15 @@ __PACKAGE__->table("vega_gene_data");
 =cut
 
 __PACKAGE__->add_columns(
-  "vega_gene_id",
+  "id",
   { data_type => "text", is_nullable => 0 },
-  "vega_gene_chromosome",
+  "chromosome",
   { data_type => "text", is_nullable => 0 },
-  "vega_gene_start",
+  "chr_start",
   { data_type => "integer", is_nullable => 0 },
-  "vega_gene_end",
+  "chr_end",
   { data_type => "integer", is_nullable => 0 },
-  "vega_gene_strand",
+  "strand",
   { data_type => "integer", is_nullable => 0 },
 );
 
@@ -82,13 +82,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</vega_gene_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("vega_gene_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -103,13 +103,13 @@ Related object: L<LIMS2::Model::Schema::Result::MgiVegaGeneMap>
 __PACKAGE__->has_many(
   "mgi_vega_gene_maps",
   "LIMS2::Model::Schema::Result::MgiVegaGeneMap",
-  { "foreign.vega_gene_id" => "self.vega_gene_id" },
+  { "foreign.vega_gene_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-05 09:46:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Bj23t0nB92EuCjO/NYfoqw
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IVbX2FDZKgtddurpYAz3/A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

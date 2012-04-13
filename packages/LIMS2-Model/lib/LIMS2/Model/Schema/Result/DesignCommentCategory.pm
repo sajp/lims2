@@ -38,14 +38,14 @@ __PACKAGE__->table("design_comment_categories");
 
 =head1 ACCESSORS
 
-=head2 design_comment_category_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'design_comment_categories_design_comment_category_id_seq'
+  sequence: 'design_comment_categories_id_seq'
 
-=head2 design_comment_category
+=head2 category
 
   data_type: 'text'
   is_nullable: 0
@@ -53,14 +53,14 @@ __PACKAGE__->table("design_comment_categories");
 =cut
 
 __PACKAGE__->add_columns(
-  "design_comment_category_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "design_comment_categories_design_comment_category_id_seq",
+    sequence          => "design_comment_categories_id_seq",
   },
-  "design_comment_category",
+  "category",
   { data_type => "text", is_nullable => 0 },
 );
 
@@ -68,13 +68,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</design_comment_category_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("design_comment_category_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -82,7 +82,7 @@ __PACKAGE__->set_primary_key("design_comment_category_id");
 
 =over 4
 
-=item * L</design_comment_category>
+=item * L</category>
 
 =back
 
@@ -90,7 +90,7 @@ __PACKAGE__->set_primary_key("design_comment_category_id");
 
 __PACKAGE__->add_unique_constraint(
   "design_comment_categories_design_comment_category_key",
-  ["design_comment_category"],
+  ["category"],
 );
 
 =head1 RELATIONS
@@ -106,15 +106,13 @@ Related object: L<LIMS2::Model::Schema::Result::DesignComment>
 __PACKAGE__->has_many(
   "design_comments",
   "LIMS2::Model::Schema::Result::DesignComment",
-  {
-    "foreign.design_comment_category_id" => "self.design_comment_category_id",
-  },
+  { "foreign.design_comment_category_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-10 15:16:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:C/QNUoWsFfiElhRYo8hXRA
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:caorBKLeISIXk28iecV79g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -38,12 +38,12 @@ __PACKAGE__->table("design_comments");
 
 =head1 ACCESSORS
 
-=head2 design_comment_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'design_comments_design_comment_id_seq'
+  sequence: 'design_comments_id_seq'
 
 =head2 design_comment_category_id
 
@@ -57,7 +57,7 @@ __PACKAGE__->table("design_comments");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 design_comment
+=head2 comment
 
   data_type: 'text'
   default_value: (empty string)
@@ -85,18 +85,18 @@ __PACKAGE__->table("design_comments");
 =cut
 
 __PACKAGE__->add_columns(
-  "design_comment_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "design_comments_design_comment_id_seq",
+    sequence          => "design_comments_id_seq",
   },
   "design_comment_category_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "design_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "design_comment",
+  "comment",
   { data_type => "text", default_value => "", is_nullable => 0 },
   "is_public",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
@@ -115,13 +115,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</design_comment_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("design_comment_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -136,7 +136,7 @@ Related object: L<LIMS2::Model::Schema::Result::User>
 __PACKAGE__->belongs_to(
   "created_by",
   "LIMS2::Model::Schema::Result::User",
-  { user_id => "created_by" },
+  { id => "created_by" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -151,7 +151,7 @@ Related object: L<LIMS2::Model::Schema::Result::Design>
 __PACKAGE__->belongs_to(
   "design",
   "LIMS2::Model::Schema::Result::Design",
-  { design_id => "design_id" },
+  { id => "design_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -166,13 +166,13 @@ Related object: L<LIMS2::Model::Schema::Result::DesignCommentCategory>
 __PACKAGE__->belongs_to(
   "design_comment_category",
   "LIMS2::Model::Schema::Result::DesignCommentCategory",
-  { design_comment_category_id => "design_comment_category_id" },
+  { id => "design_comment_category_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-09 16:47:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WZVS2c7F02CJq5G0I819aA
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:pSkVYb+fXgZOWl4hq0C3Fw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

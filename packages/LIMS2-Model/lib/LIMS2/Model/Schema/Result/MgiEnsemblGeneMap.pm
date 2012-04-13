@@ -86,7 +86,7 @@ Related object: L<LIMS2::Model::Schema::Result::EnsemblGeneData>
 __PACKAGE__->belongs_to(
   "ensembl_gene",
   "LIMS2::Model::Schema::Result::EnsemblGeneData",
-  { ensembl_gene_id => "ensembl_gene_id" },
+  { id => "ensembl_gene_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -106,8 +106,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-05 09:46:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2KcZo6K+Ejqv0ozVW1//UQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:H7Tap3+qsO7e1QNNWdsBaA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

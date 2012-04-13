@@ -38,12 +38,12 @@ __PACKAGE__->table("wells");
 
 =head1 ACCESSORS
 
-=head2 well_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'wells_well_id_seq'
+  sequence: 'wells_id_seq'
 
 =head2 plate_id
 
@@ -57,7 +57,7 @@ __PACKAGE__->table("wells");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 well_name
+=head2 name
 
   data_type: 'char'
   is_nullable: 0
@@ -95,18 +95,18 @@ __PACKAGE__->table("wells");
 =cut
 
 __PACKAGE__->add_columns(
-  "well_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "wells_well_id_seq",
+    sequence          => "wells_id_seq",
   },
   "plate_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "process_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "well_name",
+  "name",
   { data_type => "char", is_nullable => 0, size => 3 },
   "created_by",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
@@ -129,13 +129,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</well_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("well_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -145,13 +145,13 @@ __PACKAGE__->set_primary_key("well_id");
 
 =item * L</plate_id>
 
-=item * L</well_name>
+=item * L</name>
 
 =back
 
 =cut
 
-__PACKAGE__->add_unique_constraint("wells_plate_id_well_name_key", ["plate_id", "well_name"]);
+__PACKAGE__->add_unique_constraint("wells_plate_id_well_name_key", ["plate_id", "name"]);
 
 =head1 RELATIONS
 
@@ -166,7 +166,7 @@ Related object: L<LIMS2::Model::Schema::Result::User>
 __PACKAGE__->belongs_to(
   "created_by",
   "LIMS2::Model::Schema::Result::User",
-  { user_id => "created_by" },
+  { id => "created_by" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -181,7 +181,7 @@ Related object: L<LIMS2::Model::Schema::Result::Plate>
 __PACKAGE__->belongs_to(
   "plate",
   "LIMS2::Model::Schema::Result::Plate",
-  { plate_id => "plate_id" },
+  { id => "plate_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -196,7 +196,7 @@ Related object: L<LIMS2::Model::Schema::Result::Process>
 __PACKAGE__->belongs_to(
   "process",
   "LIMS2::Model::Schema::Result::Process",
-  { process_id => "process_id" },
+  { id => "process_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -211,7 +211,7 @@ Related object: L<LIMS2::Model::Schema::Result::Process2wGateway>
 __PACKAGE__->has_many(
   "process_2w_gateways",
   "LIMS2::Model::Schema::Result::Process2wGateway",
-  { "foreign.well_id" => "self.well_id" },
+  { "foreign.well_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -226,7 +226,7 @@ Related object: L<LIMS2::Model::Schema::Result::Process3wGateway>
 __PACKAGE__->has_many(
   "process_3w_gateways",
   "LIMS2::Model::Schema::Result::Process3wGateway",
-  { "foreign.well_id" => "self.well_id" },
+  { "foreign.well_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -241,7 +241,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessIntRecom>
 __PACKAGE__->has_many(
   "process_int_recoms",
   "LIMS2::Model::Schema::Result::ProcessIntRecom",
-  { "foreign.design_well_id" => "self.well_id" },
+  { "foreign.design_well_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -256,7 +256,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessRearraySourceWell>
 __PACKAGE__->has_many(
   "process_rearray_source_wells",
   "LIMS2::Model::Schema::Result::ProcessRearraySourceWell",
-  { "foreign.source_well_id" => "self.well_id" },
+  { "foreign.source_well_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -271,7 +271,7 @@ Related object: L<LIMS2::Model::Schema::Result::TreePath>
 __PACKAGE__->has_many(
   "tree_paths_ancestors",
   "LIMS2::Model::Schema::Result::TreePath",
-  { "foreign.ancestor" => "self.well_id" },
+  { "foreign.ancestor" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -286,7 +286,7 @@ Related object: L<LIMS2::Model::Schema::Result::TreePath>
 __PACKAGE__->has_many(
   "tree_paths_descendants",
   "LIMS2::Model::Schema::Result::TreePath",
-  { "foreign.descendant" => "self.well_id" },
+  { "foreign.descendant" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -301,7 +301,7 @@ Related object: L<LIMS2::Model::Schema::Result::WellAcceptedOverride>
 __PACKAGE__->might_have(
   "well_accepted_override",
   "LIMS2::Model::Schema::Result::WellAcceptedOverride",
-  { "foreign.well_id" => "self.well_id" },
+  { "foreign.well_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -316,7 +316,7 @@ Related object: L<LIMS2::Model::Schema::Result::WellAssayResult>
 __PACKAGE__->has_many(
   "well_assay_results",
   "LIMS2::Model::Schema::Result::WellAssayResult",
-  { "foreign.well_id" => "self.well_id" },
+  { "foreign.well_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -331,13 +331,13 @@ Related object: L<LIMS2::Model::Schema::Result::WellLegacyQcTestResult>
 __PACKAGE__->might_have(
   "well_legacy_qc_test_result",
   "LIMS2::Model::Schema::Result::WellLegacyQcTestResult",
-  { "foreign.well_id" => "self.well_id" },
+  { "foreign.well_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-10 15:16:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:OOCis/JnFk58WYFmR8KQjw
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tNNyqY/Pdray83kt7vrriQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

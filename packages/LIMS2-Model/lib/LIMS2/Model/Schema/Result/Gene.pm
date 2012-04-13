@@ -38,22 +38,22 @@ __PACKAGE__->table("genes");
 
 =head1 ACCESSORS
 
-=head2 gene_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'genes_gene_id_seq'
+  sequence: 'genes_id_seq'
 
 =cut
 
 __PACKAGE__->add_columns(
-  "gene_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "genes_gene_id_seq",
+    sequence          => "genes_id_seq",
   },
 );
 
@@ -61,13 +61,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</gene_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("gene_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -82,7 +82,7 @@ Related object: L<LIMS2::Model::Schema::Result::GeneComment>
 __PACKAGE__->has_many(
   "gene_comments",
   "LIMS2::Model::Schema::Result::GeneComment",
-  { "foreign.gene_id" => "self.gene_id" },
+  { "foreign.gene_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -97,13 +97,13 @@ Related object: L<LIMS2::Model::Schema::Result::MgiGeneMap>
 __PACKAGE__->has_many(
   "mgi_gene_maps",
   "LIMS2::Model::Schema::Result::MgiGeneMap",
-  { "foreign.gene_id" => "self.gene_id" },
+  { "foreign.gene_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-05 09:46:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:gJvrJk+qRW5Iedv0Q2MLoQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:nmrYp8e3jbN51HrBfFAasw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

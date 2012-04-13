@@ -38,12 +38,12 @@ __PACKAGE__->table("gene_comments");
 
 =head1 ACCESSORS
 
-=head2 gene_comment_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'gene_comments_gene_comment_id_seq'
+  sequence: 'gene_comments_id_seq'
 
 =head2 gene_id
 
@@ -51,7 +51,7 @@ __PACKAGE__->table("gene_comments");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 gene_comment
+=head2 comment
 
   data_type: 'text'
   is_nullable: 0
@@ -78,16 +78,16 @@ __PACKAGE__->table("gene_comments");
 =cut
 
 __PACKAGE__->add_columns(
-  "gene_comment_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "gene_comments_gene_comment_id_seq",
+    sequence          => "gene_comments_id_seq",
   },
   "gene_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "gene_comment",
+  "comment",
   { data_type => "text", is_nullable => 0 },
   "is_public",
   { data_type => "boolean", default_value => \"false", is_nullable => 0 },
@@ -106,13 +106,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</gene_comment_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("gene_comment_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -127,7 +127,7 @@ Related object: L<LIMS2::Model::Schema::Result::User>
 __PACKAGE__->belongs_to(
   "created_by",
   "LIMS2::Model::Schema::Result::User",
-  { user_id => "created_by" },
+  { id => "created_by" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -142,13 +142,13 @@ Related object: L<LIMS2::Model::Schema::Result::Gene>
 __PACKAGE__->belongs_to(
   "gene",
   "LIMS2::Model::Schema::Result::Gene",
-  { gene_id => "gene_id" },
+  { id => "gene_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-09 16:47:00
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:sR5Tkh0Z+9wGxmrCUHjujg
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9GrkED8XEqNlbEcUX1aZ5g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

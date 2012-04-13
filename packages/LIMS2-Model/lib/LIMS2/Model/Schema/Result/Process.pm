@@ -38,12 +38,12 @@ __PACKAGE__->table("processes");
 
 =head1 ACCESSORS
 
-=head2 process_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'processes_process_id_seq'
+  sequence: 'processes_id_seq'
 
 =head2 process_type
 
@@ -54,12 +54,12 @@ __PACKAGE__->table("processes");
 =cut
 
 __PACKAGE__->add_columns(
-  "process_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "processes_process_id_seq",
+    sequence          => "processes_id_seq",
   },
   "process_type",
   { data_type => "text", is_foreign_key => 1, is_nullable => 0 },
@@ -69,13 +69,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</process_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("process_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -90,7 +90,7 @@ Related object: L<LIMS2::Model::Schema::Result::Process2wGateway>
 __PACKAGE__->might_have(
   "process_2w_gateway",
   "LIMS2::Model::Schema::Result::Process2wGateway",
-  { "foreign.process_id" => "self.process_id" },
+  { "foreign.process_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -105,7 +105,7 @@ Related object: L<LIMS2::Model::Schema::Result::Process3wGateway>
 __PACKAGE__->might_have(
   "process_3w_gateway",
   "LIMS2::Model::Schema::Result::Process3wGateway",
-  { "foreign.process_id" => "self.process_id" },
+  { "foreign.process_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -120,7 +120,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessCreBacRecom>
 __PACKAGE__->might_have(
   "process_cre_bac_recom",
   "LIMS2::Model::Schema::Result::ProcessCreBacRecom",
-  { "foreign.process_id" => "self.process_id" },
+  { "foreign.process_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -135,7 +135,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessCreateDi>
 __PACKAGE__->might_have(
   "process_create_di",
   "LIMS2::Model::Schema::Result::ProcessCreateDi",
-  { "foreign.process_id" => "self.process_id" },
+  { "foreign.process_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -150,7 +150,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessIntRecom>
 __PACKAGE__->might_have(
   "process_int_recom",
   "LIMS2::Model::Schema::Result::ProcessIntRecom",
-  { "foreign.process_id" => "self.process_id" },
+  { "foreign.process_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -165,7 +165,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessPipeline>
 __PACKAGE__->might_have(
   "process_pipeline",
   "LIMS2::Model::Schema::Result::ProcessPipeline",
-  { "foreign.process_id" => "self.process_id" },
+  { "foreign.process_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -180,7 +180,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessRearray>
 __PACKAGE__->might_have(
   "process_rearray",
   "LIMS2::Model::Schema::Result::ProcessRearray",
-  { "foreign.process_id" => "self.process_id" },
+  { "foreign.process_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -195,7 +195,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessSyntheticConstruct>
 __PACKAGE__->might_have(
   "process_synthetic_construct",
   "LIMS2::Model::Schema::Result::ProcessSyntheticConstruct",
-  { "foreign.process_id" => "self.process_id" },
+  { "foreign.process_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -210,7 +210,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessType>
 __PACKAGE__->belongs_to(
   "process_type_rel",
   "LIMS2::Model::Schema::Result::ProcessType",
-  { process_type => "process_type" },
+  { type => "process_type" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -225,13 +225,13 @@ Related object: L<LIMS2::Model::Schema::Result::Well>
 __PACKAGE__->has_many(
   "wells",
   "LIMS2::Model::Schema::Result::Well",
-  { "foreign.process_id" => "self.process_id" },
+  { "foreign.process_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-02 11:41:25
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:okEVyvwi6ud7qEangDBWJQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:l/5dAgb/3zLgpzNHK3obuw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

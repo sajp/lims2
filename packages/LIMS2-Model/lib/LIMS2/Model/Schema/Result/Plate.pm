@@ -38,14 +38,14 @@ __PACKAGE__->table("plates");
 
 =head1 ACCESSORS
 
-=head2 plate_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'plates_plate_id_seq'
+  sequence: 'plates_id_seq'
 
-=head2 plate_name
+=head2 name
 
   data_type: 'text'
   is_nullable: 0
@@ -56,7 +56,7 @@ __PACKAGE__->table("plates");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 plate_desc
+=head2 description
 
   data_type: 'text'
   default_value: (empty string)
@@ -78,18 +78,18 @@ __PACKAGE__->table("plates");
 =cut
 
 __PACKAGE__->add_columns(
-  "plate_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "plates_plate_id_seq",
+    sequence          => "plates_id_seq",
   },
-  "plate_name",
+  "name",
   { data_type => "text", is_nullable => 0 },
   "plate_type",
   { data_type => "text", is_foreign_key => 1, is_nullable => 0 },
-  "plate_desc",
+  "description",
   { data_type => "text", default_value => "", is_nullable => 0 },
   "created_by",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
@@ -106,13 +106,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</plate_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("plate_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -120,13 +120,13 @@ __PACKAGE__->set_primary_key("plate_id");
 
 =over 4
 
-=item * L</plate_name>
+=item * L</name>
 
 =back
 
 =cut
 
-__PACKAGE__->add_unique_constraint("plates_plate_name_key", ["plate_name"]);
+__PACKAGE__->add_unique_constraint("plates_plate_name_key", ["name"]);
 
 =head1 RELATIONS
 
@@ -141,7 +141,7 @@ Related object: L<LIMS2::Model::Schema::Result::User>
 __PACKAGE__->belongs_to(
   "created_by",
   "LIMS2::Model::Schema::Result::User",
-  { user_id => "created_by" },
+  { id => "created_by" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -156,7 +156,7 @@ Related object: L<LIMS2::Model::Schema::Result::PlateComment>
 __PACKAGE__->has_many(
   "plate_comments",
   "LIMS2::Model::Schema::Result::PlateComment",
-  { "foreign.plate_id" => "self.plate_id" },
+  { "foreign.plate_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -171,7 +171,7 @@ Related object: L<LIMS2::Model::Schema::Result::PlateType>
 __PACKAGE__->belongs_to(
   "plate_type_rel",
   "LIMS2::Model::Schema::Result::PlateType",
-  { plate_type => "plate_type" },
+  { type => "plate_type" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -186,13 +186,13 @@ Related object: L<LIMS2::Model::Schema::Result::Well>
 __PACKAGE__->has_many(
   "wells",
   "LIMS2::Model::Schema::Result::Well",
-  { "foreign.plate_id" => "self.plate_id" },
+  { "foreign.plate_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-19 15:28:59
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ChQoXrEhHs5JJly9GbFMXQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:b5NULGfz+pMKxZ3GqbNX3Q
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

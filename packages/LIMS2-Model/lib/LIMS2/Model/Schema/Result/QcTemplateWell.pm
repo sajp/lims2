@@ -38,12 +38,12 @@ __PACKAGE__->table("qc_template_wells");
 
 =head1 ACCESSORS
 
-=head2 qc_template_well_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'qc_template_wells_qc_template_well_id_seq'
+  sequence: 'qc_template_wells_id_seq'
 
 =head2 qc_template_id
 
@@ -51,7 +51,7 @@ __PACKAGE__->table("qc_template_wells");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 qc_template_well_name
+=head2 name
 
   data_type: 'text'
   is_nullable: 0
@@ -65,16 +65,16 @@ __PACKAGE__->table("qc_template_wells");
 =cut
 
 __PACKAGE__->add_columns(
-  "qc_template_well_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "qc_template_wells_qc_template_well_id_seq",
+    sequence          => "qc_template_wells_id_seq",
   },
   "qc_template_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "qc_template_well_name",
+  "name",
   { data_type => "text", is_nullable => 0 },
   "qc_eng_seq_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
@@ -84,13 +84,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</qc_template_well_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("qc_template_well_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -100,7 +100,7 @@ __PACKAGE__->set_primary_key("qc_template_well_id");
 
 =item * L</qc_template_id>
 
-=item * L</qc_template_well_name>
+=item * L</name>
 
 =back
 
@@ -108,7 +108,7 @@ __PACKAGE__->set_primary_key("qc_template_well_id");
 
 __PACKAGE__->add_unique_constraint(
   "qc_template_wells_qc_template_id_qc_template_well_name_key",
-  ["qc_template_id", "qc_template_well_name"],
+  ["qc_template_id", "name"],
 );
 
 =head1 RELATIONS
@@ -124,7 +124,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcEngSeq>
 __PACKAGE__->belongs_to(
   "qc_eng_seq",
   "LIMS2::Model::Schema::Result::QcEngSeq",
-  { qc_eng_seq_id => "qc_eng_seq_id" },
+  { id => "qc_eng_seq_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -139,13 +139,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcTemplate>
 __PACKAGE__->belongs_to(
   "qc_template",
   "LIMS2::Model::Schema::Result::QcTemplate",
-  { qc_template_id => "qc_template_id" },
+  { id => "qc_template_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 15:18:37
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:1j1AVBU2/621ENv1XcwjKQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8B7wQUbrtUX3VfL3V/EkWA
 
 sub as_hash {
     my $self = shift;

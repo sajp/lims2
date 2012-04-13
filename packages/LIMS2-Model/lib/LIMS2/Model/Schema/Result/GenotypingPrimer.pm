@@ -38,14 +38,14 @@ __PACKAGE__->table("genotyping_primers");
 
 =head1 ACCESSORS
 
-=head2 genotyping_primer_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'genotyping_primers_genotyping_primer_id_seq'
+  sequence: 'genotyping_primers_id_seq'
 
-=head2 genotyping_primer_type
+=head2 type
 
   data_type: 'text'
   is_foreign_key: 1
@@ -57,7 +57,7 @@ __PACKAGE__->table("genotyping_primers");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 genotyping_primer_seq
+=head2 seq
 
   data_type: 'text'
   is_nullable: 0
@@ -65,18 +65,18 @@ __PACKAGE__->table("genotyping_primers");
 =cut
 
 __PACKAGE__->add_columns(
-  "genotyping_primer_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "genotyping_primers_genotyping_primer_id_seq",
+    sequence          => "genotyping_primers_id_seq",
   },
-  "genotyping_primer_type",
+  "type",
   { data_type => "text", is_foreign_key => 1, is_nullable => 0 },
   "design_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "genotyping_primer_seq",
+  "seq",
   { data_type => "text", is_nullable => 0 },
 );
 
@@ -84,13 +84,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</genotyping_primer_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("genotyping_primer_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -105,7 +105,7 @@ Related object: L<LIMS2::Model::Schema::Result::Design>
 __PACKAGE__->belongs_to(
   "design",
   "LIMS2::Model::Schema::Result::Design",
-  { design_id => "design_id" },
+  { id => "design_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -120,13 +120,13 @@ Related object: L<LIMS2::Model::Schema::Result::GenotypingPrimerType>
 __PACKAGE__->belongs_to(
   "genotyping_primer_type_rel",
   "LIMS2::Model::Schema::Result::GenotypingPrimerType",
-  { genotyping_primer_type => "genotyping_primer_type" },
+  { type => "type" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-09 16:33:44
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:FGRF8tnkq9KVuEB2RPtOug
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 12:59:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2hQNQU1hjvhlYPfd6CLKug
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

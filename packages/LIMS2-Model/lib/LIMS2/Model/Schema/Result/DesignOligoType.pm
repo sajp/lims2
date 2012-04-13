@@ -38,29 +38,26 @@ __PACKAGE__->table("design_oligo_types");
 
 =head1 ACCESSORS
 
-=head2 design_oligo_type
+=head2 type
 
   data_type: 'text'
   is_nullable: 0
 
 =cut
 
-__PACKAGE__->add_columns(
-  "design_oligo_type",
-  { data_type => "text", is_nullable => 0 },
-);
+__PACKAGE__->add_columns("type", { data_type => "text", is_nullable => 0 });
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</design_oligo_type>
+=item * L</type>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("design_oligo_type");
+__PACKAGE__->set_primary_key("type");
 
 =head1 RELATIONS
 
@@ -75,13 +72,13 @@ Related object: L<LIMS2::Model::Schema::Result::DesignOligo>
 __PACKAGE__->has_many(
   "design_oligos",
   "LIMS2::Model::Schema::Result::DesignOligo",
-  { "foreign.design_oligo_type" => "self.design_oligo_type" },
+  { "foreign.design_oligo_type" => "self.type" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-05 09:46:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:V/YArJ6fgbyB+AiEYcE+CQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7JgiDNFu4zDmXBhIntxJ3w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

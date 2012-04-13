@@ -38,19 +38,19 @@ __PACKAGE__->table("qc_templates");
 
 =head1 ACCESSORS
 
-=head2 qc_template_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'qc_templates_qc_template_id_seq'
+  sequence: 'qc_templates_id_seq'
 
-=head2 qc_template_name
+=head2 name
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 qc_template_created_at
+=head2 created_at
 
   data_type: 'timestamp'
   default_value: current_timestamp
@@ -60,16 +60,16 @@ __PACKAGE__->table("qc_templates");
 =cut
 
 __PACKAGE__->add_columns(
-  "qc_template_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "qc_templates_qc_template_id_seq",
+    sequence          => "qc_templates_id_seq",
   },
-  "qc_template_name",
+  "name",
   { data_type => "text", is_nullable => 0 },
-  "qc_template_created_at",
+  "created_at",
   {
     data_type     => "timestamp",
     default_value => \"current_timestamp",
@@ -82,13 +82,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</qc_template_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("qc_template_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -96,9 +96,9 @@ __PACKAGE__->set_primary_key("qc_template_id");
 
 =over 4
 
-=item * L</qc_template_name>
+=item * L</name>
 
-=item * L</qc_template_created_at>
+=item * L</created_at>
 
 =back
 
@@ -106,7 +106,7 @@ __PACKAGE__->set_primary_key("qc_template_id");
 
 __PACKAGE__->add_unique_constraint(
   "qc_templates_qc_template_name_qc_template_created_at_key",
-  ["qc_template_name", "qc_template_created_at"],
+  ["name", "created_at"],
 );
 
 =head1 RELATIONS
@@ -122,7 +122,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcTemplateWell>
 __PACKAGE__->has_many(
   "qc_template_wells",
   "LIMS2::Model::Schema::Result::QcTemplateWell",
-  { "foreign.qc_template_id" => "self.qc_template_id" },
+  { "foreign.qc_template_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -137,13 +137,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcRuns>
 __PACKAGE__->has_many(
   "qcs_runs",
   "LIMS2::Model::Schema::Result::QcRuns",
-  { "foreign.qc_template_id" => "self.qc_template_id" },
+  { "foreign.qc_template_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-03-28 13:04:46
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:9n3lisO6I9ltjISMlfQF2w
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Rko6x+dUQWdT5RH2FbotKg
 
 sub as_hash {
     my $self = shift;

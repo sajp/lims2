@@ -38,12 +38,12 @@ __PACKAGE__->table("plate_comments");
 
 =head1 ACCESSORS
 
-=head2 plate_comment_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'plate_comments_plate_comment_id_seq'
+  sequence: 'plate_comments_id_seq'
 
 =head2 plate_id
 
@@ -51,7 +51,7 @@ __PACKAGE__->table("plate_comments");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 plate_comment
+=head2 comment
 
   data_type: 'text'
   is_nullable: 0
@@ -72,16 +72,16 @@ __PACKAGE__->table("plate_comments");
 =cut
 
 __PACKAGE__->add_columns(
-  "plate_comment_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "plate_comments_plate_comment_id_seq",
+    sequence          => "plate_comments_id_seq",
   },
   "plate_id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
-  "plate_comment",
+  "comment",
   { data_type => "text", is_nullable => 0 },
   "created_by",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
@@ -98,13 +98,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</plate_comment_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("plate_comment_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -119,7 +119,7 @@ Related object: L<LIMS2::Model::Schema::Result::User>
 __PACKAGE__->belongs_to(
   "created_by",
   "LIMS2::Model::Schema::Result::User",
-  { user_id => "created_by" },
+  { id => "created_by" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -134,13 +134,13 @@ Related object: L<LIMS2::Model::Schema::Result::Plate>
 __PACKAGE__->belongs_to(
   "plate",
   "LIMS2::Model::Schema::Result::Plate",
-  { plate_id => "plate_id" },
+  { id => "plate_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-12 13:54:10
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:8/TKFI0h1teB276RfzwmGQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:zo0Dw/D4409M0twJhy0utQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

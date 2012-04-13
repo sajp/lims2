@@ -38,7 +38,7 @@ __PACKAGE__->table("qc_test_result_align_regions");
 
 =head1 ACCESSORS
 
-=head2 qc_test_result_alignment_id
+=head2 id
 
   data_type: 'integer'
   is_foreign_key: 1
@@ -83,7 +83,7 @@ __PACKAGE__->table("qc_test_result_align_regions");
 =cut
 
 __PACKAGE__->add_columns(
-  "qc_test_result_alignment_id",
+  "id",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "name",
   { data_type => "text", is_nullable => 0 },
@@ -103,7 +103,7 @@ __PACKAGE__->add_columns(
 
 =head1 RELATIONS
 
-=head2 qc_test_result_alignment
+=head2 id
 
 Type: belongs_to
 
@@ -112,15 +112,15 @@ Related object: L<LIMS2::Model::Schema::Result::QcTestResultAlignment>
 =cut
 
 __PACKAGE__->belongs_to(
-  "qc_test_result_alignment",
+  "id",
   "LIMS2::Model::Schema::Result::QcTestResultAlignment",
-  { qc_test_result_alignment_id => "qc_test_result_alignment_id" },
+  { id => "id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-10 15:16:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/Z4AyVial8j0+WBkyMKEkQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:+geUct8PyiSE6t7q1X2/Ng
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

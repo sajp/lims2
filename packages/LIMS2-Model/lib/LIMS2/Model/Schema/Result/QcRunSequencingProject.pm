@@ -87,7 +87,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcRuns>
 __PACKAGE__->belongs_to(
   "qc_run",
   "LIMS2::Model::Schema::Result::QcRuns",
-  { qc_run_id => "qc_run_id" },
+  { id => "qc_run_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -102,13 +102,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcSequencingProject>
 __PACKAGE__->belongs_to(
   "qc_sequencing_project_rel",
   "LIMS2::Model::Schema::Result::QcSequencingProject",
-  { qc_sequencing_project => "qc_sequencing_project" },
+  { name => "qc_sequencing_project" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 09:03:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XMEwTBjqI86FMFnjLzAM2A
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:LsMp+lMBuFfCvJsAZFpBww
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

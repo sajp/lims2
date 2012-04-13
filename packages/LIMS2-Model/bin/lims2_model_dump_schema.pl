@@ -10,7 +10,7 @@ use Path::Class;
 use Term::ReadPassword qw( read_password );
 
 my %MONIKER_MAP = (
-    # Singular problems            
+    # Singular problems
     bac_clone_loci    => 'BacCloneLocus',
     design_oligo_loci => 'DesignOligoLocus',
     qc_seq_reads      => 'QcSeqRead',
@@ -34,9 +34,9 @@ my %REL_NAME_MAP = (
     assembly               => 'assembly_rel',
     design_type            => 'design_type_rel',
     chr_name               => 'chromosome',
-    bac_library            => 'bac_library_rel',
+    library                => 'bac_library_rel',
     design_oligo_type      => 'design_oligo_type_rel',
-    genotyping_primer_type => 'genotyping_primer_type_rel',
+    type                   => 'genotyping_primer_type_rel',
     plate_type             => 'plate_type_rel',
     process_type           => 'process_type_rel',
     qc_sequencing_project  => 'qc_sequencing_project_rel',

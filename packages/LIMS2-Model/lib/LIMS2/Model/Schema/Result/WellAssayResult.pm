@@ -131,7 +131,7 @@ Related object: L<LIMS2::Model::Schema::Result::User>
 __PACKAGE__->belongs_to(
   "created_by",
   "LIMS2::Model::Schema::Result::User",
-  { user_id => "created_by" },
+  { id => "created_by" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -146,13 +146,13 @@ Related object: L<LIMS2::Model::Schema::Result::Well>
 __PACKAGE__->belongs_to(
   "well",
   "LIMS2::Model::Schema::Result::Well",
-  { well_id => "well_id" },
+  { id => "well_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-18 11:04:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GcQnBVPlHkJf6dflxfvgog
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4Z3WXhXBCHeeS3FU2cl6eA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

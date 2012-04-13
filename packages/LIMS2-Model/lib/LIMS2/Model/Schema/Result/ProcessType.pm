@@ -38,12 +38,12 @@ __PACKAGE__->table("process_types");
 
 =head1 ACCESSORS
 
-=head2 process_type
+=head2 type
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 process_description
+=head2 description
 
   data_type: 'text'
   default_value: (empty string)
@@ -52,9 +52,9 @@ __PACKAGE__->table("process_types");
 =cut
 
 __PACKAGE__->add_columns(
-  "process_type",
+  "type",
   { data_type => "text", is_nullable => 0 },
-  "process_description",
+  "description",
   { data_type => "text", default_value => "", is_nullable => 0 },
 );
 
@@ -62,13 +62,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</process_type>
+=item * L</type>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("process_type");
+__PACKAGE__->set_primary_key("type");
 
 =head1 RELATIONS
 
@@ -83,13 +83,13 @@ Related object: L<LIMS2::Model::Schema::Result::Process>
 __PACKAGE__->has_many(
   "processes",
   "LIMS2::Model::Schema::Result::Process",
-  { "foreign.process_type" => "self.process_type" },
+  { "foreign.process_type" => "self.type" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-10 15:16:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CaphQVG/otvlIGHNfr7BbQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qqZADJvYel7bXkxPX3L0xg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

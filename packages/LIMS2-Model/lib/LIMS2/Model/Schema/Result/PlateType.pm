@@ -38,12 +38,12 @@ __PACKAGE__->table("plate_types");
 
 =head1 ACCESSORS
 
-=head2 plate_type
+=head2 type
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 plate_type_desc
+=head2 description
 
   data_type: 'text'
   default_value: (empty string)
@@ -52,9 +52,9 @@ __PACKAGE__->table("plate_types");
 =cut
 
 __PACKAGE__->add_columns(
-  "plate_type",
+  "type",
   { data_type => "text", is_nullable => 0 },
-  "plate_type_desc",
+  "description",
   { data_type => "text", default_value => "", is_nullable => 0 },
 );
 
@@ -62,13 +62,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</plate_type>
+=item * L</type>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("plate_type");
+__PACKAGE__->set_primary_key("type");
 
 =head1 RELATIONS
 
@@ -83,13 +83,13 @@ Related object: L<LIMS2::Model::Schema::Result::Plate>
 __PACKAGE__->has_many(
   "plates",
   "LIMS2::Model::Schema::Result::Plate",
-  { "foreign.plate_type" => "self.plate_type" },
+  { "foreign.plate_type" => "self.type" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-12 13:54:10
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:r+cDMdSlU5UrGZGVVqOKaA
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:GEB8mmsoqJEg8eRLxV+tjQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

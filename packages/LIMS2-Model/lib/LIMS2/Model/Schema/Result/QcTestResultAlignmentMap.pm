@@ -86,7 +86,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcTestResult>
 __PACKAGE__->belongs_to(
   "qc_test_result",
   "LIMS2::Model::Schema::Result::QcTestResult",
-  { qc_test_result_id => "qc_test_result_id" },
+  { id => "qc_test_result_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -101,13 +101,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcTestResultAlignment>
 __PACKAGE__->belongs_to(
   "qc_test_result_alignment",
   "LIMS2::Model::Schema::Result::QcTestResultAlignment",
-  { qc_test_result_alignment_id => "qc_test_result_alignment_id" },
+  { id => "qc_test_result_alignment_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-10 15:16:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:kAdh6mT+CES/XYX3ZQzAgQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tIP1Oi08ng/+Y/V10kTRKQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

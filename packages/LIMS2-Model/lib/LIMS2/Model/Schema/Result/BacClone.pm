@@ -38,12 +38,12 @@ __PACKAGE__->table("bac_clones");
 
 =head1 ACCESSORS
 
-=head2 bac_name
+=head2 name
 
   data_type: 'text'
   is_nullable: 0
 
-=head2 bac_library
+=head2 library
 
   data_type: 'text'
   is_foreign_key: 1
@@ -52,9 +52,9 @@ __PACKAGE__->table("bac_clones");
 =cut
 
 __PACKAGE__->add_columns(
-  "bac_name",
+  "name",
   { data_type => "text", is_nullable => 0 },
-  "bac_library",
+  "library",
   { data_type => "text", is_foreign_key => 1, is_nullable => 0 },
 );
 
@@ -62,15 +62,15 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</bac_name>
+=item * L</name>
 
-=item * L</bac_library>
+=item * L</library>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("bac_name", "bac_library");
+__PACKAGE__->set_primary_key("name", "library");
 
 =head1 RELATIONS
 
@@ -85,7 +85,7 @@ Related object: L<LIMS2::Model::Schema::Result::BacLibrary>
 __PACKAGE__->belongs_to(
   "bac_library_rel",
   "LIMS2::Model::Schema::Result::BacLibrary",
-  { bac_library => "bac_library" },
+  { library => "library" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -100,10 +100,7 @@ Related object: L<LIMS2::Model::Schema::Result::BacCloneLocus>
 __PACKAGE__->has_many(
   "loci",
   "LIMS2::Model::Schema::Result::BacCloneLocus",
-  {
-    "foreign.bac_library" => "self.bac_library",
-    "foreign.bac_name"    => "self.bac_name",
-  },
+  { "foreign.library" => "self.library", "foreign.name" => "self.name" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -119,8 +116,8 @@ __PACKAGE__->has_many(
   "process_cre_bac_recoms",
   "LIMS2::Model::Schema::Result::ProcessCreBacRecom",
   {
-    "foreign.bac_library" => "self.bac_library",
-    "foreign.bac_name"    => "self.bac_name",
+    "foreign.bac_library" => "self.library",
+    "foreign.bac_name"    => "self.name",
   },
   { cascade_copy => 0, cascade_delete => 0 },
 );
@@ -137,15 +134,15 @@ __PACKAGE__->has_many(
   "process_create_di_bacs",
   "LIMS2::Model::Schema::Result::ProcessCreateDiBac",
   {
-    "foreign.bac_library" => "self.bac_library",
-    "foreign.bac_name"    => "self.bac_name",
+    "foreign.bac_library" => "self.library",
+    "foreign.bac_name"    => "self.name",
   },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-10 15:16:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:JkQVpiW6RzxQC5i64UnCLg
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 12:59:43
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:hmmzLXt8n4nA1BfDw0RfiA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

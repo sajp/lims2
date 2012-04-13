@@ -98,13 +98,13 @@ Related object: L<LIMS2::Model::Schema::Result::Well>
 __PACKAGE__->belongs_to(
   "well",
   "LIMS2::Model::Schema::Result::Well",
-  { well_id => "well_id" },
+  { id => "well_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-19 15:28:59
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:I9AUQBM/fM1jVcPBceWg+A
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:SEsMglz56U+NI+8ycHGmDQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

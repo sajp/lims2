@@ -38,14 +38,14 @@ __PACKAGE__->table("synthetic_constructs");
 
 =head1 ACCESSORS
 
-=head2 synthetic_construct_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'synthetic_constructs_synthetic_construct_id_seq'
+  sequence: 'synthetic_constructs_id_seq'
 
-=head2 synthetic_construct_genbank
+=head2 genbank
 
   data_type: 'text'
   is_nullable: 0
@@ -53,14 +53,14 @@ __PACKAGE__->table("synthetic_constructs");
 =cut
 
 __PACKAGE__->add_columns(
-  "synthetic_construct_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "synthetic_constructs_synthetic_construct_id_seq",
+    sequence          => "synthetic_constructs_id_seq",
   },
-  "synthetic_construct_genbank",
+  "genbank",
   { data_type => "text", is_nullable => 0 },
 );
 
@@ -68,13 +68,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</synthetic_construct_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("synthetic_construct_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -89,15 +89,13 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessSyntheticConstruct>
 __PACKAGE__->has_many(
   "process_synthetics_construct",
   "LIMS2::Model::Schema::Result::ProcessSyntheticConstruct",
-  {
-    "foreign.synthetic_construct_id" => "self.synthetic_construct_id",
-  },
+  { "foreign.synthetic_construct_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-03-15 11:56:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:NidAZgocb0cWeTEvXVbzVA
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ZJMG5vSSQvA4/YX6ZcBMFA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

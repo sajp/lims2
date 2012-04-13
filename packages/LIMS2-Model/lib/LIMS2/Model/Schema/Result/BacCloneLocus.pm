@@ -38,13 +38,13 @@ __PACKAGE__->table("bac_clone_loci");
 
 =head1 ACCESSORS
 
-=head2 bac_name
+=head2 name
 
   data_type: 'text'
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 bac_library
+=head2 library
 
   data_type: 'text'
   is_foreign_key: 1
@@ -75,9 +75,9 @@ __PACKAGE__->table("bac_clone_loci");
 =cut
 
 __PACKAGE__->add_columns(
-  "bac_name",
+  "name",
   { data_type => "text", is_foreign_key => 1, is_nullable => 0 },
-  "bac_library",
+  "library",
   { data_type => "text", is_foreign_key => 1, is_nullable => 0 },
   "assembly",
   { data_type => "text", is_foreign_key => 1, is_nullable => 0 },
@@ -93,9 +93,9 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</bac_name>
+=item * L</name>
 
-=item * L</bac_library>
+=item * L</library>
 
 =item * L</assembly>
 
@@ -103,7 +103,7 @@ __PACKAGE__->add_columns(
 
 =cut
 
-__PACKAGE__->set_primary_key("bac_name", "bac_library", "assembly");
+__PACKAGE__->set_primary_key("name", "library", "assembly");
 
 =head1 RELATIONS
 
@@ -133,7 +133,7 @@ Related object: L<LIMS2::Model::Schema::Result::BacClone>
 __PACKAGE__->belongs_to(
   "bac_clone",
   "LIMS2::Model::Schema::Result::BacClone",
-  { bac_library => "bac_library", bac_name => "bac_name" },
+  { library => "library", name => "name" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -153,8 +153,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-09 16:35:53
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:qVIfHtGDz0RslP7wyeLXvA
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:7INKv2tPA+s0l9nl05sfIw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

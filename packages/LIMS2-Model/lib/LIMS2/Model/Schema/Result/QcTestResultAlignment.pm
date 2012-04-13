@@ -38,12 +38,12 @@ __PACKAGE__->table("qc_test_result_alignments");
 
 =head1 ACCESSORS
 
-=head2 qc_test_result_alignment_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'qc_test_result_alignments_qc_test_result_alignment_id_seq'
+  sequence: 'qc_test_result_alignments_id_seq'
 
 =head2 qc_seq_read_id
 
@@ -115,12 +115,12 @@ __PACKAGE__->table("qc_test_result_alignments");
 =cut
 
 __PACKAGE__->add_columns(
-  "qc_test_result_alignment_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "qc_test_result_alignments_qc_test_result_alignment_id_seq",
+    sequence          => "qc_test_result_alignments_id_seq",
   },
   "qc_seq_read_id",
   { data_type => "text", is_foreign_key => 1, is_nullable => 0 },
@@ -154,13 +154,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</qc_test_result_alignment_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("qc_test_result_alignment_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -175,7 +175,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcSeqRead>
 __PACKAGE__->belongs_to(
   "qc_seq_read",
   "LIMS2::Model::Schema::Result::QcSeqRead",
-  { qc_seq_read_id => "qc_seq_read_id" },
+  { id => "qc_seq_read_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -190,9 +190,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcTestResultAlignRegion>
 __PACKAGE__->has_many(
   "qc_test_result_align_regions",
   "LIMS2::Model::Schema::Result::QcTestResultAlignRegion",
-  {
-    "foreign.qc_test_result_alignment_id" => "self.qc_test_result_alignment_id",
-  },
+  { "foreign.id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -207,15 +205,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcTestResultAlignmentMap>
 __PACKAGE__->has_many(
   "qc_test_result_alignment_maps",
   "LIMS2::Model::Schema::Result::QcTestResultAlignmentMap",
-  {
-    "foreign.qc_test_result_alignment_id" => "self.qc_test_result_alignment_id",
-  },
+  { "foreign.qc_test_result_alignment_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-03-15 11:56:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DYBoxM5Z8cO9yzCtdKHTvQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:F3OxP2I3S3+BVp+ZJZsYwA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

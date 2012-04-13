@@ -38,19 +38,19 @@ __PACKAGE__->table("pipelines");
 
 =head1 ACCESSORS
 
-=head2 pipeline_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'pipelines_pipeline_id_seq'
+  sequence: 'pipelines_id_seq'
 
-=head2 pipeline_name
+=head2 name
 
   data_type: 'text'
   is_nullable: 1
 
-=head2 pipeline_desc
+=head2 description
 
   data_type: 'text'
   default_value: (empty string)
@@ -59,16 +59,16 @@ __PACKAGE__->table("pipelines");
 =cut
 
 __PACKAGE__->add_columns(
-  "pipeline_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "pipelines_pipeline_id_seq",
+    sequence          => "pipelines_id_seq",
   },
-  "pipeline_name",
+  "name",
   { data_type => "text", is_nullable => 1 },
-  "pipeline_desc",
+  "description",
   { data_type => "text", default_value => "", is_nullable => 0 },
 );
 
@@ -76,13 +76,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</pipeline_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("pipeline_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -90,13 +90,13 @@ __PACKAGE__->set_primary_key("pipeline_id");
 
 =over 4
 
-=item * L</pipeline_name>
+=item * L</name>
 
 =back
 
 =cut
 
-__PACKAGE__->add_unique_constraint("pipelines_pipeline_name_key", ["pipeline_name"]);
+__PACKAGE__->add_unique_constraint("pipelines_pipeline_name_key", ["name"]);
 
 =head1 RELATIONS
 
@@ -111,13 +111,13 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessPipeline>
 __PACKAGE__->has_many(
   "process_pipelines",
   "LIMS2::Model::Schema::Result::ProcessPipeline",
-  { "foreign.pipeline_id" => "self.pipeline_id" },
+  { "foreign.pipeline_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-10 15:16:54
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:dPYnrfmgRR7p30aP542irA
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:aUSAoYY7cjciF+zydOatmQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

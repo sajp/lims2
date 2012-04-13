@@ -38,29 +38,26 @@ __PACKAGE__->table("qc_sequencing_projects");
 
 =head1 ACCESSORS
 
-=head2 qc_sequencing_project
+=head2 name
 
   data_type: 'text'
   is_nullable: 0
 
 =cut
 
-__PACKAGE__->add_columns(
-  "qc_sequencing_project",
-  { data_type => "text", is_nullable => 0 },
-);
+__PACKAGE__->add_columns("name", { data_type => "text", is_nullable => 0 });
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</qc_sequencing_project>
+=item * L</name>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("qc_sequencing_project");
+__PACKAGE__->set_primary_key("name");
 
 =head1 RELATIONS
 
@@ -75,7 +72,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcRunSequencingProject>
 __PACKAGE__->has_many(
   "qc_run_sequencing_projects",
   "LIMS2::Model::Schema::Result::QcRunSequencingProject",
-  { "foreign.qc_sequencing_project" => "self.qc_sequencing_project" },
+  { "foreign.qc_sequencing_project" => "self.name" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -90,13 +87,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcSeqRead>
 __PACKAGE__->has_many(
   "qc_seq_reads",
   "LIMS2::Model::Schema::Result::QcSeqRead",
-  { "foreign.qc_sequencing_project" => "self.qc_sequencing_project" },
+  { "foreign.qc_sequencing_project" => "self.name" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-02 11:41:26
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5DzeMBrrJFIjJqdIfMxdyQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:3IvpkYrwMwZGfmRCAHzTtQ
 
 sub as_hash {
     my $self = shift;

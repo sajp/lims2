@@ -101,13 +101,13 @@ Related object: L<LIMS2::Model::Schema::Result::VegaGeneData>
 __PACKAGE__->belongs_to(
   "vega_gene",
   "LIMS2::Model::Schema::Result::VegaGeneData",
-  { vega_gene_id => "vega_gene_id" },
+  { id => "vega_gene_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-05 09:46:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:vdbwqOq0HQf+lVvQ7L0l+w
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tFICwlBfMmMLnEsz8R7qYg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

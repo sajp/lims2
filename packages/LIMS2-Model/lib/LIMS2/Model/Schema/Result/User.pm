@@ -38,14 +38,14 @@ __PACKAGE__->table("users");
 
 =head1 ACCESSORS
 
-=head2 user_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'users_user_id_seq'
+  sequence: 'users_id_seq'
 
-=head2 user_name
+=head2 name
 
   data_type: 'text'
   is_nullable: 0
@@ -58,14 +58,14 @@ __PACKAGE__->table("users");
 =cut
 
 __PACKAGE__->add_columns(
-  "user_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "users_user_id_seq",
+    sequence          => "users_id_seq",
   },
-  "user_name",
+  "name",
   { data_type => "text", is_nullable => 0 },
   "password",
   { data_type => "text", is_nullable => 1 },
@@ -75,13 +75,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</user_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("user_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -89,13 +89,13 @@ __PACKAGE__->set_primary_key("user_id");
 
 =over 4
 
-=item * L</user_name>
+=item * L</name>
 
 =back
 
 =cut
 
-__PACKAGE__->add_unique_constraint("users_user_name_key", ["user_name"]);
+__PACKAGE__->add_unique_constraint("users_user_name_key", ["name"]);
 
 =head1 RELATIONS
 
@@ -110,7 +110,7 @@ Related object: L<LIMS2::Model::Schema::Result::DesignComment>
 __PACKAGE__->has_many(
   "design_comments",
   "LIMS2::Model::Schema::Result::DesignComment",
-  { "foreign.created_by" => "self.user_id" },
+  { "foreign.created_by" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -125,7 +125,7 @@ Related object: L<LIMS2::Model::Schema::Result::Design>
 __PACKAGE__->has_many(
   "designs",
   "LIMS2::Model::Schema::Result::Design",
-  { "foreign.created_by" => "self.user_id" },
+  { "foreign.created_by" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -140,7 +140,7 @@ Related object: L<LIMS2::Model::Schema::Result::GeneComment>
 __PACKAGE__->has_many(
   "gene_comments",
   "LIMS2::Model::Schema::Result::GeneComment",
-  { "foreign.created_by" => "self.user_id" },
+  { "foreign.created_by" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -155,7 +155,7 @@ Related object: L<LIMS2::Model::Schema::Result::PlateComment>
 __PACKAGE__->has_many(
   "plate_comments",
   "LIMS2::Model::Schema::Result::PlateComment",
-  { "foreign.created_by" => "self.user_id" },
+  { "foreign.created_by" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -170,7 +170,7 @@ Related object: L<LIMS2::Model::Schema::Result::Plate>
 __PACKAGE__->has_many(
   "plates",
   "LIMS2::Model::Schema::Result::Plate",
-  { "foreign.created_by" => "self.user_id" },
+  { "foreign.created_by" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -185,7 +185,7 @@ Related object: L<LIMS2::Model::Schema::Result::UserRole>
 __PACKAGE__->has_many(
   "user_roles",
   "LIMS2::Model::Schema::Result::UserRole",
-  { "foreign.user_id" => "self.user_id" },
+  { "foreign.user_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -200,7 +200,7 @@ Related object: L<LIMS2::Model::Schema::Result::WellAcceptedOverride>
 __PACKAGE__->has_many(
   "well_accepted_overrides",
   "LIMS2::Model::Schema::Result::WellAcceptedOverride",
-  { "foreign.created_by" => "self.user_id" },
+  { "foreign.created_by" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -215,7 +215,7 @@ Related object: L<LIMS2::Model::Schema::Result::WellAssayResult>
 __PACKAGE__->has_many(
   "well_assay_results",
   "LIMS2::Model::Schema::Result::WellAssayResult",
-  { "foreign.created_by" => "self.user_id" },
+  { "foreign.created_by" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -230,13 +230,13 @@ Related object: L<LIMS2::Model::Schema::Result::Well>
 __PACKAGE__->has_many(
   "wells",
   "LIMS2::Model::Schema::Result::Well",
-  { "foreign.created_by" => "self.user_id" },
+  { "foreign.created_by" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-13 17:08:15
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5LjYZHoU/Wq/V3Cwp9gmLw
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:tXQi/BouEjjkSmsIh3U97w
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

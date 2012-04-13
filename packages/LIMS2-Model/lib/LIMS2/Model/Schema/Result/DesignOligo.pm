@@ -50,7 +50,7 @@ __PACKAGE__->table("design_oligos");
   is_foreign_key: 1
   is_nullable: 0
 
-=head2 design_oligo_seq
+=head2 seq
 
   data_type: 'text'
   is_nullable: 0
@@ -62,7 +62,7 @@ __PACKAGE__->add_columns(
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "design_oligo_type",
   { data_type => "text", is_foreign_key => 1, is_nullable => 0 },
-  "design_oligo_seq",
+  "seq",
   { data_type => "text", is_nullable => 0 },
 );
 
@@ -93,7 +93,7 @@ Related object: L<LIMS2::Model::Schema::Result::Design>
 __PACKAGE__->belongs_to(
   "design",
   "LIMS2::Model::Schema::Result::Design",
-  { design_id => "design_id" },
+  { id => "design_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -108,7 +108,7 @@ Related object: L<LIMS2::Model::Schema::Result::DesignOligoType>
 __PACKAGE__->belongs_to(
   "design_oligo_type_rel",
   "LIMS2::Model::Schema::Result::DesignOligoType",
-  { design_oligo_type => "design_oligo_type" },
+  { type => "design_oligo_type" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -131,8 +131,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-09 16:02:22
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ySig2apyF2gHzbbhRrhVRQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ubMm6Saq5g9zl73BXKCOnw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

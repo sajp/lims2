@@ -76,7 +76,7 @@ Related object: L<LIMS2::Model::Schema::Result::Process>
 __PACKAGE__->belongs_to(
   "process",
   "LIMS2::Model::Schema::Result::Process",
-  { process_id => "process_id" },
+  { id => "process_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -96,8 +96,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-13 13:25:31
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:COkL+PqqocXgimUBDpVz1Q
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mrhMYFSR/X7h6ncxeErBHA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -86,7 +86,7 @@ Related object: L<LIMS2::Model::Schema::Result::Role>
 __PACKAGE__->belongs_to(
   "role",
   "LIMS2::Model::Schema::Result::Role",
-  { role_id => "role_id" },
+  { id => "role_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -101,13 +101,13 @@ Related object: L<LIMS2::Model::Schema::Result::User>
 __PACKAGE__->belongs_to(
   "user",
   "LIMS2::Model::Schema::Result::User",
-  { user_id => "user_id" },
+  { id => "user_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-05 09:46:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:l1URYmcPGtkN6reghAau4w
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:4/2HXvCbKevwqgIAK9dWlg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

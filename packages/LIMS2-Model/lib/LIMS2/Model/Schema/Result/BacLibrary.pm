@@ -38,26 +38,26 @@ __PACKAGE__->table("bac_libraries");
 
 =head1 ACCESSORS
 
-=head2 bac_library
+=head2 library
 
   data_type: 'text'
   is_nullable: 0
 
 =cut
 
-__PACKAGE__->add_columns("bac_library", { data_type => "text", is_nullable => 0 });
+__PACKAGE__->add_columns("library", { data_type => "text", is_nullable => 0 });
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</bac_library>
+=item * L</library>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("bac_library");
+__PACKAGE__->set_primary_key("library");
 
 =head1 RELATIONS
 
@@ -72,13 +72,13 @@ Related object: L<LIMS2::Model::Schema::Result::BacClone>
 __PACKAGE__->has_many(
   "bac_clones",
   "LIMS2::Model::Schema::Result::BacClone",
-  { "foreign.bac_library" => "self.bac_library" },
+  { "foreign.library" => "self.library" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-05 09:46:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:i0ZvYs4Rbsqwj+w3BuYnIQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:meQgrh0NdapE7uHz4CEsBA
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

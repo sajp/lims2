@@ -38,12 +38,12 @@ __PACKAGE__->table("designs");
 
 =head1 ACCESSORS
 
-=head2 design_id
+=head2 id
 
   data_type: 'integer'
   is_nullable: 0
 
-=head2 design_name
+=head2 name
 
   data_type: 'text'
   is_nullable: 1
@@ -85,9 +85,9 @@ __PACKAGE__->table("designs");
 =cut
 
 __PACKAGE__->add_columns(
-  "design_id",
+  "id",
   { data_type => "integer", is_nullable => 0 },
-  "design_name",
+  "name",
   { data_type => "text", is_nullable => 1 },
   "created_by",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
@@ -112,13 +112,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</design_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("design_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -133,7 +133,7 @@ Related object: L<LIMS2::Model::Schema::Result::User>
 __PACKAGE__->belongs_to(
   "created_by",
   "LIMS2::Model::Schema::Result::User",
-  { user_id => "created_by" },
+  { id => "created_by" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -148,7 +148,7 @@ Related object: L<LIMS2::Model::Schema::Result::DesignComment>
 __PACKAGE__->has_many(
   "design_comments",
   "LIMS2::Model::Schema::Result::DesignComment",
-  { "foreign.design_id" => "self.design_id" },
+  { "foreign.design_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -163,7 +163,7 @@ Related object: L<LIMS2::Model::Schema::Result::DesignOligo>
 __PACKAGE__->has_many(
   "design_oligos",
   "LIMS2::Model::Schema::Result::DesignOligo",
-  { "foreign.design_id" => "self.design_id" },
+  { "foreign.design_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -178,7 +178,7 @@ Related object: L<LIMS2::Model::Schema::Result::DesignType>
 __PACKAGE__->belongs_to(
   "design_type_rel",
   "LIMS2::Model::Schema::Result::DesignType",
-  { design_type => "design_type" },
+  { type => "design_type" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -193,7 +193,7 @@ Related object: L<LIMS2::Model::Schema::Result::GenotypingPrimer>
 __PACKAGE__->has_many(
   "genotyping_primers",
   "LIMS2::Model::Schema::Result::GenotypingPrimer",
-  { "foreign.design_id" => "self.design_id" },
+  { "foreign.design_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -208,7 +208,7 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessCreBacRecom>
 __PACKAGE__->has_many(
   "process_cre_bac_recoms",
   "LIMS2::Model::Schema::Result::ProcessCreBacRecom",
-  { "foreign.design_id" => "self.design_id" },
+  { "foreign.design_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -223,13 +223,13 @@ Related object: L<LIMS2::Model::Schema::Result::ProcessCreateDi>
 __PACKAGE__->has_many(
   "process_create_dis",
   "LIMS2::Model::Schema::Result::ProcessCreateDi",
-  { "foreign.design_id" => "self.design_id" },
+  { "foreign.design_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-02-13 09:58:35
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:BflcXdWvm8dicPI9W4CS/g
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:2swoUvJo6jZnsUz0VLYu1A
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

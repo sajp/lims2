@@ -38,12 +38,12 @@ __PACKAGE__->table("qc_eng_seqs");
 
 =head1 ACCESSORS
 
-=head2 qc_eng_seq_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'qc_eng_seqs_qc_eng_seq_id_seq'
+  sequence: 'qc_eng_seqs_id_seq'
 
 =head2 eng_seq_method
 
@@ -58,12 +58,12 @@ __PACKAGE__->table("qc_eng_seqs");
 =cut
 
 __PACKAGE__->add_columns(
-  "qc_eng_seq_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "qc_eng_seqs_qc_eng_seq_id_seq",
+    sequence          => "qc_eng_seqs_id_seq",
   },
   "eng_seq_method",
   { data_type => "text", is_nullable => 0 },
@@ -75,13 +75,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</qc_eng_seq_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("qc_eng_seq_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 UNIQUE CONSTRAINTS
 
@@ -115,7 +115,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcTemplateWell>
 __PACKAGE__->has_many(
   "qc_template_wells",
   "LIMS2::Model::Schema::Result::QcTemplateWell",
-  { "foreign.qc_eng_seq_id" => "self.qc_eng_seq_id" },
+  { "foreign.qc_eng_seq_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
@@ -130,13 +130,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcTestResult>
 __PACKAGE__->has_many(
   "qc_test_results",
   "LIMS2::Model::Schema::Result::QcTestResult",
-  { "foreign.qc_eng_seq_id" => "self.qc_eng_seq_id" },
+  { "foreign.qc_eng_seq_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 15:18:37
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:d4IVnBE8p5MvQjCbnLguIQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:AaQJf0ykLf1GuCDso/BjRg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

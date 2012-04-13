@@ -38,7 +38,7 @@ __PACKAGE__->table("qc_seq_reads");
 
 =head1 ACCESSORS
 
-=head2 qc_seq_read_id
+=head2 id
 
   data_type: 'text'
   is_nullable: 0
@@ -68,7 +68,7 @@ __PACKAGE__->table("qc_seq_reads");
 =cut
 
 __PACKAGE__->add_columns(
-  "qc_seq_read_id",
+  "id",
   { data_type => "text", is_nullable => 0 },
   "description",
   { data_type => "text", default_value => "", is_nullable => 0 },
@@ -84,13 +84,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</qc_seq_read_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("qc_seq_read_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -105,7 +105,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcSequencingProject>
 __PACKAGE__->belongs_to(
   "qc_sequencing_project_rel",
   "LIMS2::Model::Schema::Result::QcSequencingProject",
-  { qc_sequencing_project => "qc_sequencing_project" },
+  { name => "qc_sequencing_project" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -120,13 +120,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcTestResultAlignment>
 __PACKAGE__->has_many(
   "qc_test_result_alignments",
   "LIMS2::Model::Schema::Result::QcTestResultAlignment",
-  { "foreign.qc_seq_read_id" => "self.qc_seq_read_id" },
+  { "foreign.qc_seq_read_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 09:03:30
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rvs5ediQsygXzmnOoaQWxw
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:/q2pVbuJVtw27YT0a4rqIA
 
 sub as_hash {
     my $self = shift;

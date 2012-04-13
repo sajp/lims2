@@ -38,12 +38,12 @@ __PACKAGE__->table("qc_test_results");
 
 =head1 ACCESSORS
 
-=head2 qc_test_result_id
+=head2 id
 
   data_type: 'integer'
   is_auto_increment: 1
   is_nullable: 0
-  sequence: 'qc_test_results_qc_test_result_id_seq'
+  sequence: 'qc_test_results_id_seq'
 
 =head2 qc_run_id
 
@@ -83,12 +83,12 @@ __PACKAGE__->table("qc_test_results");
 =cut
 
 __PACKAGE__->add_columns(
-  "qc_test_result_id",
+  "id",
   {
     data_type         => "integer",
     is_auto_increment => 1,
     is_nullable       => 0,
-    sequence          => "qc_test_results_qc_test_result_id_seq",
+    sequence          => "qc_test_results_id_seq",
   },
   "qc_run_id",
   { data_type => "char", is_foreign_key => 1, is_nullable => 0, size => 36 },
@@ -108,13 +108,13 @@ __PACKAGE__->add_columns(
 
 =over 4
 
-=item * L</qc_test_result_id>
+=item * L</id>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("qc_test_result_id");
+__PACKAGE__->set_primary_key("id");
 
 =head1 RELATIONS
 
@@ -129,7 +129,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcEngSeq>
 __PACKAGE__->belongs_to(
   "qc_eng_seq",
   "LIMS2::Model::Schema::Result::QcEngSeq",
-  { qc_eng_seq_id => "qc_eng_seq_id" },
+  { id => "qc_eng_seq_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -144,7 +144,7 @@ Related object: L<LIMS2::Model::Schema::Result::QcRuns>
 __PACKAGE__->belongs_to(
   "qc_run",
   "LIMS2::Model::Schema::Result::QcRuns",
-  { qc_run_id => "qc_run_id" },
+  { id => "qc_run_id" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -159,13 +159,13 @@ Related object: L<LIMS2::Model::Schema::Result::QcTestResultAlignmentMap>
 __PACKAGE__->has_many(
   "qc_test_result_alignment_maps",
   "LIMS2::Model::Schema::Result::QcTestResultAlignmentMap",
-  { "foreign.qc_test_result_id" => "self.qc_test_result_id" },
+  { "foreign.qc_test_result_id" => "self.id" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-03 15:18:37
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:WLQcjCdYvc8b3n13I7K4wQ
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:cB+EtEsbSB5Cy5Zrd/2BCA
 
 sub as_hash {
     my $self = shift;

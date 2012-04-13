@@ -38,26 +38,26 @@ __PACKAGE__->table("design_types");
 
 =head1 ACCESSORS
 
-=head2 design_type
+=head2 type
 
   data_type: 'text'
   is_nullable: 0
 
 =cut
 
-__PACKAGE__->add_columns("design_type", { data_type => "text", is_nullable => 0 });
+__PACKAGE__->add_columns("type", { data_type => "text", is_nullable => 0 });
 
 =head1 PRIMARY KEY
 
 =over 4
 
-=item * L</design_type>
+=item * L</type>
 
 =back
 
 =cut
 
-__PACKAGE__->set_primary_key("design_type");
+__PACKAGE__->set_primary_key("type");
 
 =head1 RELATIONS
 
@@ -72,13 +72,13 @@ Related object: L<LIMS2::Model::Schema::Result::Design>
 __PACKAGE__->has_many(
   "designs",
   "LIMS2::Model::Schema::Result::Design",
-  { "foreign.design_type" => "self.design_type" },
+  { "foreign.design_type" => "self.type" },
   { cascade_copy => 0, cascade_delete => 0 },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-05 09:46:51
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XZ2XiWV6WZxXg2KRLHVJBw
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:48
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:XTq722FyBaZW0Gmapbdosw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

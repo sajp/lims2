@@ -93,7 +93,7 @@ Related object: L<LIMS2::Model::Schema::Result::Well>
 __PACKAGE__->belongs_to(
   "ancestor",
   "LIMS2::Model::Schema::Result::Well",
-  { well_id => "ancestor" },
+  { id => "ancestor" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
@@ -108,13 +108,13 @@ Related object: L<LIMS2::Model::Schema::Result::Well>
 __PACKAGE__->belongs_to(
   "descendant",
   "LIMS2::Model::Schema::Result::Well",
-  { well_id => "descendant" },
+  { id => "descendant" },
   { is_deferrable => 1, on_delete => "CASCADE", on_update => "CASCADE" },
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-01-12 13:54:10
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:KZ0Cl3t33pPNSm1R8HaUmg
+# Created by DBIx::Class::Schema::Loader v0.07014 @ 2012-04-13 11:34:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:AGbUrhYd3TPswXpZ/HCIHQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
