@@ -27,7 +27,7 @@ Retrieve list of QcTemplate plates
 sub qc_templates_GET {
     my ( $self, $c ) = @_;
 
-    my $qc_templates = $c->model('Golgi')->list(
+    my $qc_templates = $c->model('Golgi')->retrieve_list(
         QcTemplate => { }, { columns => [ qw( qc_template_id qc_template_name ) ] } );
 
     $self->status_ok(
