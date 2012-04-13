@@ -11,7 +11,7 @@ class_has 'well_data_fields' => (
     lazy    => 1,
     default => sub {
         return [ qw(
-            well_name
+            name
             pipeline
             assay_results
             legacy_qc_results
@@ -63,7 +63,7 @@ sub _build_assay_result_fields {
 sub _build_wells {
     my $self = shift;
 
-    return [ sort { $a->well_name cmp $b->well_name } $self->plate->wells->all ];
+    return [ sort { $a->name cmp $b->name } $self->plate->wells->all ];
 }
 
 sub as_hash {
@@ -81,7 +81,7 @@ sub get_well_data {
 
     my $well_data          = $well->as_hash;
     my $process_pipeline   = $well->process->process_pipeline;
-    $well_data->{pipeline} = $process_pipeline ? $process_pipeline->pipeline->pipeline_name : '';
+    $well_data->{pipeline} = $process_pipeline ? $process_pipeline->pipeline->name : '';
 
     return $well_data;
 }

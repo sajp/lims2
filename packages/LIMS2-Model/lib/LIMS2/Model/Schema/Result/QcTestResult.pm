@@ -171,12 +171,12 @@ sub as_hash {
     my $self = shift;
 
     return {
-        qc_test_result_id => $self->qc_test_result_id,
-        qc_run_id         => $self->qc_run_id,
-        well_name         => $self->well_name,
-        plate_name        => $self->plate_name,
-        score             => $self->score,
-        pass              => $self->pass,
+        id         => $self->id,
+        qc_run_id  => $self->qc_run_id,
+        well_name  => $self->well_name,
+        plate_name => $self->plate_name,
+        score      => $self->score,
+        pass       => $self->pass,
     };
 }
 

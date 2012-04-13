@@ -23,26 +23,20 @@ sub pspec_create_qc_test_result {
 
 sub create_qc_test_result {
     my ( $self, $params ) = @_;
-    my $qc_test_result;
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_test_result );
 
-    $self->schema->txn_do(
-        sub {
-            $qc_test_result = $self->schema->resultset('QcTestResult')->create(
-                {
-                    slice_def( $validated_params, qw( well_name plate_name score pass qc_eng_seq_id qc_run_id ) ),
-                }
-            );
-
-            for my $test_result_alignment_params ( @{ $validated_params->{qc_test_result_alignments} } ) {
-                $test_result_alignment_params->{qc_test_result_id} = $qc_test_result->qc_test_result_id;
-                $self->create_qc_test_result_alignment( $test_result_alignment_params, $qc_test_result );
-            }
+    my $qc_test_result = $self->schema->resultset('QcTestResult')->create(
+        {
+            slice_def( $validated_params, qw( well_name plate_name score pass qc_eng_seq_id qc_run_id ) ),
         }
     );
 
-    $self->log->debug( 'created qc test result: ' . $qc_test_result->qc_test_result_id );
+    for my $test_result_alignment_params ( @{ $validated_params->{qc_test_result_alignments} } ) {
+        $self->create_qc_test_result_alignment( $test_result_alignment_params, $qc_test_result );
+    }
+
+    $self->log->debug( 'created qc test result: ' . $qc_test_result->id );
 
     return $qc_test_result;
 }
@@ -84,12 +78,11 @@ sub create_qc_test_result_alignment {
 
     $qc_test_result_alignment->create_related(
         qc_test_result_alignment_maps => {
-            qc_test_result_id => $qc_test_result->qc_test_result_id
+            qc_test_result_id => $qc_test_result->id
         }
     );
 
     for my $alignment_region_params ( @{ $validated_params->{alignment_regions} } ) {
-        $alignment_region_params->{qc_test_result_id} = $qc_test_result->qc_test_result_id;
         $self->create_qc_test_result_alignment_region( $alignment_region_params, $qc_test_result_alignment );
     }
 }

@@ -19,7 +19,7 @@ sub _instantiate_qc_seq_read {
 
     my $validated_params = $self->check_params(
         { slice( $params, qw( qc_seq_read_id ) ) },
-        { qc_seq_read_id => { validate => 'qc_seq_read_id' } }
+        { qc_seq_read_id => { validate => 'qc_seq_read_id', rename => 'id' } }
     );
 
     $self->retrieve( QcSeqRead => $validated_params );
@@ -27,7 +27,7 @@ sub _instantiate_qc_seq_read {
 
 sub pspec_create_qc_seq_read {
     return {
-        qc_seq_read_id        => { validate => 'qc_seq_read_id' },
+        id                    => { validate => 'qc_seq_read_id' },
         qc_sequencing_project => { validate => 'plate_name' },
         description           => { validate => 'non_empty_string' },
         seq                   => { validate => 'dna_seq' },
@@ -37,29 +37,24 @@ sub pspec_create_qc_seq_read {
 
 sub create_qc_seq_read {
     my ( $self, $params ) = @_;
-    my $qc_seq_read;
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_seq_read );
 
-    $self->schema->txn_do(
-        sub {
-            $qc_seq_read = $self->schema->resultset('QcSeqRead')->create(
-                {
-                    slice_def( $validated_params,
-                        qw( qc_seq_read_id description seq length qc_sequencing_project ) ),
-                }
-            );
+    my $qc_seq_read = $self->schema->resultset('QcSeqRead')->create(
+        {
+            slice_def( $validated_params,
+                qw( id description seq length qc_sequencing_project ) ),
         }
     );
 
-    $self->log->debug( 'created qc_seq_read with id: ' . $qc_seq_read->qc_seq_read_id );
+    $self->log->debug( 'created qc_seq_read with id: ' . $qc_seq_read->id );
 
     return $qc_seq_read;
 }
 
 sub pspec_retrieve_qc_seq_read {
     return {
-        qc_seq_read_id => { validate => 'qc_seq_read_id' },
+        id => { validate => 'qc_seq_read_id' },
     };
 }
 

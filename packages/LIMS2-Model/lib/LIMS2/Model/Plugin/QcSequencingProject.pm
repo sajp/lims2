@@ -19,7 +19,7 @@ sub _instantiate_qc_sequencing_project {
 
     my $validated_params = $self->check_params(
         { slice( $params, qw( qc_sequencing_project ) ) },
-        { qc_sequencing_project => { validate => 'plate_name' } }
+        { qc_sequencing_project => { validate => 'plate_name', rename => 'name' } }
     );
 
     $self->retrieve( QcSequencingProject => $validated_params );
@@ -27,27 +27,20 @@ sub _instantiate_qc_sequencing_project {
 
 sub pspec_create_qc_sequencing_project {
     return {
-        qc_sequencing_project => { validate => 'plate_name' },
+        name => { validate => 'plate_name' },
     };
 }
 
 sub create_qc_sequencing_project {
     my ( $self, $params ) = @_;
-    my $qc_sequencing_project;
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_sequencing_project );
 
-    $self->schema->txn_do(
-        sub {
-            $qc_sequencing_project = $self->schema->resultset( 'QcSequencingProject' )->create(
-                { slice_def( $validated_params, qw( qc_sequencing_project ) ) }
-            );
-
-        }
+    my $qc_sequencing_project = $self->schema->resultset( 'QcSequencingProject' )->create(
+        { slice_def( $validated_params, qw( name ) ) }
     );
 
-    $self->log->debug( 'created qc sequencing project: '
-        . $qc_sequencing_project->qc_sequencing_project );
+    $self->log->debug( 'created qc sequencing project: ' . $qc_sequencing_project->name );
 
     return $qc_sequencing_project;
 }

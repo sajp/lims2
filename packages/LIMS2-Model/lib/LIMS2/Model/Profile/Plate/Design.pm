@@ -10,7 +10,7 @@ class_has '+well_data_fields' => (
         my $self = shift;
 
         my @well_data_fields = qw(
-            well_name
+            name
             pipeline
             design_id
             design_type
@@ -33,7 +33,7 @@ override 'get_well_data' => sub {
     return $well_data unless $create_di_process;
 
     my $design                = $create_di_process->design;
-    $well_data->{design_id}   = $design->design_id;
+    $well_data->{design_id}   = $design->id;
     $well_data->{design_type} = $design->design_type;
 
     $well_data->{legacy_qc_results} = $self->get_legacy_qc_results( $well );

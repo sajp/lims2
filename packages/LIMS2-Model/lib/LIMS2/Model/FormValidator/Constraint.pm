@@ -138,7 +138,7 @@ sub existing_assembly {
 
 sub existing_bac_library {
     my ( $class, $model ) = @_;    
-    in_resultset( $model, 'BacLibrary', 'bac_library' );
+    in_resultset( $model, 'BacLibrary', 'library' );
 }
 
 sub existing_chromosome {
@@ -148,27 +148,27 @@ sub existing_chromosome {
 
 sub existing_design_type {
     my ( $class, $model ) = @_;    
-    in_resultset( $model, 'DesignType', 'design_type' );
+    in_resultset( $model, 'DesignType', 'type' );
 }
 
 sub existing_design_comment_category {
     my ( $class, $model ) = @_;    
-    in_resultset( $model, 'DesignCommentCategory', 'design_comment_category' );
+    in_resultset( $model, 'DesignCommentCategory', 'category' );
 }
 
 sub existing_design_oligo_type {
     my ( $class, $model ) = @_;    
-    in_resultset( $model, 'DesignOligoType', 'design_oligo_type' );
+    in_resultset( $model, 'DesignOligoType', 'type' );
 }
 
 sub existing_pipeline {
     my ( $class, $model ) = @_;
-    in_resultset( $model, 'Pipeline', 'pipeline_name' );
+    in_resultset( $model, 'Pipeline', 'name' );
 }
 
 sub existing_plate_type {
     my ( $class, $model ) = @_;
-    in_resultset( $model, 'PlateType', 'plate_type' );
+    in_resultset( $model, 'PlateType', 'type' );
 }
 
 sub existing_design_well_recombineering_assay {
@@ -178,17 +178,17 @@ sub existing_design_well_recombineering_assay {
 
 sub existing_genotyping_primer_type {
     my ( $class, $model ) = @_;    
-    in_resultset( $model, 'GenotypingPrimerType', 'genotyping_primer_type' );
+    in_resultset( $model, 'GenotypingPrimerType', 'type' );
 }
 
 sub existing_user {
     my ( $class, $model ) = @_;    
-    in_resultset( $model, 'User', 'user_name' );
+    in_resultset( $model, 'User', 'name' );
 }
 
 sub existing_role {
     my ( $class, $model ) = @_;    
-    in_resultset( $model, 'Role', 'role_name' );
+    in_resultset( $model, 'Role', 'name' );
 }
 
 sub existing_plate_name {
@@ -196,7 +196,7 @@ sub existing_plate_name {
     
     return sub {
         my $plate_name = shift;
-        $model->schema->resultset( 'Plate' )->search_rs( { plate_name => $plate_name } )->count;
+        $model->schema->resultset( 'Plate' )->search_rs( { name => $plate_name } )->count;
     }
 }
 
@@ -206,7 +206,7 @@ sub existing_qc_template_name {
     return sub {
         my $qc_template_name = shift;
         $model->schema->resultset( 'QcTemplate' )->search_rs(
-            { qc_template_name => $qc_template_name } )->count;
+            { name => $qc_template_name } )->count;
     }
 }
 

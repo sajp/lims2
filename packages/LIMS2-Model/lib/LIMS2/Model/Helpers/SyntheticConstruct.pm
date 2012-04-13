@@ -38,7 +38,7 @@ sub genbank_to_bio_seq {
 sub synthetic_construct_params {
     my $process = shift;
 
-    my $process_type = $process->process_type->process_type;
+    my $process_type = $process->process_type;
 
     if ( $process_type eq 'rearray' ) {
         _process_rearray_params( $process->process_rearray );
@@ -81,7 +81,6 @@ sub _process_rearray_params {
     return $params;
 }
 
-
 sub _process_bac_recom_params {
     my $bac_recom_process = shift;
 
@@ -92,14 +91,14 @@ sub _process_bac_recom_params {
     unless ( $bac_locus ) {
         LIMS2::Model::Error::Database->throw(
             sprintf 'No locus for bac %s/%s on assembly %s',
-            $bac_clone->bac_library, $bac_clone->bac_name, $DEFAULT_ASSEMBLY
+            $bac_clone->library, $bac_clone->name, $DEFAULT_ASSEMBLY
         );
     }
 
     my $gene = LIMS2::Util::EnsEMBL->new->gene_adaptor->fetch_by_transcript_stable_id( $design->target_transcript );
 
     my $display_id = join '_', ( $gene ? $gene->external_name : () ),
-        $bac_clone->bac_name, $design->design_id;
+        $bac_clone->name, $design->id;
 
     my %params = (
         method      => 'insertion_vector_seq',
@@ -127,7 +126,6 @@ sub _process_bac_recom_params {
     return \%params;
 }
 
-
 sub _process_int_recom_params {
     my $int_recom_process = shift;
 
@@ -135,7 +133,7 @@ sub _process_int_recom_params {
     my $design_type = $design->design_type;
     my $cassette    = $int_recom_process->cassette;
     my $backbone    = $int_recom_process->backbone;
-    my $display_id  = sprintf( 'int_vec_%d#%s#%s', $design->design_id, $cassette, $backbone );
+    my $display_id  = sprintf( 'int_vec_%d#%s#%s', $design->id, $cassette, $backbone );
     $display_id =~ s/\s+/_/g;
 
     my %params = (

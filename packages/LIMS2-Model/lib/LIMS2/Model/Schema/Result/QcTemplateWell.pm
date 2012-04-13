@@ -151,8 +151,8 @@ sub as_hash {
     my $self = shift;
 
     return {
-        well_name         => $self->qc_template_well_name,
-        qc_eng_seq_id     => $self->qc_eng_seq->qc_eng_seq_id,
+        name              => $self->name,
+        qc_eng_seq_id     => $self->qc_eng_seq->id,
         qc_eng_seq_method => $self->qc_eng_seq->eng_seq_method,
         qc_eng_seq_params => $self->qc_eng_seq->eng_seq_params,
     };

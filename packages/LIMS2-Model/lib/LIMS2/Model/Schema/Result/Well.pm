@@ -346,7 +346,7 @@ use overload '""' => \&stringify;
 
 sub stringify {
     my ( $self ) = @_;
-    sprintf( '%s[%s]', $self->plate->plate_name || 'UNKNOWN PLATE', $self->well_name || 'UNNAMED WELL' );
+    sprintf( '%s[%s]', $self->plate->name || 'UNKNOWN PLATE', $self->name || 'UNNAMED WELL' );
 }
 
 with qw( LIMS2::Model::Schema::Extensions::Well );

@@ -12,8 +12,8 @@ requires qw( schema check_params throw );
 sub pspec_retrieve_synthetic_construct {
     return {
         plate_name => { validate => 'existing_plate_name' },
-        well_name  => { validate => 'well_name' }
-    }
+        well_name  => { validate => 'well_name', rename => 'name' }
+    };
 }
 
 sub retrieve_synthetic_construct {
@@ -21,6 +21,7 @@ sub retrieve_synthetic_construct {
 
     my $validated_params = $self->check_params( $params, $self->pspec_retrieve_synthetic_construct );
 
+    # TODO: check this works, plate_name is not a search term
     my $well = $self->retrieve( Well => $validated_params,
                                 {
                                     join     => 'plate',
@@ -47,7 +48,7 @@ sub retrieve_synthetic_construct {
     );
 
     $process->create_related(
-        process_synthetic_construct => { synthetic_construct_id => $synthetic_construct->synthetic_construct_id }
+        process_synthetic_construct => { synthetic_construct_id => $synthetic_construct->id }
     );
 
     return $synthetic_construct;
@@ -56,8 +57,8 @@ sub retrieve_synthetic_construct {
 sub pspec_retrieve_synthetic_construct_params {
     return {
         plate_name => { validate => 'existing_plate_name' },
-        well_name  => { validate => 'well_name' }
-    }
+        well_name  => { validate => 'well_name', rename => 'name' }
+    };
 }
 
 sub retrieve_synthetic_construct_params {

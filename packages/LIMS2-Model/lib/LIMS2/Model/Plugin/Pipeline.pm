@@ -21,7 +21,7 @@ has pipelines => (
 sub _build_pipelines {
     my $self = shift;
 
-    +{ map { $_->pipeline_name => $_->pipeline_id } $self->schema->resultset( 'Pipeline' )->all };
+    +{ map { $_->name => $_->id } $self->schema->resultset( 'Pipeline' )->all };
 }
 
 1;

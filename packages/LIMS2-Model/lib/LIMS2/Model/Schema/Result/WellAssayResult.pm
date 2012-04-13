@@ -161,12 +161,12 @@ sub as_hash {
     my $self = shift;
 
     return {
-        plate_name => $self->well->plate->plate_name,
-        well_name  => $self->well->well_name,
+        plate_name => $self->well->plate->name,
+        well_name  => $self->well->name,
         assay      => $self->assay,
         result     => $self->result,
         created_at => $self->created_at->iso8601,
-        created_by => $self->created_by->user_name
+        created_by => $self->created_by->name
     };
 }
 

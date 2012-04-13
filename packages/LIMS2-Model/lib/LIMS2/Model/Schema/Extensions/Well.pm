@@ -20,9 +20,9 @@ sub as_hash {
     my $self = shift;
 
     return {
-        plate_name     => $self->plate->plate_name,
-        well_name      => $self->well_name,
-        created_by     => $self->created_by->user_name,
+        plate_name     => $self->plate->name,
+        name           => $self->name,
+        created_by     => $self->created_by->name,
         created_at     => $self->created_at->iso8601,
         assay_pending  => $self->assay_pending  ? $self->assay_pending->iso8601  : '',
         assay_complete => $self->assay_complete ? $self->assay_complete->iso8601 : '',

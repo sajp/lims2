@@ -10,7 +10,7 @@ requires qw( schema check_params throw );
 
 sub pspec_create_bac_library {
     return {
-        bac_library => { validate => 'bac_library' }
+        library => { validate => 'library' }
     };
 }
 
@@ -30,7 +30,7 @@ sub list_bac_libraries {
 
 sub pspec_delete_bac_library {
     return {
-        bac_library => { validate => 'existing_bac_library' }
+        library => { validate => 'existing_bac_library' }
     };
 }
 
@@ -39,7 +39,7 @@ sub delete_bac_library {
 
     my $validated_params = $self->check_params( $params, $self->pspec_delete_bac_library );
 
-    my %search = slice( $validated_params, 'bac_library' );
+    my %search = slice( $validated_params, 'library' );
     my $bac_library = $self->schema->resultset( 'BacLibrary' )->find( \%search )
         or $self->throw(
             NotFound => {
@@ -63,9 +63,9 @@ sub delete_bac_library {
 
 sub pspec_create_bac_clone {
     return {
-        bac_library => { validate => 'existing_bac_library' },
-        bac_name    => { validate => 'bac_name' },
-        loci        => { optional => 1 }
+        library => { validate => 'existing_bac_library' },
+        name    => { validate => 'bac_name' },
+        loci    => { optional => 1 }
     };
 }
 
@@ -97,8 +97,8 @@ sub create_bac_clone {
 
 sub pspec_delete_bac_clone {
     return {
-        bac_library => { validate => 'existing_bac_library' },
-        bac_name    => { validate => 'bac_name' }
+        library => { validate => 'existing_bac_library' },
+        name    => { validate => 'bac_name' }
     };
 }
 

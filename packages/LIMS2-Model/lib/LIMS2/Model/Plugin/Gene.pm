@@ -12,7 +12,7 @@ requires qw( schema check_params throw );
 sub pspec_get_genes_by_name {
     return {
         name => { validate => 'non_empty_string' }
-    }
+    };
 }
 
 sub get_genes_by_name {

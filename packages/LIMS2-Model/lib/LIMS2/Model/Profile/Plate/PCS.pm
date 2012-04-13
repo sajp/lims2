@@ -10,7 +10,7 @@ class_has '+well_data_fields' => (
         my $self = shift;
 
         my @well_data_fields = qw(
-            well_name
+            name
             pipeline
             cassette
             backbone
@@ -37,7 +37,7 @@ override 'get_well_data' => sub {
 
     my $design_well = $int_recom_process->design_well;
     my $design = $design_well->process->process_create_di->design;
-    $well_data->{design_id}   = $design->design_id;
+    $well_data->{design_id}   = $design->id;
     $well_data->{design_type} = $design->design_type;
     $well_data->{design_well} = "$design_well";
     $well_data->{cassette}    = $int_recom_process->cassette;

@@ -21,13 +21,13 @@ has _role_id_for => (
 sub _build__role_id_for {
     my $self = shift;
 
-    return +{ map { $_->role_name => $_->role_id } $self->schema->resultset( 'Role' )->all };
+    return +{ map { $_->name => $_->id } $self->schema->resultset( 'Role' )->all };
 }
 
 sub user_id_for {
     my ( $self, $user_name ) = @_;
 
-    my %search = ( user_name => $user_name );
+    my %search = ( name => $user_name );
     my $user = $self->schema->resultset( 'User' )->find( \%search )
         or $self->throw(
             NotFound => {
@@ -36,13 +36,13 @@ sub user_id_for {
             }
         );
 
-    return $user->user_id;
+    return $user->id;
 }
 
 sub pspec_create_user {
     return {
-        user_name => { validate => 'user_name' },
-        roles     => { validate => 'existing_role', optional => 1 }
+        name  => { validate => 'user_name' },
+        roles => { validate => 'existing_role', optional => 1 }
     };
 }
 
@@ -51,13 +51,13 @@ sub create_user {
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_user );
 
-    my $user = $self->schema->resultset( 'User' )->create( { slice $validated_params, 'user_name' } );
+    my $user = $self->schema->resultset( 'User' )->create( { slice $validated_params, 'name' } );
 
     if ( $validated_params->{roles} ) {
         for my $r ( @{ $validated_params->{roles} } ) {
             $user->create_related(
                 user_roles => {
-                    role_id => $self->role_id_for( $r )
+                    id => $self->role_id_for( $r )
                 }
             );
         }
@@ -68,7 +68,7 @@ sub create_user {
 
 sub pspec_delete_user {
     return {
-        user_name => { validate => 'user_name' }
+        name => { validate => 'user_name' }
     };
 }
 

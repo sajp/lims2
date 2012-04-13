@@ -26,7 +26,7 @@ sub check_parent_plate_type {
 sub pspec_create_well {
     return {
         plate_name     => { validate => 'plate_name' },
-        well_name      => { validate => 'well_name' },
+        name           => { validate => 'well_name' },
         created_by     => { validate => 'existing_user', post_filter => 'user_id_for' },
         created_at     => { validate => 'date_time', optional => 1, post_filter => 'parse_date_time' },
         assay_pending  => { validate => 'date_time', optional => 1, post_filter => 'parse_date_time' },
@@ -35,7 +35,7 @@ sub pspec_create_well {
         parent_wells   => { optional => 1, default => [] },
         assay_results  => { optional => 1, default => [] },
         pipeline       => { optional => 1, validate => 'existing_pipeline', post_filter => 'pipeline_id_for' }
-    }
+    };
 }
 
 # Internal function, returns a LIMS2::Model::Schema::Result::Well object
@@ -46,6 +46,7 @@ sub _instantiate_well {
         return $params;
     }
 
+    #TODO: check this
     my $validated_params = $self->check_params(
         { slice( $params, qw( plate_name well_name ) ) },
         { plate_name => {}, well_name  => {} }
@@ -70,13 +71,13 @@ insert into tree_paths( ancestor, descendant, path_length )
 union all
   select cast( ? as integer ), cast( ? as integer ), 0
 EOT
-        @bind_params = ( $well->well_id, map( $_->well_id, @ancestors ), $well->well_id, $well->well_id );
+        @bind_params = ( $well->id, map( $_->id, @ancestors ), $well->id, $well->id );
     }
     else {
         $insert_tree_paths = <<'EOT';
 insert into tree_paths( ancestor, descendant, path_length ) values( ?, ?, 0 )
 EOT
-        @bind_params = ( $well->well_id, $well->well_id );
+        @bind_params = ( $well->id, $well->id );
     }
 
     $self->schema->storage->dbh_do(
@@ -91,24 +92,25 @@ EOT
 sub _create_well {
     my ( $self, $validated_params, $process, $plate ) = @_;
 
+    # TODO: check how this is called, better to pass well_name or name
     $plate ||= $self->_instantiate_plate( $validated_params );
 
-    $self->log->debug( '_create_well: ' . $plate->plate_name . '_' . $validated_params->{well_name} );
+    $self->log->debug( '_create_well: ' . $plate->name . '_' . $validated_params->{name} );
 
     my $well = $plate->create_related(
         wells => {
-            slice_def( $validated_params, qw( well_name created_by created_at assay_pending ) ),
-            process_id => $process->process_id
+            slice_def( $validated_params, qw( name created_by created_at assay_pending ) ),
+            process_id => $process->id
         }
     );
 
-    $self->log->debug( 'created well with id: ' . $well->well_id );
+    $self->log->debug( 'created well with id: ' . $well->id );
 
     $self->_create_tree_paths( $well, map { $self->_instantiate_well( $_ ) } @{ $validated_params->{parent_wells} } );
 
     if ( $validated_params->{pipeline} ) {
         $process->create_related(
-            process_pipeline => { pipeline_id => $validated_params->{pipeline} }
+            process_pipeline => { id => $validated_params->{pipeline} }
         );
     }
 
@@ -218,9 +220,10 @@ sub add_well_assay_result {
 Delete a well, its linked data  and all its corresponding process
 
 =cut
+
 sub delete_well {
     my ( $self, $well ) = @_;
-    $self->log->debug('deleting well: ' . $well->well_name );
+    $self->log->debug('deleting well: ' . $well->name );
 
     my $process_linked_multiple_wells = $self->_check_process_linked_to_multiple_well( $well );
 
@@ -263,7 +266,7 @@ sub _check_process_linked_to_multiple_well {
         return;
     }
     else {
-        my @well_names = map { $_->well_name } $linked_wells_rs->all;
+        my @well_names = map { $_->name } $linked_wells_rs->all;
         $self->log->info(' .. not deleting process, linked to other well: ' . join(',', @well_names) );
         return 1;
     }
@@ -277,7 +280,7 @@ sub _check_tree_paths {
     if ( $descendants_rs->count ) {
         LIMS2::Model::Error::Database->throw(
             sprintf 'Well %s (%d) has descendant wells, cannot delete',
-            $well->well_name, $well->well_id
+            $well->name, $well->id
         );
     }
 }
@@ -293,7 +296,7 @@ sub _check_process {
         my $process_rs = $well->$process;
         if ( $process_rs->count > 0 ) {
             LIMS2::Model::Error::Database->throw( sprintf 'Well %s (%d) has a %s linked to it, cannot delete',
-                                                  $well->well_name, $well->well_id, $process );
+                                                  $well->name, $well->id, $process );
         }
     }
 }
@@ -317,7 +320,7 @@ sub _delete_sub_process {
     }
     else {
         LIMS2::Model::Error::Database->throw( sprintf 'Well %s (%d) is from a %s, unable to delete yet',
-                                              $well->well_name, $well->well_id, $process_type );
+                                              $well->name, $well->id, $process_type );
     }
 }
 

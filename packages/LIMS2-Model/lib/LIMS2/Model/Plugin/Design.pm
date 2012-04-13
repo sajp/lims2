@@ -21,7 +21,7 @@ has _design_comment_category_ids => (
 sub _build__design_comment_category_ids {
     my $self = shift;
 
-    my %category_id_for = map { $_->design_comment_category => $_->design_comment_category_id }
+    my %category_id_for = map { $_->category => $_->id }
         $self->schema->resultset( 'DesignCommentCategory' )->all;
 
     return \%category_id_for;
@@ -29,13 +29,13 @@ sub _build__design_comment_category_ids {
 
 sub pspec_create_design {
     return {
-        design_id               => { validate => 'integer' },
+        id                      => { validate => 'integer' },
         design_type             => { validate => 'existing_design_type' },
         created_at              => { validate => 'date_time', post_filter => 'parse_date_time' },
         created_by              => { validate => 'existing_user', post_filter => 'user_id_for' },
         phase                   => { validate => 'phase' },
         validated_by_annotation => { validate => 'validated_by_annotation', default => 'not done' },
-        design_name             => { validate => 'alphanumeric_string' },
+        name                    => { validate => 'alphanumeric_string' },
         target_transcript       => { optional => 1, validate => 'ensembl_transcript_id' },
         oligos                  => { optional => 1 },
         comments                => { optional => 1 },
@@ -48,19 +48,19 @@ sub pspec_create_design_comment {
         design_comment_category => { validate    => 'existing_design_comment_category',
                                      post_filter => 'design_comment_category_id_for',
                                      rename      => 'design_comment_category_id' },
-        design_comment          => { optional => 1 },
+        comment                 => { optional => 1 },
         created_at              => { validate => 'date_time', post_filter => 'parse_date_time' },
         created_by              => { validate => 'existing_user', post_filter => 'user_id_for' },
         is_public               => { validate => 'boolean', default => 0 }
-    }
+    };
 }
 
 sub pspec_create_design_oligo {
     return {
         design_oligo_type => { validate => 'existing_design_oligo_type' },
-        design_oligo_seq  => { validate => 'dna_seq' },
+        seq               => { validate => 'dna_seq' },
         loci              => { optional => 1 }
-    }
+    };
 }
 
 sub pspec_create_design_oligo_locus {
@@ -70,14 +70,14 @@ sub pspec_create_design_oligo_locus {
         chr_start  => { validate => 'integer' },
         chr_end    => { validate => 'integer' },
         chr_strand => { validate => 'strand' },
-    }
+    };
 }
 
 sub pspec_create_genotyping_primer {
     return {
-        genotyping_primer_type => { validate => 'existing_genotyping_primer_type' },
-        genotyping_primer_seq  => { validate => 'dna_seq' }
-    }
+        type => { validate => 'existing_genotyping_primer_type' },
+        seq  => { validate => 'dna_seq' }
+    };
 }
 
 sub create_design {
@@ -88,7 +88,7 @@ sub create_design {
     my $design = $self->schema->resultset( 'Design' )->create(
         {
             slice_def( $validated_params,
-                       qw( design_id design_name created_by created_at design_type
+                       qw( id name created_by created_at design_type
                            phase validated_by_annotation target_transcript ) )
         }
     );
@@ -118,9 +118,9 @@ sub create_design {
 
 sub pspec_delete_design {
     return {
-        design_id => { validate => 'integer' },
+        id => { validate => 'integer' },
         cascade   => { validate => 'boolean', optional => 1 }
-    }
+    };
 }
 
 sub delete_design {
@@ -128,7 +128,7 @@ sub delete_design {
 
     my $validated_params = $self->check_params( $params, $self->pspec_delete_design );
 
-    my %search = slice( $validated_params, 'design_id' );
+    my %search = slice( $validated_params, 'id' );
     my $design = $self->schema->resultset( 'Design' )->find( \%search )
         or $self->throw(
             NotFound => {
@@ -143,7 +143,7 @@ sub delete_design {
 
     if ( $design->process_cre_bac_recoms_rs->count > 0
              or $design->process_create_dis_rs->count > 0 ) {
-        $self->throw( InvalidState => 'Design ' . $design->design_id . ' is used in one or more processes' );
+        $self->throw( InvalidState => 'Design ' . $design->id . ' is used in one or more processes' );
     }
 
     if ( $validated_params->{cascade} ) {
@@ -159,8 +159,8 @@ sub delete_design {
 
 sub pspec_retrieve_design {
     return {
-        design_id => { validate => 'integer' }
-    }
+        id => { validate => 'integer' }
+    };
 }
 
 sub retrieve_design {
@@ -186,7 +186,7 @@ sub _list_designs_for_gene {
 
     my @transcripts = map { $_->stable_id } map { @{ $_->ensembl_gene->get_all_Transcripts } } @{$genes};
 
-    my @design_ids = map { $_->design_id }
+    my @design_ids = map { $_->id }
         $self->schema->resultset( 'Design' )->search( { target_transcript => { -in => \@transcripts } } );
 
     return \@design_ids;

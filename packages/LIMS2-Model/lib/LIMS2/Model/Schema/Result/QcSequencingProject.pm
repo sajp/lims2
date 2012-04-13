@@ -99,7 +99,7 @@ sub as_hash {
     my $self = shift;
 
     return {
-        qc_sequencing_project => $self->qc_sequencing_project,
+        name => $self->name,
     };
 }
 

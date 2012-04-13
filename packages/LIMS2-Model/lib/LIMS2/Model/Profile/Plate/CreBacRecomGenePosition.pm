@@ -26,7 +26,7 @@ override 'get_well_data' => sub {
 
     $well_data->{bac_id}        = $cre_bac_recom_process->bac_name;
     $well_data->{marker_symbol} = $cre_bac_recom_process->design->marker_symbol;
-    $well_data->{design_id}     = $cre_bac_recom_process->design->design_id;
+    $well_data->{design_id}     = $cre_bac_recom_process->design->id;
 
     return $well_data;
 };

@@ -29,13 +29,13 @@ sub _create_rearray_process {
     my ( $self, $parent_well ) = @_;
 
     my $process = $self->schema->resultset( 'Process' )->create( { process_type => 'rearray' } );
-    $self->log->debug( "Created rearray process with id " . $process->process_id );
+    $self->log->debug( "Created rearray process with id " . $process->id );
     $process->create_related(
         process_rearray => {}
     )->create_related(
-        process_rearray_source_wells => { source_well_id => $parent_well->well_id }
+        process_rearray_source_wells => { source_well_id => $parent_well->id }
     );
-    $self->log->debug( "Created auxiliary process_rearray data for process " . $process->process_id );
+    $self->log->debug( "Created auxiliary process_rearray data for process " . $process->id );
 
     return $process;
 }

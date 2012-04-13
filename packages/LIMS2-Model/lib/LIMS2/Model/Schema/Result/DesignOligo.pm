@@ -142,7 +142,7 @@ sub as_hash {
 
     return {
         design_oligo_type => $self->design_oligo_type,
-        design_oligo_seq  => $self->design_oligo_seq,
+        seq               => $self->seq,
         loci              => [ map { $_->as_hash } $self->loci ],
     };
 }

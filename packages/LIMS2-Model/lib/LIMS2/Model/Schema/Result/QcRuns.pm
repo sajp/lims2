@@ -154,11 +154,11 @@ sub as_hash {
     my $self = shift;
 
     return {
-        qc_run_id        => $self->qc_run_id,
-        qc_run_date      => $self->qc_run_date->iso8601,
+        id               => $self->id,
+        date             => $self->date->iso8601,
         profile          => $self->profile,
         software_version => $self->software_version,
-        qc_template      => $self->qc_template->qc_template_name,
+        qc_template      => $self->qc_template->name,
     };
 }
 

@@ -255,8 +255,8 @@ sub as_hash {
     my $self = shift;
 
     return {
-        user_name => $self->user_name,
-        roles     => [ map { $_->role_name } $self->roles ]
+        name  => $self->name,
+        roles => [ map { $_->name } $self->roles ]
     };
 }
     

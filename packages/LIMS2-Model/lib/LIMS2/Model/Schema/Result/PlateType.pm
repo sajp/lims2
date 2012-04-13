@@ -97,7 +97,7 @@ __PACKAGE__->has_many(
 sub as_hash {
     my $self = shift;
 
-    return { map { $_ => $self->$_ } qw( plate_type plate_type_desc ) };
+    return { map { $_ => $self->$_ } qw( type description ) };
 }
         
 __PACKAGE__->meta->make_immutable;

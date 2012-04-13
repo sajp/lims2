@@ -135,8 +135,8 @@ sub as_hash {
     my $self = shift;
 
     return {
-        genotyping_primer_type => $self->genotyping_primer_type,
-        genotyping_primer_seq  => $self->genotyping_primer_seq
+        type => $self->type,
+        seq  => $self->seq
     };
 }
 

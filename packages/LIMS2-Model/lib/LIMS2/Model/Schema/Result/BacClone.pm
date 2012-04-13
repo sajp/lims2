@@ -151,8 +151,8 @@ sub as_hash {
     my $self = shift;
 
     return {
-        bac_library => $self->bac_library,
-        bac_name    => $self->bac_name,
+        library => $self->library,
+        name    => $self->name,
         loci        => [ map { $_->as_hash } $self->loci ],
     };
 }

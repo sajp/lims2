@@ -62,11 +62,13 @@ sub _create_pcs_well_process {
 
     my $process;
 
-    if ( $pw->plate->plate_type eq 'design' ) {
+    # TODO: should be using process instead of plate type....
+
+    if ( $pw->plate->type eq 'design' ) {
         $process = $self->_instantiate_int_recom_process( $validated_params, $pw ) ;
         $process ||= $self->_create_int_recom_process( $validated_params, $pw );
     }
-    elsif ( $pw->plate->plate_type eq 'pcs' ) {
+    elsif ( $pw->plate->type eq 'pcs' ) {
         $process = $self->_instantiate_rearray_process( $validated_params, $pw ) ;
         $process ||= $self->_create_rearray_process( $pw );
     }

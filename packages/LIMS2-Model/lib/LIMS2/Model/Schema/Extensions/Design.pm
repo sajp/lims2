@@ -102,7 +102,7 @@ sub locus_for {
 
     unless ( $locus ) {
         LIMS2::Model::Error::Database->throw( sprintf 'Design %d has no %s oligo with locus on assembly %s',
-                                              $self->design_id, $oligo_type, $DEFAULT_ASSEMBLY );
+                                              $self->id, $oligo_type, $DEFAULT_ASSEMBLY );
     }
 
     return $locus;
@@ -145,11 +145,11 @@ sub _build_chr_name {
     }
     elsif ( @loci == 0 ) {
         LIMS2::Model::Error::Database->throw( sprintf 'Design %d has no oligos with locus on assembly %s',
-                                              $self->design_id, $DEFAULT_ASSEMBLY );
+                                              $self->id, $DEFAULT_ASSEMBLY );
     }
     else {
         LIMS2::Model::Error::Database->throw( sprintf 'Design %d oligos have inconsistent chromosome name',
-                                              $self->design_id );
+                                              $self->id );
     }
 }
 
@@ -170,11 +170,11 @@ sub _build_chr_strand {
     }
     elsif ( @loci == 0 ) {
         LIMS2::Model::Error::Database->throw( sprintf 'Design %d has no oligos with locus on assembly %s',
-                                              $self->design_id, $DEFAULT_ASSEMBLY );
+                                              $self->id, $DEFAULT_ASSEMBLY );
     }
     else {
         LIMS2::Model::Error::Database->throw( sprintf 'Design %d oligos have inconsistent strand',
-                                              $self->design_id );
+                                              $self->id );
     }
 }
 

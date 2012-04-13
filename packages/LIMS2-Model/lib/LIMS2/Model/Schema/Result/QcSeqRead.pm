@@ -132,7 +132,7 @@ sub as_hash {
     my $self = shift;
 
     return {
-        qc_seq_read_id        => $self->qc_seq_read_id,
+        id                    => $self->id,
         seq                   => $self->seq,
         length                => $self->length,
         description           => $self->description,

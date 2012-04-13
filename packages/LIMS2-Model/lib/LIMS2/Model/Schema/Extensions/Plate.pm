@@ -12,12 +12,12 @@ sub as_hash {
     my $self = shift;
 
     return {
-        plate_name => $self->plate_name,
-        plate_type => $self->plate_type,
-        plate_desc => $self->plate_desc,
-        created_at => $self->created_at->iso8601,
-        created_by => $self->created_by->user_name,
-        comments   => [ map { $_->as_hash } $self->plate_comments ]
+        name        => $self->name,
+        plate_type  => $self->plate_type,
+        description => $self->description,
+        created_at  => $self->created_at->iso8601,
+        created_by  => $self->created_by->name,
+        comments    => [ map { $_->as_hash } $self->plate_comments ]
     };
 }
 

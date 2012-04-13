@@ -35,15 +35,15 @@ sub _create_int_recom_process {
     my ( $self, $validated_params, $parent_well ) = @_;
 
     my $process = $self->schema->resultset( 'Process' )->create( { process_type => 'int_recom' } );
-    $self->log->debug( "Created int_recom process with id " . $process->process_id );
+    $self->log->debug( "Created int_recom process with id " . $process->id );
     $process->create_related(
         process_int_recom => {
-            design_well_id => $parent_well->well_id,
+            design_well_id => $parent_well->id,
             cassette       => $validated_params->{cassette},
             backbone       => $validated_params->{backbone}
         }
     );
-    $self->log->debug( "Created auxiliary process_int_recom data for process " . $process->process_id );
+    $self->log->debug( "Created auxiliary process_int_recom data for process " . $process->id );
 
     return $process;
 }

@@ -27,7 +27,7 @@ sub create_cre_bac_recom_process {
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_cre_bac_recom_process );
 
-    my $design = $self->retrieve_design( { design_id => $validated_params->{design_id} } );
+    my $design = $self->retrieve_design( { id => $validated_params->{design_id} } );
     if ( $design->design_type ne $CRE_BAC_DESIGN_TYPE ) {
         $self->throw(
             Validation => {

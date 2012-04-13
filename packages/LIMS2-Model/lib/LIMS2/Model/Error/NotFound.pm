@@ -28,9 +28,9 @@ has search_params => (
 override as_string => sub {
     my $self = shift;
 
-    my $str = 'No ' . $self->entity_class . ' entity found matching:';    
+    my $str = 'No ' . $self->entity_class . ' entity found matching:';
 
-    $str .= "\n\n" . pp( $self->search_params );    
+    $str .= "\n\n" . pp( $self->search_params );
 
     if ( $self->show_stack_trace ) {
         $str .= "\n\n" . $self->stack_trace->as_string;
