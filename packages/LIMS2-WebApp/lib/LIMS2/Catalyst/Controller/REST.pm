@@ -69,7 +69,7 @@ sub error_status {
 sub handle_lims2_model_error {
     my ( $self, $c, $error ) = @_;
 
-    my %entity = ( error => $error->message );
+    my %entity = ( error => $error->message, class => blessed $error );
     
     if ( $error->isa( 'LIMS2::Model::Error::Authorization' ) ) {
         return $self->error_status( $c, HTTP_FORBIDDEN, \%entity );
