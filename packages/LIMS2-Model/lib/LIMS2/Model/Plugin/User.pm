@@ -57,7 +57,7 @@ sub create_user {
         for my $r ( @{ $validated_params->{roles} } ) {
             $user->create_related(
                 user_roles => {
-                    id => $self->role_id_for( $r )
+                    role_id => $self->role_id_for( $r )
                 }
             );
         }
@@ -85,7 +85,7 @@ sub delete_user {
             }
         );
 
-    $user->user_roles_rs->delete;
+    $user->user_roles->delete;
     $user->delete;
 
     return 1;

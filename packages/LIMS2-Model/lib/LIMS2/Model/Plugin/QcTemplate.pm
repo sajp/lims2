@@ -86,7 +86,7 @@ sub create_qc_template_well {
     my $qc_template_well = $qc_template->create_related(
         qc_template_wells => {
             slice_def( $validated_params, qw( name ) ),
-            qc_eng_seq_id => $qc_eng_seq->qc_eng_seq_id,
+            qc_eng_seq_id => $qc_eng_seq->id,
         }
     );
 

@@ -9,7 +9,7 @@ extends qw( LIMS2::Model::Profile::Plate );
 class_has '+well_data_fields' => (
     default => sub {
         return [ qw(
-            well_name
+            name
             marker_symbol
             chromosome
             strand
