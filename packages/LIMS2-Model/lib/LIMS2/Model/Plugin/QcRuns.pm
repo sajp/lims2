@@ -18,6 +18,7 @@ sub pspec_create_qc_run {
         qc_sequencing_projects     => { validate => 'non_empty_string' },
         qc_template_name           => { validate => 'plate_name', rename => 'name' },
         qc_template_created_before => { validate => 'date_time', optional => 1, rename => 'created_before' },
+        qc_test_results            => { optional => 1 },
     };
 }
 
@@ -27,7 +28,7 @@ sub create_qc_run {
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_run );
 
-    # TODO: I don't like the rename qc_template_name to name in validate params, rework
+    # TODO: is the rename qc_template_name to name in validate params a good idea, better way?
     my $qc_template;
     if ( $validated_params->{created_before} ) {
         $qc_template = $self->retrieve_newest_qc_template_created_after(
@@ -53,7 +54,12 @@ sub create_qc_run {
     map { $self->create_qc_run_sequencing_project( { qc_sequencing_project => $_ }, $qc_run ) }
         @qc_sequencing_projects;
 
-    $self->log->debug( 'created qc run : ' . $qc_run->qc_run_id );
+    $self->log->debug( 'created qc run : ' . $qc_run->id );
+
+    for my $test_result_params ( @{ $validated_params->{qc_test_results} } ) {
+        $test_result_params->{qc_run_id} = $qc_run->id;
+        $self->create_qc_test_result( $test_result_params );
+    }
 
     return $qc_run;
 }
@@ -71,7 +77,7 @@ sub create_qc_run_sequencing_project {
 
     my $qc_run_sequencing_project = $qc_run->create_related(
        qc_run_sequencing_projects => {
-           name => $validated_params->{qc_sequencing_project},
+           qc_sequencing_project => $validated_params->{qc_sequencing_project},
        }
     );
 
