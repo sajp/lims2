@@ -10,8 +10,8 @@ use Data::Dump 'dd';
 
 use_ok 'LIMS2::Model';
 
-ok my $schema = LIMS2::Model::DBConnect->connect( 'LIMS2_PROCESS_TEST', 'tests' ),
-    'connect to LIMS2_TEST';
+ok my $schema = LIMS2::Model::DBConnect->connect( $ENV{LIMS2_DB}, 'tests' ),
+    'connect to LIMS2_DB';
 
 ok my $model = LIMS2::Model->new( schema => $schema ), 'instantiate model';
 
@@ -25,7 +25,7 @@ $model->txn_do(
 
         can_ok $model, 'delete_design';
 
-        ok $model->delete_design( { design_id => $params->{design_id}, cascade => 1 } ),
+        ok $model->delete_design( { id => $params->{id}, cascade => 1 } ),
             'delete_design succeeds';
     }
 );
@@ -36,15 +36,15 @@ __DATA__
 ---
 comments:
 - design_comment_category: Alternative variant not targeted
-  design_comment: Isoform specific design. Transcripts OTTMUST00000042560, OTTMUST00000042552,
+  comment: Isoform specific design. Transcripts OTTMUST00000042560, OTTMUST00000042552,
     OTTMUST00000042553, OTTMUST00000042554 not targeted
   created_at: 2011-12-21T14:38:25
   created_by: am9
   is_public: ''
 created_at: 2011-12-21T14:38:25
 created_by: am9
-design_id: '20'
-design_name: EUCTV00010
+id: '9999999'
+name: EUCTV00010
 design_type: conditional
 genotyping_primers:
 - seq: CGAGCTGAGGTGACACAGTAATCAGC
@@ -85,7 +85,7 @@ oligos:
     chr_start: '63100485'
     chr_strand: '-1'
   seq: GTATGTATAGACAAGGTGAGAAATAAAGGGGCTAAGATACTATTACGTCC
-  type: G5
+  design_oligo_type: G5
 - loci:
   - assembly: NCBIM37
     chr_end: '63097188'
@@ -93,7 +93,7 @@ oligos:
     chr_start: '63097139'
     chr_strand: '-1'
   seq: TTTAGAATGCCAGTGATACTTTAGCTTACTAAAGGAAGTAAAACAAACAA
-  type: U5
+  design_oligo_type: U5
 - loci:
   - assembly: NCBIM37
     chr_end: '63096984'
@@ -101,7 +101,7 @@ oligos:
     chr_start: '63096935'
     chr_strand: '-1'
   seq: GATTTCTTATCTACTACACGCTTTATTTTTATTCTATGTGCATATATGAG
-  type: U3
+  design_oligo_type: U3
 - loci:
   - assembly: NCBIM37
     chr_end: '63096179'
@@ -109,7 +109,7 @@ oligos:
     chr_start: '63096130'
     chr_strand: '-1'
   seq: CCTGCATTCAGATGCTCCCAGATGCACTAAACACCCAGTAAAGTGATTTG
-  type: D5
+  design_oligo_type: D5
 - loci:
   - assembly: NCBIM37
     chr_end: '63095943'
@@ -117,7 +117,7 @@ oligos:
     chr_start: '63095894'
     chr_strand: '-1'
   seq: CTATGCAGGAGAAAAGAAGGGAGTACATGAGAGAAATAAGACACTGTTGG
-  type: D3
+  design_oligo_type: D3
 - loci:
   - assembly: NCBIM37
     chr_end: '63092490'
@@ -125,6 +125,6 @@ oligos:
     chr_start: '63092441'
     chr_strand: '-1'
   seq: ACTGCAATTATGGAGTTCTTGTTTTGTCTAACCATCCTTTACATTTTATT
-  type: G3
+  design_oligo_type: G3
 phase: '0'
 validated_by_annotation: yes

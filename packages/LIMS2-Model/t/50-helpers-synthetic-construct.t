@@ -8,8 +8,8 @@ use LIMS2::Model::DBConnect;
 
 use_ok 'LIMS2::Model::Helpers::SyntheticConstruct', 'synthetic_construct_params';
 
-ok my $schema = LIMS2::Model::DBConnect->connect( 'LIMS2_TEST', 'tests' ),
-    'connect to LIMS2_TEST';
+ok my $schema = LIMS2::Model::DBConnect->connect( $ENV{LIMS2_DB}, 'tests' ),
+    'connect to LIMS2_DB';
 
 {
     note "Testing Cre BAC Recombineering Process";
@@ -23,7 +23,7 @@ ok my $schema = LIMS2::Model::DBConnect->connect( 'LIMS2_TEST', 'tests' ),
         }
     )->first, "Retrieve cre_bac_recom process";
 
-    my $process_id = $process->process_id;
+    my $process_id = $process->id;
     
     ok my $params = synthetic_construct_params( $process ), "synthetic_construct_params for $process_id";
 
@@ -46,7 +46,7 @@ ok my $schema = LIMS2::Model::DBConnect->connect( 'LIMS2_TEST', 'tests' ),
         }
     )->first, 'Retrieve int_recom process';
 
-    my $process_id = $process->process_id;
+    my $process_id = $process->id;
 
     ok my $params = synthetic_construct_params( $process ), "synthetic_construct_params for $process_id";
 
@@ -58,20 +58,20 @@ ok my $schema = LIMS2::Model::DBConnect->connect( 'LIMS2_TEST', 'tests' ),
 
     ok my $process = $schema->resultset( 'Process' )->search(
         {
-            process_id => { -in => \[ "select distinct dest_well.process_id
+            id => { -in => \[ "select distinct dest_well.process_id
                                        from wells dest_well
                                        join process_rearray_source_wells on process_rearray_source_wells.process_id = dest_well.process_id
-                                       join wells src_well on src_well.well_id = process_rearray_source_wells.source_well_id
+                                       join wells src_well on src_well.id = process_rearray_source_wells.source_well_id
                                        join process_int_recom on process_int_recom.process_id = src_well.process_id
-                                       join wells design_well on design_well.well_id = process_int_recom.design_well_id
+                                       join wells design_well on design_well.id = process_int_recom.design_well_id
                                        join process_create_di on process_create_di.process_id = design_well.process_id
-                                       join designs on designs.design_id = process_create_di.design_id
+                                       join designs on designs.id = process_create_di.design_id
                                        where designs.design_type = ? ", [ design_type => 'deletion' ] ]
                           }
         } 
     )->first, 'Retrieve rearrayed int_recom process';
 
-    my $process_id = $process->process_id;
+    my $process_id = $process->id;
  
     ok my $params = synthetic_construct_params( $process ), "synthetic_construct_params for $process_id";
 

@@ -18,11 +18,11 @@ $model->txn_do(
         can_ok $model, 'create_qc_sequencing_project';
 
         ok my $qc_sequencing_project = $model->create_qc_sequencing_project( {
-                qc_sequencing_project => 'PG00259_Z'
+                name => 'PG00259_Z'
             }
         ), 'create_qc_sequencing_project should succeed';
 
-        is $qc_sequencing_project->qc_sequencing_project, 'PG00259_Z', '.. has correct name';
+        is $qc_sequencing_project->name, 'PG00259_Z', '.. has correct name';
 
         $model->txn_rollback;
     }

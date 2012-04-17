@@ -23,10 +23,10 @@ $model->txn_do(
 
         ok my $qc_template = $model->create_qc_template( $params ), 'create_qc_template should succeed';
 
-        is $qc_template->qc_template_name, 'VTP00001', '.. has correct plate name';
+        is $qc_template->name, 'VTP00001', '.. has correct plate name';
 
         ok my $qc_template_well = $qc_template->qc_template_wells->first, '.. can grab well';
-        is $qc_template_well->qc_template_well_name, 'A01', '.. has correct well name';
+        is $qc_template_well->name, 'A01', '.. has correct well name';
 
         ok my $qc_eng_seq = $qc_template_well->qc_eng_seq, '.. well belongs to a qc_eng_seq';
         is $qc_eng_seq->eng_seq_method, 'conditional_vector_seq', '.. qc_eng_seq has correct method';
@@ -34,12 +34,12 @@ $model->txn_do(
         is $eng_seq_params->{transcript}, 'ENSMUST00000056146' ,'.. transcript is correct';
 
         ok my $qc_template_well_A02 = $qc_template->qc_template_wells->find(
-            { qc_template_well_name => 'A02' } ), 'grab second template well';
+            { name => 'A02' } ), 'grab second template well';
         is $qc_template_well_A02->qc_eng_seq_id, $qc_template_well->qc_eng_seq_id
             , '.. and both wells have same qc_eng_seq even though JSON input not in same order';
 
         ok my $qc_template_well_A03 = $qc_template->qc_template_wells->find(
-            { qc_template_well_name => 'A03' } ), 'grab third template well';
+            { name => 'A03' } ), 'grab third template well';
         isnt $qc_template_well_A03->qc_eng_seq_id, $qc_template_well->qc_eng_seq_id
             , '.. and this well has a different qc_eng_seq_id';
 
@@ -51,7 +51,7 @@ done_testing;
 
 __DATA__
 ---
-qc_template_name: VTP00001
+name: VTP00001
 wells:
     A01:
         eng_seq_method: conditional_vector_seq

@@ -40,7 +40,7 @@ $model->txn_do(
             ,'create_qc_test_result should succeed';
 
         is $qc_test_result->well_name, 'A01', '.. has correct well_name';
-        is $qc_test_result->qc_run_id, $qc_run->qc_run_id, '.. linked to correct qc_run';
+        is $qc_test_result->qc_run_id, $qc_run->id, '.. linked to correct qc_run';
 
         ok my $qc_test_result_alignment_maps = $qc_test_result->qc_test_result_alignment_maps
             , 'can grab qc_test_result_alignment_maps';
@@ -50,7 +50,7 @@ $model->txn_do(
             , 'can grab qc_test_result_alignment';
 
         is $qc_test_result_alignment->primer_name, 'R3', '.. correct primer name';
-        is $qc_test_result_alignment->qc_seq_read_id, $qc_seq_read->qc_seq_read_id
+        is $qc_test_result_alignment->qc_seq_read_id, $qc_seq_read->id
             , '.. belongs to correct qc_seq_read';
 
         ok my $qc_test_result_align_region = $qc_test_result_alignment->qc_test_result_align_regions->first
@@ -118,25 +118,25 @@ qc_test_result:
             pass: 1
 
 qc_seq_read:
-    qc_seq_read_id: PSA002_A_2d10.p1kaR3
+    id: PSA002_A_2d10.p1kaR3
     qc_sequencing_project: PG00259_Z
     description: bases 28 to 738 (QL to QR)
     seq: CTATGAAAAAATTTTTTTCCCCCCCCGGGGGGGCGTAAGTCC
     length: 42
 
 qc_sequencing_project:
-    qc_sequencing_project: PG00259_Z
+    name: PG00259_Z
 
 qc_run:
-    qc_run_id: 47291142-5BA3-11E1-8E63-B870F3CB94C8
-    qc_run_date: 2011-02-12T12:50:50
+    id: 47291142-5BA3-11E1-8E63-B870F3CB94C8
+    date: 2011-02-12T12:50:50
     profile: eucomm-post-cre
     software_version: 1.1.2
     qc_sequencing_projects: PG00259_Z
     qc_template_name: VTP00001
 
 qc_template:
-    qc_template_name: VTP00001
+    name: VTP00001
     wells:
         A01:
             eng_seq_method: conditional_vector_seq

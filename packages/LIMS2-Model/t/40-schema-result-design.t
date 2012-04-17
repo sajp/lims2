@@ -7,14 +7,14 @@ use LIMS2::Model;
 use LIMS2::Model::DBConnect;
 use Test::Most;
 
-ok my $schema = LIMS2::Model::DBConnect->connect( 'LIMS2_TEST', 'tests' ),
-    'connect to LIMS2_TEST';
+ok my $schema = LIMS2::Model::DBConnect->connect( $ENV{LIMS2_DB}, 'tests' ),
+    'connect to LIMS2_DB';
 
 ok my $model = LIMS2::Model->new( schema => $schema ), 'instantiate model';
 
 {
     my %data = (
-        design_id           => 1,
+        id                  => 1,
         chr_name            => '4',
         chr_strand          => -1,
         five_arm_start      => 83128900,
@@ -26,7 +26,7 @@ ok my $model = LIMS2::Model->new( schema => $schema ), 'instantiate model';
         design_type         => 'conditional'
     );    
 
-    ok my $design = $model->retrieve_design( { design_id => $data{design_id} } ), "retrieve design $data{design_id}";
+    ok my $design = $model->retrieve_design( { id => $data{id} } ), "retrieve design $data{id}";
 
     while ( my ( $k, $v ) = each %data ) {
         can_ok $design, $k;

@@ -9,8 +9,8 @@ use LIMS2::Model::DBConnect;
 
 use_ok 'LIMS2::Model';
 
-ok my $schema = LIMS2::Model::DBConnect->connect( 'LIMS2_TEST', 'tests' ),
-    'connect to LIMS2_TEST';
+ok my $schema = LIMS2::Model::DBConnect->connect( $ENV{LIMS2_DB}, 'tests' ),
+    'connect to LIMS2_DB';
 
 ok my $model = LIMS2::Model->new( schema => $schema ), 'instantiate model';
 
@@ -26,9 +26,9 @@ ok my $model = LIMS2::Model->new( schema => $schema ), 'instantiate model';
     can_ok $model, 'create_bac_clone';
 
     my %params = (
-        bac_library => 'black6',
-        bac_name    => 'foo',
-        loci        => [
+        library => 'black6',
+        name    => 'foo',
+        loci    => [
             {
                 assembly  => 'NCBIM37',
                 chr_name  => '12',
@@ -44,12 +44,12 @@ ok my $model = LIMS2::Model->new( schema => $schema ), 'instantiate model';
 
     can_ok $model, 'delete_bac_clone';
 
-    lives_ok { $model->delete_bac_clone( { slice( \%params, qw( bac_library bac_name ) ) } ) }
+    lives_ok { $model->delete_bac_clone( { slice( \%params, qw( library name ) ) } ) }
         'delete_bac_clone should live';
 }
 
 {    
-    throws_ok { $model->create_bac_clone( { bac_library => 'black6' } ) }
+    throws_ok { $model->create_bac_clone( { library => 'black6' } ) }
         'LIMS2::Model::Error::Validation', 'validation error thrown';
 
     my $r = $@->results;    
@@ -59,7 +59,7 @@ ok my $model = LIMS2::Model->new( schema => $schema ), 'instantiate model';
     ok ! $r->has_invalid, 'There are no invalid fields';
     ok ! $r->has_unknown, 'There are no unknown fields';
     ok $r->has_missing, 'There are missing fields';
-    is_deeply [ $@->results->missing ], [ 'bac_name' ], 'Validation results contain expected fields';    
+    is_deeply [ $@->results->missing ], [ 'name' ], 'Validation results contain expected fields';    
 }
 
 done_testing;

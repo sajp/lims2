@@ -8,8 +8,8 @@ use Data::FormValidator;
 use LIMS2::Model;
 use LIMS2::Model::DBConnect;
 
-ok my $schema = LIMS2::Model::DBConnect->connect( 'LIMS2_TEST', 'tests' ),
-    'connect to LIMS2_TEST';
+ok my $schema = LIMS2::Model::DBConnect->connect( $ENV{LIMS2_DB}, 'tests' ),
+    'connect to LIMS2_DB';
 
 ok my $model = LIMS2::Model->new( schema => $schema ),
     'created model';
@@ -25,8 +25,8 @@ ok my $dfv_profile = $model->form_validator->dfv_profile( $pspec ),
 {   
     my $res = Data::FormValidator->check(
         {
-            bac_library => 'black6',
-            bac_name    => 'foo'
+            library => 'black6',
+            name    => 'foo'
         }, $dfv_profile
     );    
 
@@ -38,7 +38,7 @@ ok my $dfv_profile = $model->form_validator->dfv_profile( $pspec ),
 {
     my $res = Data::FormValidator->check(
         {
-            bac_library => '128'
+            library => '128'
         }, $dfv_profile
     );
 
@@ -48,11 +48,11 @@ ok my $dfv_profile = $model->form_validator->dfv_profile( $pspec ),
 
     ok $res->has_invalid, 'result has_invalid';
 
-    is_deeply [ $res->invalid ], [ 'bac_library' ], 'bac_library is invalid';
+    is_deeply [ $res->invalid ], [ 'library' ], 'library is invalid';
 
     ok $res->has_missing, 'result has missing';
 
-    is_deeply [ $res->missing ], [ 'bac_name' ], 'bac_name is missing';
+    is_deeply [ $res->missing ], [ 'name' ], 'name is missing';
 }
 
 {
