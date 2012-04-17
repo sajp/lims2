@@ -28,13 +28,13 @@ sub qc_seq_reads_GET {
     my ( $self, $c ) = @_;
 
     my $qc_seq_reads = $c->model('Golgi')->retrieve_list(
-        QcSeqRead => { }, { columns => [ qw( qc_seq_read_id ) ] } );
+        QcSeqRead => { }, { columns => [ qw( id ) ] } );
 
 
     $self->status_ok(
         $c,
-        entity => { map { $_->qc_seq_read_id => $c->uri_for( '/api/qc_seq_read/'
-                        . $_->qc_seq_read_id )->as_string } @{ $qc_seq_reads } },
+        entity => { map { $_->id => $c->uri_for( '/api/qc_seq_read/'
+                        . $_->id )->as_string } @{ $qc_seq_reads } },
     );
 }
 
@@ -53,7 +53,7 @@ sub qc_seq_reads_POST {
 
     $self->status_created(
         $c,
-        location => $c->uri_for( '/api/qc_seq_read/', $qc_seq_read->qc_seq_read_id ),
+        location => $c->uri_for( '/api/qc_seq_read/', $qc_seq_read->id ),
         entity   => $qc_seq_read,
     );
 }
@@ -71,7 +71,7 @@ sub qc_seq_read_GET {
 
     $c->assert_user_roles( 'read' );
 
-    my $qc_seq_read = $c->model('Golgi')->retrieve( QcSeqRead => { qc_seq_read_id => $qc_seq_read_id });
+    my $qc_seq_read = $c->model('Golgi')->retrieve( QcSeqRead => { id => $qc_seq_read_id });
 
     return $self->status_ok(
         $c,

@@ -41,7 +41,7 @@ sub plate_GET {
 
     $c->assert_user_roles( 'read' );
 
-    my $plate = $c->model( 'Golgi' )->retrieve_plate( { plate_id => $plate_id } );
+    my $plate = $c->model( 'Golgi' )->retrieve_plate( { id => $plate_id } );
 
     $self->status_ok(
         $c,

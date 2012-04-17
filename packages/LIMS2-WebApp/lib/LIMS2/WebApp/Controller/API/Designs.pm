@@ -30,7 +30,7 @@ sub design_GET {
 
     $c->assert_user_roles( 'read' );
 
-    my $design = $c->model( 'Golgi' )->retrieve_design( { design_id => $design_id } );
+    my $design = $c->model( 'Golgi' )->retrieve_design( { id => $design_id } );
 
     $self->status_ok(
         $c,

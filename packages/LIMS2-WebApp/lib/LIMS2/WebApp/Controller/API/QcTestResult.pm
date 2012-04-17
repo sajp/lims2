@@ -28,12 +28,12 @@ sub qc_test_results_GET {
     my ( $self, $c ) = @_;
 
     my $qc_test_result = $c->model('Golgi')->retrieve_list(
-        QcTestResult => { }, { columns => [ qw( qc_test_result_id ) ] } );
+        QcTestResult => { }, { columns => [ qw( id ) ] } );
 
     $self->status_ok(
         $c,
-        entity => { map { $_->qc_test_result_id => $c->uri_for( '/api/qc_test_result/'
-                        . $_->qc_test_result_id )->as_string } @{ $qc_test_result } },
+        entity => { map { $_->id => $c->uri_for( '/api/qc_test_result/'
+                        . $_->id )->as_string } @{ $qc_test_result } },
     );
 }
 
@@ -52,7 +52,7 @@ sub qc_test_results_POST {
 
     $self->status_created(
         $c,
-        location => $c->uri_for( '/api/qc_test_result/', $qc_test_result->qc_test_result_id ),
+        location => $c->uri_for( '/api/qc_test_result/', $qc_test_result->id ),
         entity   => $qc_test_result,
     );
 }
@@ -70,7 +70,7 @@ sub qc_test_result_GET {
 
     $c->assert_user_roles( 'read' );
 
-    my $qc_test_result = $c->model('Golgi')->retrieve( QcTestResult => { qc_test_result_id => $qc_test_result_id } );
+    my $qc_test_result = $c->model('Golgi')->retrieve( QcTestResult => { id => $qc_test_result_id } );
 
     return $self->status_ok(
         $c,

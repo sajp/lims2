@@ -28,12 +28,12 @@ sub qc_sequencing_projects_GET {
     my ( $self, $c ) = @_;
 
     my $qc_sequencing_projects = $c->model('Golgi')->retrieve_list(
-        QcSequencingProject => { }, { columns => [ qw( qc_sequencing_project ) ] } );
+        QcSequencingProject => { }, { columns => [ qw( name ) ] } );
 
     $self->status_ok(
         $c,
-        entity => { map { $_->qc_sequencing_project => $c->uri_for( '/api/qc_sequencing_project/'
-                        . $_->qc_sequencing_project )->as_string } @{ $qc_sequencing_projects } },
+        entity => { map { $_->name => $c->uri_for( '/api/qc_sequencing_project/'
+                        . $_->name )->as_string } @{ $qc_sequencing_projects } },
     );
 }
 
@@ -52,7 +52,7 @@ sub qc_sequencing_projects_POST {
 
     $self->status_created(
         $c,
-        location => $c->uri_for( '/api/qc_sequencing_project/', $qc_sequencing_project->qc_sequencing_project ),
+        location => $c->uri_for( '/api/qc_sequencing_project/', $qc_sequencing_project->name ),
         entity   => $qc_sequencing_project,
     );
 }
@@ -66,12 +66,12 @@ Retrieve a specific QcSequencingProject, by qc_sequencing_project
 =cut
 
 sub qc_sequencing_project_GET {
-    my ( $self, $c, $qc_sequencing_project_id ) = @_;
+    my ( $self, $c, $qc_sequencing_project ) = @_;
 
     $c->assert_user_roles( 'read' );
 
     my $qc_sequencing_project = $c->model('Golgi')->retrieve(
-        QcSequencingProject => { qc_sequencing_project => $qc_sequencing_project_id }
+        QcSequencingProject => { name => $qc_sequencing_project }
     );
 
     return $self->status_ok(

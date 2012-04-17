@@ -28,12 +28,12 @@ sub qc_templates_GET {
     my ( $self, $c ) = @_;
 
     my $qc_templates = $c->model('Golgi')->retrieve_list(
-        QcTemplate => { }, { columns => [ qw( qc_template_id qc_template_name ) ] } );
+        QcTemplate => { }, { columns => [ qw( id name ) ] } );
 
     $self->status_ok(
         $c,
-        entity => { map { $_->qc_template_name => $c->uri_for( '/api/qc_template/'
-                        . $_->qc_template_id )->as_string } @{ $qc_templates } },
+        entity => { map { $_->name => $c->uri_for( '/api/qc_template/'
+                        . $_->id )->as_string } @{ $qc_templates } },
     );
 }
 
@@ -52,7 +52,7 @@ sub qc_templates_POST {
 
     $self->status_created(
         $c,
-        location => $c->uri_for( '/api/qc_template/', $qc_template->qc_template_id ),
+        location => $c->uri_for( '/api/qc_template/', $qc_template->id ),
         entity   => $qc_template
     );
 }
@@ -70,8 +70,8 @@ sub qc_template_GET {
 
     $c->assert_user_roles( 'read' );
 
-    my $qc_template_params = $qc_template =~ /^\d+$/ ? { qc_template_id => $qc_template }
-                                                     : { qc_template_name => $qc_template };
+    my $qc_template_params = $qc_template =~ /^\d+$/ ? { id => $qc_template }
+                                                     : { name => $qc_template };
 
     my $qc_template_obj = $c->model('Golgi')->retrieve_qc_template( $qc_template_params );
 

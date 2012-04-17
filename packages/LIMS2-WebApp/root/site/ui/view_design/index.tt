@@ -1,6 +1,6 @@
 [% META title = "View Design" %]
-<h2>Design: [% design.design_id %] </h2>
-<strong>Name:</strong> [% design.design_name %]<br>
+<h2>Design: [% design.id %] </h2>
+<strong>Name:</strong> [% design.name %]<br>
 <strong>Type:</strong> [% design.design_type %]<br>
 <strong>Phase:</strong> [% design.phase %]<br>
 <strong>Created By:</strong> [% design.created_by %]<br>
@@ -20,7 +20,7 @@
     [% FOR comment IN design.comments %]
         <tr>
             <td>[% comment.design_comment_category %]</td>
-            <td>[% comment.design_comment %]</td>
+            <td>[% comment.comment %]</td>
             <td>[% comment.created_by %]</td>
             <td>[% comment.created_at %]</td>
         </tr>
@@ -38,8 +38,8 @@
     </tr>
     [%- FOR primer IN design.genotyping_primers %]
         <tr>
-            <td>[% primer.genotyping_primer_type %]</td>
-            <td>[% primer.genotyping_primer_seq %]</td>
+            <td>[% primer.type %]</td>
+            <td>[% primer.seq %]</td>
         </tr>
     [%- END %]
     </table>
@@ -55,7 +55,7 @@
     [%- FOR oligo IN design.oligos %]
         <tr>
             <td>[% oligo.design_oligo_type %]</td>
-            <td>[% oligo.design_oligo_seq %]</td>
+            <td>[% oligo.seq %]</td>
         </tr>
     [%- END %]
     </table>

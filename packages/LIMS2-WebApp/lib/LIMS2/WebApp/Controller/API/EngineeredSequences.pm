@@ -43,7 +43,7 @@ sub eng_seq_params_for_plate :Path( '/api/eng_seq_params' ) :Args(1) :ActionClas
 sub eng_seq_params_for_plate_GET {
     my ( $self, $c, $plate_name ) = @_;
 
-    my $plate = $c->model( 'Golgi' )->retrieve( Plate => { plate_name => $plate_name }, { prefetch => 'wells' } );
+    my $plate = $c->model( 'Golgi' )->retrieve( Plate => { name => $plate_name }, { prefetch => 'wells' } );
 
     my @params;
 
@@ -99,22 +99,22 @@ sub eng_seqs_for_plate :Path( '/api/eng_seq' ) :Args(1) {
     my $tarball;
     
     try {
-        my $plate = $c->model( 'Golgi' )->retrieve( Plate => { plate_name => $plate_name }, { prefetch => 'wells' } );
+        my $plate = $c->model( 'Golgi' )->retrieve( Plate => { name => $plate_name }, { prefetch => 'wells' } );
 
         my $format = $c->request->param( 'format' ) || 'genbank';
     
         my $tempdir = File::Temp->newdir;
-        my $outdir  = dir( $tempdir->dirname )->subdir( $plate->plate_name );
+        my $outdir  = dir( $tempdir->dirname )->subdir( $plate->name );
         $outdir->mkpath;
     
         for my $well ( $plate->wells ) {
             my $synvec  = $c->model( 'Golgi' )->retrieve_synthetic_construct( { plate_name => $plate->plate_name, well_name => $well->well_name } );
-            my $outfile = $outdir->file( $well->well_name . '.gbk' );
+            my $outfile = $outdir->file( $well->name . '.gbk' );
             my $seq_io = Bio::SeqIO->new( -fh => $outfile->openw, -format => $format );            
             $seq_io->write_seq( $synvec->bio_seq );
         }
 
-        my $tarball_file = dir( $tempdir->dirname )->file( $plate->plate_name . '.tar.gz' );
+        my $tarball_file = dir( $tempdir->dirname )->file( $plate->name . '.tar.gz' );
         systemx( 'tar', '-z', '-c', '-C', $outdir->parent, '-f', $tarball_file, $outdir->relative( $outdir->parent ) );
         $tarball = $tarball_file->openr;        
     }

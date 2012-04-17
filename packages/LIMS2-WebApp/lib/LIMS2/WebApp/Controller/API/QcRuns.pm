@@ -28,12 +28,12 @@ sub qc_runs_GET {
     my ( $self, $c ) = @_;
 
     my $qc_runs = $c->model('Golgi')->retrieve_list(
-        QcRuns => { }, { columns => [ qw( qc_run_id ) ] } );
+        QcRuns => { }, { columns => [ qw( id ) ] } );
 
     $self->status_ok(
         $c,
-        entity => { map { $_->qc_run_id => $c->uri_for( '/api/qc_run/'
-                        . $_->qc_run_id )->as_string } @{ $qc_runs } },
+        entity => { map { $_->id => $c->uri_for( '/api/qc_run/'
+                        . $_->id )->as_string } @{ $qc_runs } },
     );
 }
 
@@ -47,12 +47,18 @@ sub qc_runs_POST {
     my ( $self, $c ) = @_;
 
     $c->assert_user_roles( 'edit' );
+    my $golgi - $c->model( 'Golgi' );
 
-    my $qc_run = $c->model( 'Golgi' )->create_qc_run( $c->request->data );
+    my $qc_run;
+    $golgi->txn_do(
+        sub {
+            $qc_run = $golgi->create_qc_run( $c->request->data );
+        }
+    );
 
     $self->status_created(
         $c,
-        location => $c->uri_for( '/api/qc_run/', $qc_run->qc_run_id ),
+        location => $c->uri_for( '/api/qc_run/', $qc_run->id ),
         entity   => $qc_run,
     );
 }
@@ -70,7 +76,7 @@ sub qc_run_GET {
 
     $c->assert_user_roles( 'read' );
 
-    my $qc_run = $c->model('Golgi')->retrieve( QcRuns => { qc_run_id => $qc_run_id } );
+    my $qc_run = $c->model('Golgi')->retrieve( QcRuns => { id => $qc_run_id } );
 
     return $self->status_ok(
         $c,

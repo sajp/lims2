@@ -1,10 +1,10 @@
 [% META title = "View Plate" %]
 <h2>Plate Details</h2>
-<strong>Plate Name:</strong> [% plate.plate_name %]<br>
+<strong>Plate Name:</strong> [% plate.name %]<br>
 <strong>Plate Type:</strong> [% plate.plate_type %]<br>
 <strong>Created By:</strong> [% plate.created_by %]<br>
 <strong>Created At:</strong> [% plate.created_at %]<br>
-<strong>Description:</strong> [% plate.plate_desc %]<br>
+<strong>Description:</strong> [% plate.description %]<br>
 
 [% IF plate.comments.size %]
     <p>
@@ -17,7 +17,7 @@
     </tr>
     [% FOR comment IN plate.comments %]
         <tr>
-            <td>[% comment.plate_comment %]</td>
+            <td>[% comment.comment %]</td>
             <td>[% comment.created_by %]</td>
             <td>[% comment.created_at %]</td>
         </tr>
