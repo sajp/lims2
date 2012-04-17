@@ -43,7 +43,7 @@ sub synthetic_construct_params {
     if ( $process_type eq 'rearray' ) {
         _process_rearray_params( $process->process_rearray );
     }
-    elsif ( $process_type eq 'bac_recom' ) {
+    elsif ( $process_type eq 'cre_bac_recom' ) {
         _process_bac_recom_params( $process->process_cre_bac_recom );
     }
     elsif ( $process_type eq 'int_recom' ) {
@@ -52,7 +52,7 @@ sub synthetic_construct_params {
     else {
         LIMS2::Model::Error::Implementation->throw( 
             "Don't know how to construct synthetic vector for process "
-                . $process->process_type->process_description
+                . $process->process_type_rel->description
         );
     }
 }
