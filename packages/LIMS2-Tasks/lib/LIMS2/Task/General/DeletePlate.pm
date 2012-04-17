@@ -27,7 +27,7 @@ sub execute {
 
     $self->model->txn_do(
         sub {
-            $self->model->delete_plate( { plate_name => $self->plate_name } );
+            $self->model->delete_plate( { name => $self->plate_name } );
             unless ( $self->commit ) {
                 warn "Rollback\n";
                 $self->model->txn_rollback;

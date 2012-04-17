@@ -22,7 +22,7 @@ override create => sub {
 override wanted => sub {
     my ( $self, $datum ) = @_;
 
-    my $plate = $self->schema->resultset( 'Plate' )->find( { plate_name => $datum->{plate_name} } );    
+    my $plate = $self->schema->resultset( 'Plate' )->find( { name => $datum->{plate_name} } );
     if ( $plate ) {
         $self->log->warn( "Skipping existing plate $datum->{plate_name}" );
         return 0;
@@ -43,4 +43,4 @@ __PACKAGE__->meta->make_immutable;
 
 __END__
 
-    
+

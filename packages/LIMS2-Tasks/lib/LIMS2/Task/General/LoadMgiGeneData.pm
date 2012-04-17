@@ -36,7 +36,7 @@ const my @MGI_COORDINATE_COLUMNS => qw(
     ensembl_gene_chromosome
     ensembl_gene_start
     ensembl_gene_end
-    ensembl_gene_strand    
+    ensembl_gene_strand
     vega_gene_id
     vega_gene_chromosome
     vega_gene_start
@@ -118,7 +118,7 @@ sub execute {
     # if the download fails.
     my $mgi_coordinate_iterator = $self->mgi_coordinate_iterator;
     my $mgi_ensembl_iterator    = $self->mgi_ensembl_iterator;
-    
+
     $self->schema->txn_do(
         sub {
             $self->delete_gene_data;
@@ -126,7 +126,7 @@ sub execute {
             $self->load_mgi_ensembl_data( $mgi_ensembl_iterator );
             if ( ! $self->commit ) {
                 $self->log->warn( "Rollback" );
-                $self->schema->txn_rollback;                
+                $self->schema->txn_rollback;
             }
         }
     );
@@ -148,13 +148,13 @@ sub mgi_ensembl_iterator {
     my $fh = $self->download( $self->mgi_ensembl_url );
 
     imap { $self->parse_mgi_ensembl_record( $_ ) } igrep { m/^MGI:/ } iter( $fh );
-}      
+}
 
 sub download {
     my ( $self, $url ) = @_;
 
-    $self->log->info( "Downloading $url" );    
-    
+    $self->log->info( "Downloading $url" );
+
     my $tmp = File::Temp->new();
 
     my $ua = LWP::UserAgent->new();
@@ -162,7 +162,7 @@ sub download {
 
     my $response = $ua->get( $url, ':content_file' => $tmp->filename );
 
-    unless ( $response->is_success ) {        
+    unless ( $response->is_success ) {
         die "Error retrieving $url: " . $response->status_line;
     }
 
@@ -183,7 +183,7 @@ sub parse_mgi_coordinate_record {
 
     my %data;
     @data{@MGI_COORDINATE_COLUMNS} = split "\t", $_;
-    
+
     for ( keys %data ) {
         $data{$_} = undef if $data{$_} and lc( $data{$_} ) eq 'null';
     }
@@ -198,8 +198,8 @@ sub parse_mgi_coordinate_record {
         }
         else {
             $self->log->warn( "Invalid $_ '$data{$_}' for $data{mgi_accession_id}" );
-            delete $data{$_};            
-        }        
+            delete $data{$_};
+        }
     }
 
     return \%data;
@@ -218,7 +218,7 @@ sub load_mgi_coordinate_data {
     my ( $self, $iterator ) = @_;
 
     $self->log->info( "Loading MGI coordinate data" );
-    
+
     while ( my $record = $iterator->next ) {
         try {
             $self->add_mgi_gene_data( $record );
@@ -226,7 +226,7 @@ sub load_mgi_coordinate_data {
         catch {
             $self->add_error( $_ );
             $self->log->error( $_ );
-        };      
+        };
     }
 }
 
@@ -234,14 +234,14 @@ sub load_mgi_ensembl_data {
     my ( $self, $iterator ) = @_;
 
     $self->log->info( "Loading MGI EnsEMBL data" );
-    
+
     while ( my $record = $iterator->next ) {
         try {
             my $mgi_gene = $self->schema->resultset( 'MgiGeneData' )->find(
                 {
                     mgi_accession_id => $record->{mgi_accession_id}
                 }
-            );                            
+            );
             if ( $mgi_gene ) {
                 $self->add_ensembl_gene_data( $mgi_gene, $record );
             }
@@ -252,7 +252,7 @@ sub load_mgi_ensembl_data {
         catch {
             $self->add_error( $_ );
             $self->log->error( $_ );
-        };        
+        };
     }
 }
 
@@ -260,11 +260,11 @@ sub add_mgi_gene_data {
     my ( $self, $data ) = @_;
 
     my %mgi_gene_data = slice $data, @MGI_GENE_DATA;
-    
+
     $self->log->info( "Creating MgiGeneData: $data->{mgi_accession_id}" );
-    
-    my $mgi_gene = $self->schema->resultset( 'MgiGeneData' )->create( \%mgi_gene_data );    
-    
+
+    my $mgi_gene = $self->schema->resultset( 'MgiGeneData' )->create( \%mgi_gene_data );
+
     if ( $data->{ensembl_gene_id} ) {
         $self->add_ensembl_gene_data( $mgi_gene, $data );
     }
@@ -286,7 +286,7 @@ sub add_ensembl_gene_data {
         unless ( $gene_data ) {
             $gene_data = $self->create_ensembl_gene_data( $ensembl_gene_id );
         }
-        next unless $gene_data;        
+        next unless $gene_data;
         $self->log->info( "Creating MgiEnsemblGeneMap $data->{mgi_accession_id} => $ensembl_gene_id" );
         $self->schema->resultset( 'MgiEnsemblGeneMap' )->find_or_create(
             {
@@ -300,7 +300,7 @@ sub add_ensembl_gene_data {
 sub add_vega_gene_data {
     my ( $self, $mgi_gene, $data ) = @_;
 
-    my %vega_gene_data = slice $data, @VEGA_GENE_DATA;   
+    my %vega_gene_data = slice $data, @VEGA_GENE_DATA;
 
     for my $vega_gene_id ( split /\s*,\s*/, $data->{vega_gene_id} ) {
         $self->log->info( "Creating VegaGeneData for: $vega_gene_id" );
@@ -322,10 +322,10 @@ sub create_ensembl_gene_data {
     unless ( $gene ) {
         $self->log->warn( "failed to retrieve Ensembl gene $ensembl_gene_id" );
         return;
-    }        
-        
+    }
+
     my ( $sp, $tm ) = ( 0, 0 );
-    
+
     for my $transcript ( @{ $gene->get_all_Transcripts } ) {
         my $translation = $transcript->translation
             or next;
@@ -336,13 +336,13 @@ sub create_ensembl_gene_data {
             }
             elsif ( $logic_name eq 'tmhmm' ) {
                 $tm = 1;
-            }                
+            }
         }
         # No need to consider other transcripts if we found the
         # domains we are looking for
         last if $sp and $tm;
     }
-    
+
     $self->log->info( "Creating EnsemblGeneData for: $ensembl_gene_id" );
     $self->schema->resultset( 'EnsemblGeneData' )->create(
         {

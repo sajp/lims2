@@ -26,7 +26,7 @@ sub execute {
     my ( $self, $opts, $args ) = @_;
     $self->log->debug('Deleting plate types: ' . $self->plate_type );
 
-    my $plate_type = $self->schema->resultset('PlateType')->find( { plate_type => $self->plate_type } );
+    my $plate_type = $self->schema->resultset('PlateType')->find( { type => $self->plate_type } );
     unless ( $plate_type ) {
         $self->log->error( 'Invalid plate type: ' . $self->plate_type );
         return;
@@ -38,7 +38,7 @@ sub execute {
             $self->_delete_plate( $plate );
         }
         catch {
-            $self->log->error('Unable to delete plate: ' . $plate->plate_name . "\n" . $_);
+            $self->log->error('Unable to delete plate: ' . $plate->name . "\n" . $_);
         };
     }
 }
@@ -47,12 +47,12 @@ sub _delete_plate {
     my ( $self, $plate ) = @_;
 
     $self->model->txn_do(
-        sub {   
+        sub {
             $plate->delete_this_plate;
             unless ( $self->commit ) {
                 warn "Rollback\n";
                 $self->model->txn_rollback;
-            }            
+            }
         }
     );
 }

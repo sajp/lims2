@@ -68,7 +68,7 @@ sub backbone_for {
     for my $match ( keys %BACKBONE_FOR ) {
         if ( $bac_name =~ $match ) {
             return $BACKBONE_FOR{$match};
-        }        
+        }
     }
 
     die "No backbone configured for BAC $bac_name\n";
@@ -105,7 +105,7 @@ sub parse_data_file {
         plate_desc => $self->plate_desc,
         created_by => $self->created_by,
         comments   => $self->plate_comments,
-        wells      => \%wells            
+        wells      => \%wells
     };
 }
 
@@ -119,12 +119,12 @@ sub execute {
     my $data = $self->parse_data_file( $args->[0] );
 
     $self->model->txn_do(
-        sub {   
+        sub {
             $self->model->create_plate( $data );
             unless ( $self->commit ) {
                 warn "Rollback\n";
                 $self->model->txn_rollback;
-            }            
+            }
         }
     );
 }
