@@ -40,6 +40,8 @@ sub create_qc_seq_read {
 
     my $validated_params = $self->check_params( $params, $self->pspec_create_qc_seq_read );
 
+    $self->find_or_create_qc_sequencing_project( { name => $validate_params->{qc_sequencing_project}  } )
+
     my $qc_seq_read = $self->schema->resultset('QcSeqRead')->create(
         {
             slice_def( $validated_params,
