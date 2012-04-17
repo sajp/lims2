@@ -54,13 +54,13 @@ sub process :Path( '/ui/process_upload_plate' ) :Args(0) {
         }
         else {
             die $_;
-        }   
+        }
     };
-    
+
     $c->response->body( "Processing..." );
 }
 
-        
+
 
 
 =head1 AUTHOR

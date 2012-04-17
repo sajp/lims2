@@ -24,7 +24,7 @@ has _ensembl_gene_chr => (
     handles    => {
         chr_start  => 'start',
         chr_end    => 'end',
-        chr_strand => 'strand'        
+        chr_strand => 'strand'
     }
 );
 
@@ -37,13 +37,13 @@ around BUILDARGS => sub {
     }
     else {
         return $class->$orig( @_ );
-    }    
+    }
 };
 
 sub _build__ensembl_gene_chr {
     shift->ensembl_gene->transform( 'chromosome' );
 }
-        
+
 sub chr_name {
     shift->_ensembl_gene_chr->slice->seq_region_name;
 }
