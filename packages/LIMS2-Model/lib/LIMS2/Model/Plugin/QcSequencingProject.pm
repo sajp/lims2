@@ -9,7 +9,9 @@ use Scalar::Util qw( blessed );
 use namespace::autoclean;
 
 requires qw( schema check_params throw );
+# TODO: move this code into QcSeqRead plugin
 
+# this subroutine is not used anywhere?
 sub _instantiate_qc_sequencing_project {
     my ( $self, $params ) = @_;
 
@@ -25,22 +27,20 @@ sub _instantiate_qc_sequencing_project {
     $self->retrieve( QcSequencingProject => $validated_params );
 }
 
-sub pspec_create_qc_sequencing_project {
+sub pspec_find_or_create_qc_sequencing_project {
     return {
         name => { validate => 'plate_name' },
     };
 }
 
-sub create_qc_sequencing_project {
+sub find_or_create_qc_sequencing_project {
     my ( $self, $params ) = @_;
 
-    my $validated_params = $self->check_params( $params, $self->pspec_create_qc_sequencing_project );
+    my $validated_params = $self->check_params( $params, $self->pspec_find_or_create_qc_sequencing_project );
 
-    my $qc_sequencing_project = $self->schema->resultset( 'QcSequencingProject' )->create(
+    my $qc_sequencing_project = $self->schema->resultset( 'QcSequencingProject' )->find_or_create(
         { slice_def( $validated_params, qw( name ) ) }
     );
-
-    $self->log->debug( 'created qc sequencing project: ' . $qc_sequencing_project->name );
 
     return $qc_sequencing_project;
 }
