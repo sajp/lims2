@@ -118,8 +118,8 @@ sub create_design {
 
 sub pspec_delete_design {
     return {
-        id => { validate => 'integer' },
-        cascade   => { validate => 'boolean', optional => 1 }
+        id      => { validate => 'integer' },
+        cascade  => { validate => 'boolean', optional => 1 }
     };
 }
 
@@ -148,7 +148,10 @@ sub delete_design {
 
     if ( $validated_params->{cascade} ) {
         $design->design_comments_rs->delete;
-        $design->design_oligos_rs->delete;
+        foreach my $oligo ( $design->design_oligos->all ) {
+            $oligo->loci_rs->delete;
+            $oligo->delete;
+        }
         $design->genotyping_primers_rs->delete;
     }
 
